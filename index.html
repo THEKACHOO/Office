@@ -392,13 +392,108 @@
         padding-bottom: 1.5rem;
       }
     }
+
+    /* ========== STYLE UNTUK KONTEN KHUSUS ========== */
+    /* Tampilan food court coming soon */
+    .foodcourt-message {
+      text-align: center;
+      font-size: clamp(2rem, 8vw, 4rem);
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: white;
+      text-shadow: 0 0 20px rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      padding: 2rem 4rem;
+      border-radius: 60px;
+      border: 2px solid rgba(255,255,255,0.5);
+    }
+
+    /* Tampilan information desk */
+    .info-content {
+      max-width: 800px;
+      width: 90%;
+      background: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 48px;
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #f0f0f0;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.7);
+    }
+
+    .info-content p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .info-content .address {
+      font-size: 1.1rem;
+      margin: 1.8rem 0 1.2rem 0;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .info-content .contact-line {
+      font-size: 1.2rem;
+      margin: 0.6rem 0;
+    }
+
+    .info-content a {
+      color: #ffdb8e;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px dotted #ffdb8e;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .info-content a:hover {
+      color: #ffffff;
+      border-bottom: 1px solid #ffffff;
+    }
+
+    .info-content .closing-note {
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      opacity: 0.7;
+      font-style: italic;
+    }
+
+    /* Sembunyikan tombol container saat konten khusus tampil */
+    .hidden-content {
+      display: none !important;
+    }
+
+    /* Tombol kembali (opsional, akan ditambahkan via JS untuk informasi) */
+    .back-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.7rem 1.8rem;
+      background: white;
+      color: black;
+      font-weight: 700;
+      border-radius: 40px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 1rem;
+    }
+    .back-button:hover {
+      background: #ddd;
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body>
   <!-- BUILDING SCENE -->
   <div id="scene-building" class="scene">
     <div class="content">
-      <div class="enter-area" id="enter-lobby-trigger">
+      <!-- area sentuh seluruh layar: kita jadikan .enter-area melingkupi semuanya, tapi karena .content sudah full, kita gunakan elemen pembungkus -->
+      <div class="enter-area" id="enter-lobby-trigger" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
         <div class="welcome-message">
           <h1>WELCOME TO THE KACHOO</h1>
           <p>Headquarters · explore every level</p>
@@ -410,15 +505,18 @@
   <!-- LOBBY SCENE -->
   <div id="scene-lobby" class="scene hidden">
     <div class="content">
-      <div class="button-container">
+      <!-- Button container normal -->
+      <div class="button-container" id="lobby-button-container">
         <button class="floor-btn" id="lift-btn">Lift</button>
-        <a href="info.html" class="floor-btn" target="_blank">Information desk</a>
+        <button class="floor-btn" id="info-desk-btn">Information desk</button>
         <a href="GH.html" class="floor-btn" target="_blank">Grand Hall</a>
         <a href="Exhibition.html" class="floor-btn" target="_blank">Exhibition Center</a>
         <a href="Chobank.html" class="floor-btn" target="_blank">Chobank</a>
-        <a href="FC.html" class="floor-btn" target="_blank">Food Court</a>
+        <button class="floor-btn" id="food-court-btn">Food Court</button>
       </div>
-      <div class="floor-label">THE KACHOO · GROUND FLOOR</div>
+      <!-- Tempat untuk konten khusus (information desk / food court) -->
+      <div id="lobby-special-content" style="width:100%; display:flex; flex-direction:column; align-items:center;"></div>
+      <div class="floor-label" id="lobby-floor-label">THE KACHOO · GROUND FLOOR</div>
     </div>
   </div>
 
@@ -463,6 +561,11 @@
       const liftPanel = document.getElementById('lift-panel');
       const basementPanel = document.getElementById('basement-panel');
       
+      // Lobby elements
+      const lobbyButtonContainer = document.getElementById('lobby-button-container');
+      const lobbySpecialContent = document.getElementById('lobby-special-content');
+      const lobbyFloorLabel = document.getElementById('lobby-floor-label');
+
       // Notification
       const notification = document.getElementById('notification');
 
@@ -496,6 +599,66 @@
         }, 400);
       }
 
+      // Fungsi untuk mereset lobby ke tampilan awal (tombol-tombol)
+      function resetLobbyToDefault() {
+        // Tampilkan container tombol, sembunyikan konten khusus, label normal
+        lobbyButtonContainer.classList.remove('hidden-content');
+        lobbySpecialContent.innerHTML = ''; // kosongkan
+        lobbySpecialContent.style.display = 'none';
+        lobbyFloorLabel.style.display = 'block';
+        // Pastikan background lobby kembali normal (tidak perlu diubah karena class scene sudah benar)
+        // tapi kita juga harus mengubah background jika perlu: scene-lobby background default
+        // tidak perlu, karena class scene tetap. Namun untuk food court kita ubah background langsung di sini reset
+        lobbyScene.style.backgroundImage = ''; // kosongkan dulu biar pakai CSS
+        // force reflow? gak perlu, kita hapus inline style
+        lobbyScene.style.backgroundImage = null; 
+      }
+
+      // Fungsi untuk menampilkan food court (coming soon dengan background foodcourt.png)
+      function showFoodCourt() {
+        // Sembunyikan container tombol dan label
+        lobbyButtonContainer.classList.add('hidden-content');
+        lobbyFloorLabel.style.display = 'none';
+        // Set background lobby menjadi foodcourt.png (prioritas inline)
+        lobbyScene.style.backgroundImage = "url('foodcourt.png')";
+        // Isi konten special
+        lobbySpecialContent.style.display = 'flex';
+        lobbySpecialContent.innerHTML = `
+          <div class="foodcourt-message">COMING SOON</div>
+          <button class="back-button" id="back-from-foodcourt">← Back to Lobby</button>
+        `;
+        // tambahkan event listener ke tombol back
+        document.getElementById('back-from-foodcourt').addEventListener('click', (e) => {
+          e.stopPropagation();
+          resetLobbyToDefault();
+        });
+      }
+
+      // Fungsi untuk menampilkan information desk (teks + link X)
+      function showInformationDesk() {
+        lobbyButtonContainer.classList.add('hidden-content');
+        lobbyFloorLabel.style.display = 'none';
+        // background lobby tetap menggunakan gambar lobby default, tidak diubah
+        // (biarkan seperti ada, tidak usah ganti)
+        lobbyScene.style.backgroundImage = null; // kembalikan ke css default
+        lobbySpecialContent.style.display = 'flex';
+        lobbySpecialContent.innerHTML = `
+          <div class="info-content">
+            <p>The Kachoo is a media and news publishing company. The Kachoo has three projects: Kafkapages, Kazine, and Kaboom. The Kachoo is also developing a digital banking feature called Chobank and a directory system called Chonnect.</p>
+            <div class="address">Address:<br>Jenderal Sudirman Avenue, Lots 61–62, South Jakarta 12930, Indonesia</div>
+            <div class="contact-line">Contact: <a href="https://x.com/HaiKachoo" target="_blank">@HaiKachoo</a></div>
+            <div class="contact-line">Director’s Contact: <a href="https://x.com/sekrenite" target="_blank">@sekrenite</a></div>
+            <div class="contact-line">Kazine Contact: <a href="https://x.com/Chaarmente" target="_blank">@Chaarmente</a></div>
+            <div class="closing-note">Tap outside or click below to return</div>
+            <button class="back-button" id="back-from-info">← Back to Lobby</button>
+          </div>
+        `;
+        document.getElementById('back-from-info').addEventListener('click', (e) => {
+          e.stopPropagation();
+          resetLobbyToDefault();
+        });
+      }
+
       // Fungsi buat tombol lift (kecil semua di bawah)
       function createFloorButtons() {
         liftPanel.innerHTML = '';
@@ -517,8 +680,10 @@
               });
             }
             else if (floor === 'G') {
-              // Balik ke lobby pake G
-              switchLiftScene(liftScene, lobbyScene, null);
+              // Balik ke lobby pake G, pastikan lobby direset
+              switchLiftScene(liftScene, lobbyScene, () => {
+                resetLobbyToDefault();
+              });
             }
             else if (floor === 'L1') {
               // Animasi dulu baru redirect
@@ -560,20 +725,65 @@
       // Event: klik area welcome untuk masuk lobby (LANGSUNG, tanpa animasi)
       document.getElementById('enter-lobby-trigger').addEventListener('click', () => {
         showSceneDirect(lobbyScene);
+        resetLobbyToDefault(); // pastikan lobby default
       });
 
-      // Event: klik tombol Lift di lobby (LANGSUNG, tanpa animasi)
+      // Event: klik tombol Lift di lobby
       document.getElementById('lift-btn').addEventListener('click', () => {
         createFloorButtons();
         showSceneDirect(liftScene);
       });
 
+      // Event: klik Information desk (baru)
+      document.getElementById('info-desk-btn').addEventListener('click', () => {
+        // panggil fungsi information desk tanpa pindah scene, hanya ganti konten di lobby
+        showInformationDesk();
+      });
+
+      // Event: klik Food Court (baru)
+      document.getElementById('food-court-btn').addEventListener('click', () => {
+        showFoodCourt();
+      });
+
+      // Juga pastikan jika user mengklik di area lobby di luar tombol, tidak melakukan apa2
+      // Tapi untuk kembali dari special content, kita sudah punya tombol back.
+      // Selain itu, sentuh di building sudah diatur.
+
       // Initial state
       window.addEventListener('load', () => {
         showSceneDirect(buildingScene);
+        // Pastikan special content di lobby tersembunyi awal
+        resetLobbyToDefault();
       });
+
+      // Override: ketika kembali ke lobby dari lift (G) atau dari scene lain, reset
+      // Kita sudah panggil reset di bagian lift G.
+      // Tambahan: jika suatu saat scene lobby ditampilkan dari fungsi lain, kita ingin reset.
+      // Kita bisa monkeypatch showSceneDirect untuk lobby? Atau aman dengan memanggil reset tiap kali lobbyScene ditampilkan.
+      // Untuk amannya, kita tambahkan observer sederhana? Tidak perlu ribet, kita panggil reset di tempat2 yang memungkinkan lobby muncul.
+      // Tapi jika ada scene lain yang panggil showSceneDirect(lobbyScene) tanpa reset, kita perlu reset.
+      // Kita simpan asli showSceneDirect dan bungkus.
+      const originalShowSceneDirect = showSceneDirect;
+      window.showSceneDirect = function(scene) {
+        if (scene === lobbyScene) {
+          resetLobbyToDefault();
+        }
+        originalShowSceneDirect(scene);
+      };
+      // replace fungsi global
+      showSceneDirect = function(scene) {
+        if (scene === lobbyScene) {
+          resetLobbyToDefault();
+        }
+        originalShowSceneDirect(scene);
+      };
+
+      // Perbaiki referensi di event2 lama yang panggil showSceneDirect
+      // Karena sudah di-reassign, aman.
+      // Tapi karena ada pemanggilan di dalam switchLiftScene juga, perlu pastikan menggunakan yang baru.
+      // switchLiftScene memanggil showSceneDirect, sudah pakai yang terbaru.
 
     })();
   </script>
 </body>
-</html>
+  </html>
