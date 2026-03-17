@@ -27,48 +27,8 @@
       color: #000;
     }
 
-    /* background motion halus - lebih subtle */
-    .motion-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .motion-bg span {
-      position: absolute;
-      display: block;
-      width: 2px;
-      height: 2px;
-      background: rgba(0, 0, 0, 0.06);
-      border-radius: 50%;
-      animation: floatParticle 16s infinite linear;
-    }
-
-    @keyframes floatParticle {
-      0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-      10% { opacity: 0.2; }
-      90% { opacity: 0.15; }
-      100% { transform: translateY(-120vh) translateX(20px) scale(0.5); opacity: 0; }
-    }
-
-    .motion-bg .line {
-      position: absolute;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.04), transparent);
-      animation: slideLine 15s infinite ease-in-out;
-    }
-
-    @keyframes slideLine {
-      0% { transform: translateX(-100%); opacity: 0; }
-      50% { opacity: 0.15; }
-      100% { transform: translateX(100%); opacity: 0; }
-    }
+    /* ===== BACKGROUND MOTION DIHAPUS ===== */
+    /* Semua elemen .motion-bg dan animasinya dihapus */
 
     /* ===== CONTAINER GLASS BLEAM PUTIH ===== */
     .glass-card {
@@ -518,8 +478,7 @@
   </style>
 </head>
 <body>
-  <!-- background motion tipis -->
-  <div class="motion-bg" id="motionBg"></div>
+  <!-- BACKGROUND MOTION DIHAPUS - tidak ada lagi elemen motion-bg -->
 
   <div class="glass-card">
     <!-- GUESTBOOK HEADER -->
@@ -527,6 +486,14 @@
       <h1>GUESTBOOK</h1>
       <p>Sign the attendance</p>
     </div>
+
+    <!-- grid invitation + form -->
+    <div class="dashboard">
+      <!-- INVITATION LIST -->
+      <div class="invitation-section">
+        <h2>VIP Guest</h2>
+        <div class="invitation-grid" id="invitationGrid"></div>
+      </div>
 
       <!-- FORM (hanya Fullname & Username) -->
       <div class="form-section">
@@ -541,14 +508,6 @@
         </div>
         <button class="sign-btn" id="signGuestbookBtn">Sign guestbook</button>
         <div id="formFeedback" class="feedback-message"></div>
-      </div>
-
-    <!-- grid invitation + form -->
-    <div class="dashboard">
-      <!-- INVITATION LIST -->
-      <div class="invitation-section">
-        <h2>VIP Guest</h2>
-        <div class="invitation-grid" id="invitationGrid"></div>
       </div>
     </div>
 
@@ -646,23 +605,7 @@
 
       renderNames();
 
-      // background particles sederhana
-      const motionBg = document.getElementById('motionBg');
-      for (let i = 0; i < 20; i++) {
-        const span = document.createElement('span');
-        span.style.left = Math.random() * 100 + '%';
-        span.style.top = Math.random() * 100 + '%';
-        span.style.animationDuration = (Math.random() * 15 + 10) + 's';
-        span.style.animationDelay = (Math.random() * 5) + 's';
-        motionBg.appendChild(span);
-      }
-      for (let i = 0; i < 3; i++) {
-        const line = document.createElement('div');
-        line.className = 'line';
-        line.style.top = (20 + i * 25) + '%';
-        line.style.animationDelay = (i * 0.8) + 's';
-        motionBg.appendChild(line);
-      }
+      // BACKGROUND MOTION DIHAPUS - tidak ada kode untuk membuat partikel/garis
     })();
   </script>
 </body>
