@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Grand Hall · Attend the Event</title>
+  <!-- Inter font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .grandhall-container {
+      max-width: 1100px;
+      width: 100%;
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      padding: 2.5rem 2rem;
+    }
+
+    /* header putih bersih */
+    .hall-header {
+      text-align: left;
+      margin-bottom: 2.5rem;
+      border-bottom: 2px solid #000;
+      padding-bottom: 1.2rem;
+    }
+
+    .hall-header h1 {
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #000;
+      line-height: 1.1;
+    }
+
+    .hall-header p {
+      color: #333;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-top: 0.5rem;
+    }
+
+    /* dua kolom untuk bagian atas (invitation list + form) */
+    .top-section {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* INVITATION LIST – langsung daftar tanpa tombol */
+    .invitation-box {
+      background: #f5f5f5;
+      border: 2px solid #000;
+      border-radius: 24px;
+      padding: 1.6rem 1.5rem;
+    }
+
+    .invitation-box h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.3px;
+    }
+
+    .invitation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem 1rem;
+      max-height: 340px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .invitation-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+    .invitation-grid::-webkit-scrollbar-track {
+      background: #ddd;
+    }
+    .invitation-grid::-webkit-scrollbar-thumb {
+      background: #000;
+      border-radius: 12px;
+    }
+
+    .invitee-item {
+      padding: 0.6rem 0.8rem;
+      background: #ffffff;
+      border: 1.5px solid #000;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 2px 0 #000;
+    }
+
+    /* GUESTBOOK FORM */
+    .guestbook-box {
+      background: #ffffff;
+      border: 2px solid #000;
+      border-radius: 24px;
+      padding: 1.6rem 1.5rem;
+    }
+
+    .guestbook-box h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 1.8rem;
+      letter-spacing: -0.3px;
+    }
+
+    .field-group {
+      margin-bottom: 1.4rem;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #000;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.3px;
+    }
+
+    .field-group input {
+      width: 100%;
+      background: #ffffff;
+      border: 2px solid #000;
+      border-radius: 50px;
+      padding: 0.9rem 1.2rem;
+      font-size: 1rem;
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      transition: 0.1s;
+    }
+
+    .field-group input:focus {
+      outline: none;
+      background: #f2f2f2;
+      border-color: #000;
+    }
+
+    .field-group input::placeholder {
+      color: #888;
+      font-weight: 300;
+      opacity: 0.8;
+    }
+
+    .sign-btn {
+      background: #000;
+      border: none;
+      color: #ffffff;
+      font-weight: 700;
+      padding: 1rem 1.8rem;
+      border-radius: 60px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.15s;
+      border: 2px solid #000;
+      width: 100%;
+      margin-top: 0.5rem;
+      letter-spacing: 0.3px;
+    }
+
+    .sign-btn:hover {
+      background: #333;
+      border-color: #333;
+    }
+
+    .sign-btn:active {
+      background: #000;
+      transform: scale(0.98);
+    }
+
+    /* notifikasi custom (Thank you!) */
+    .notification-thankyou {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #000;
+      color: #fff;
+      font-weight: 700;
+      font-size: 2rem;
+      padding: 1.5rem 3rem;
+      border-radius: 60px;
+      border: 3px solid #fff;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      z-index: 9999;
+      animation: fadePop 1.5s ease forwards;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    @keyframes fadePop {
+      0% { opacity: 0; transform: translate(-50%, -30%); }
+      20% { opacity: 1; transform: translate(-50%, -50%); }
+      80% { opacity: 1; transform: translate(-50%, -50%); }
+      100% { opacity: 0; transform: translate(-50%, -70%); }
+    }
+
+    /* pesan / loading kecil (opsional) */
+    .form-message {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: #000;
+      background: #eaeaea;
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      text-align: center;
+      font-weight: 500;
+      border: 1px solid #aaa;
+      display: none;
+    }
+
+    /* back link minimal */
+    .back-lobby-link {
+      margin-top: 2rem;
+      text-align: right;
+    }
+
+    .back-btn {
+      display: inline-block;
+      background: transparent;
+      border: 2px solid #000;
+      color: #000;
+      font-weight: 600;
+      padding: 0.7rem 2rem;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: 0.15s;
+      font-size: 0.95rem;
+    }
+
+    .back-btn:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    /* responsive */
+    @media (max-width: 800px) {
+      .top-section {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .invitation-grid {
+        max-height: 240px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .grandhall-container {
+        padding: 1.5rem 1rem;
+      }
+      .invitation-grid {
+        grid-template-columns: 1fr;
+      }
+      .notification-thankyou {
+        font-size: 1.4rem;
+        padding: 1rem 2rem;
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grandhall-container">
+    <!-- header: Attend the Event -->
+    <div class="hall-header">
+      <h1>Attend the Event</h1>
+      <p>Grand Hall · Kachoo Building</p>
+    </div>
+
+    <!-- bagian kiri: invitation list + kanan: guestbook form -->
+    <div class="top-section">
+      <!-- INVITATION LIST – langsung tampil, tanpa label -->
+      <div class="invitation-box">
+        <h2>Invitation</h2>
+        <div class="invitation-grid" id="invitationGrid"></div>
+      </div>
+
+      <!-- GUESTBOOK FORM: fullname + username -->
+      <div class="guestbook-box">
+        <h2>Guestbook</h2>
+        <div class="field-group">
+          <label>Full name</label>
+          <input type="text" id="fullNameInput" placeholder="Rachel Theodora Hearst" autocomplete="off">
+        </div>
+        <div class="field-group">
+          <label>Username</label>
+          <input type="text" id="usernameInput" placeholder="rachel_hearts" autocomplete="off">
+        </div>
+        <button class="sign-btn" id="signGuestbookBtn">Sign guestbook</button>
+        <div id="formFeedback" class="form-message"></div>
+      </div>
+    </div>
+
+    <!-- link kembali (simulasi) -->
+    <div class="back-lobby-link">
+      <a href="#" class="back-btn" id="backToLobby">← Kembali ke Lobby</a>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ==================== DATA INVITATION ====================
+      const komunitas = [
+        "Kachoo Teams", "Urbanc Studio", "Cadence", "Modex", "Kriya Nusaca",
+        "Amére", "Altday Project", "Our Dream", "TROY Bakery & Cafe", "Taskit",
+        "Thesera", "A+Clothes", "Makarya", "Ayu Merona", "RAIA Group",
+        "Studio 35°", "Pancarona Studio", "Ruang Rasa"
+      ];
+
+      const undangan = [
+        "Rachel Theodora Hearst", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner",
+        "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H.P",
+        "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga",
+        "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma",
+        "Sheila Kanna", "Elijah Gilead"
+      ];
+
+      // Gabungkan semua (tanpa label)
+      const semuaNamaUndangan = [...komunitas, ...undangan];
+
+      // ==================== ELEMEN DOM ====================
+      const invitationGrid = document.getElementById('invitationGrid');
+      const fullNameInput = document.getElementById('fullNameInput');
+      const usernameInput = document.getElementById('usernameInput');
+      const signBtn = document.getElementById('signGuestbookBtn');
+      const formFeedback = document.getElementById('formFeedback');
+      const backBtn = document.getElementById('backToLobby');
+
+      // ==================== RENDER INVITATION ====================
+      function renderInvitation() {
+        let html = '';
+        semuaNamaUndangan.forEach(nama => {
+          const safeNama = escapeHtml(nama);
+          html += `<div class="invitee-item">${safeNama}</div>`;
+        });
+        invitationGrid.innerHTML = html;
+      }
+
+      function escapeHtml(unsafe) {
+        return unsafe.replace(/[&<>"]/g, function(m) {
+          if (m === '&') return '&amp;';
+          if (m === '<') return '&lt;';
+          if (m === '>') return '&gt;';
+          if (m === '"') return '&quot;';
+          return m;
+        });
+      }
+
+      // ==================== NOTIFIKASI THANK YOU & REDIRECT ====================
+      function showThankYouAndRedirect() {
+        // Buat elemen notifikasi
+        const notif = document.createElement('div');
+        notif.className = 'notification-thankyou';
+        notif.textContent = 'Thank you!';
+        document.body.appendChild(notif);
+
+        // Setelah animasi selesai (1.5s), redirect ke GH.html (halaman ini sendiri)
+        setTimeout(() => {
+          window.location.href = 'GH.html'; // redirect ke halaman grand hall (refresh)
+        }, 1500);
+      }
+
+      // ==================== KIRIM DATA KE SPREADSHEET (APPS SCRIPT) ====================
+      // GANTI URL INI DENGAN LINK APPS SCRIPT YANG SUDAH DIBUAT
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH2V7J1U_8p0jX5sL3xK9mW6nR4tY7uI2oP3cE/exec'; // contoh placeholder, harus diganti
+
+      async function submitToSpreadsheet(fullname, username) {
+        // Buat FormData atau URL-encoded
+        const payload = new URLSearchParams();
+        payload.append('fullname', fullname);
+        payload.append('username', username);
+        // Apps script bisa menerima parameter GET atau POST. Kita gunakan POST.
+        
+        try {
+          const response = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // no-cors memungkinkan kirim walaupun tidak membaca response
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: payload
+          });
+          // Dengan no-cors, kita tidak bisa membaca response, tapi permintaan tetap terkirim.
+          // Anggap saja berhasil.
+          return true;
+        } catch (error) {
+          console.warn('Gagal mengirim ke spreadsheet, tapi tetap lanjut notifikasi', error);
+          return false; // tetap lanjut notifikasi
+        }
+      }
+
+      // ==================== HANDLE SIGN GUESTBOOK ====================
+      async function handleSign() {
+        const fullname = fullNameInput.value.trim();
+        const username = usernameInput.value.trim();
+
+        if (fullname === '' || username === '') {
+          formFeedback.style.display = 'block';
+          formFeedback.textContent = 'Nama dan username harus diisi';
+          formFeedback.style.background = '#ffeeee';
+          formFeedback.style.color = '#cc0000';
+          formFeedback.style.border = '1px solid #cc0000';
+          setTimeout(() => {
+            formFeedback.style.display = 'none';
+          }, 2000);
+          return;
+        }
+
+        // Nonaktifkan tombol sementara
+        signBtn.disabled = true;
+        signBtn.textContent = 'Mengirim...';
+
+        // Kirim ke spreadsheet via Apps Script
+        await submitToSpreadsheet(fullname, username);
+
+        // Tampilkan notifikasi Thank you dan redirect
+        showThankYouAndRedirect();
+
+        // Reset form (optional, karena akan redirect)
+        fullNameInput.value = '';
+        usernameInput.value = '';
+        signBtn.disabled = false;
+        signBtn.textContent = 'Sign guestbook';
+      }
+
+      // ==================== EVENT LISTENERS ====================
+      signBtn.addEventListener('click', handleSign);
+
+      // enter di field
+      fullNameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          usernameInput.focus();
+        }
+      });
+      usernameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleSign();
+        }
+      });
+
+      // Tombol kembali (simulasi)
+      backBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Kembali ke lobby (dalam konteks demo). Jika ini tab terpisah, tutup manual.');
+      });
+
+      // ==================== INIT ====================
+      renderInvitation();
+
+      // Catatan: untuk production, ganti APPS_SCRIPT_URL dengan endpoint yang benar.
+      // Contoh endpoint yang sudah dideploy dari Apps Script:
+      // const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/ABCDE12345/exec';
+      // Pastikan Apps Script menerima parameter fullname dan username dan menulis ke sheet.
+    })();
+  </script>
+</body>
+</html>
