@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Grand Hall · Attend the Event</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grand hall · pinterest reference</title>
   <!-- Inter font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -14,376 +16,512 @@
     }
 
     body {
+      background: #0a0a0a; /* gelap biar glass effect keliatan */
       font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
-      color: #000000;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      width: 100%;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 1.2rem;
+      position: relative;
     }
 
-    .grandhall-container {
-      max-width: 1200px;
+    /* background movement subtle */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.03) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.03) 0%, transparent 25%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 10px);
+      opacity: 0.5;
+      animation: bgMove 14s infinite alternate ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes bgMove {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.03) translate(-0.8%, -0.8%); }
+    }
+
+    /* CARD GLASS UTAMA — persis gaya foto: border putih tipis, blur, hitam putih */
+    .glass-panel {
+      position: relative;
+      z-index: 20;
       width: 100%;
-      background: #ffffff;
-      border: 2px solid #000000;
-      border-radius: 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-      padding: 2rem 2rem;
+      max-width: 1240px;
+      background: rgba(20, 20, 20, 0.5);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 56px;
+      padding: 2.4rem 2.5rem;
+      box-shadow: 0 30px 70px -20px black, inset 0 1px 1px rgba(255,255,255,0.1);
+      color: #fff;
     }
 
-    /* header */
-    .hall-header {
-      text-align: left;
-      margin-bottom: 2.2rem;
-      border-bottom: 2px solid #000;
-      padding-bottom: 1rem;
-    }
-
-    .hall-header h1 {
-      font-size: clamp(2.4rem, 7vw, 4rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #000;
-      line-height: 1.1;
-    }
-
-    .hall-header p {
-      color: #333;
-      font-size: 1.2rem;
-      font-weight: 400;
-      margin-top: 0.5rem;
-    }
-
-    /* dua kolom utama */
-    .top-section {
+    /* layout 2 kolom: kiri = auth style (tapi isi guestbook), kanan = pinterest zone */
+    .grid-dua {
       display: grid;
-      grid-template-columns: 1.2fr 0.9fr;
+      grid-template-columns: 1.2fr 1fr;
       gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ===== BAGIAN KIRI ===== (tampak seperti login/signup, isi guestbook) */
+    .left-auth {
+      background: transparent;
+      padding-right: 1rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* sign up / login toggle */
+    .auth-switch {
+      display: flex;
+      gap: 2.2rem;
+      margin-bottom: 2.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding-bottom: 0.8rem;
+    }
+    .auth-switch .btn-switch {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      padding: 0;
+      cursor: default;
+      transition: 0.2s;
+    }
+    .auth-switch .btn-switch.active {
+      color: white;
+      text-decoration: underline;
+      text-underline-offset: 8px;
+      text-decoration-thickness: 2px;
+    }
+
+    /* form field ala login: email, password, forget */
+    .guestbook-fields {
+      margin-bottom: 2rem;
+    }
+    .field-row {
+      margin-bottom: 1.5rem;
+    }
+    .field-row label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 0.3rem;
+    }
+    .field-row input {
+      width: 100%;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 40px;
+      padding: 0.9rem 1.4rem;
+      font-size: 1rem;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      backdrop-filter: blur(4px);
+      transition: 0.18s;
+    }
+    .field-row input:focus {
+      outline: none;
+      border-color: rgba(255,255,255,0.6);
+      background: rgba(20,20,20,0.7);
+    }
+    .field-row input::placeholder {
+      color: rgba(255,255,255,0.3);
+      font-weight: 300;
+    }
+
+    .forget-link {
+      text-align: right;
+      margin-top: 0.2rem;
+      margin-bottom: 1rem;
+    }
+    .forget-link a {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.85rem;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(255,255,255,0.3);
+    }
+
+    /* teks panjang ala foto */
+    .long-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.7);
+      margin: 1.8rem 0 1.2rem 0;
+      max-width: 90%;
+      font-weight: 300;
+      border-left: 2px solid rgba(255,255,255,0.2);
+      padding-left: 1rem;
+    }
+
+    .click-here {
+      margin: 1rem 0 2rem;
+    }
+    .click-here a {
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: rgba(255,255,255,0.5);
+      transition: 0.2s;
+    }
+    .click-here a:hover {
+      text-decoration-color: white;
+    }
+
+    /* sign guestbook button (hitam putih glass) */
+    .sign-guestbook-btn {
+      background: rgba(255,255,255,0.9);
+      border: none;
+      color: #000;
+      font-weight: 700;
+      padding: 1rem 2rem;
+      border-radius: 60px;
+      font-size: 1.1rem;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.15s;
+      border: 1px solid white;
+      letter-spacing: 0.3px;
+      margin-top: 1.5rem;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 10px 20px -10px rgba(0,0,0,0.5);
+    }
+    .sign-guestbook-btn:hover {
+      background: white;
+      transform: scale(0.99);
+    }
+
+    /* ===== BAGIAN KANAN ===== Pinterest references / jan 2025 */
+    .right-pinterest {
+      background: rgba(0,0,0,0.2);
+      border-radius: 40px;
+      padding: 1.8rem 1.6rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(4px);
+    }
+
+    .date-block {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .date-block .month {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -1px;
+    }
+    .date-block .year {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      margin-left: 0.2rem;
+    }
+    .minimal-typo {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border-bottom: 1px dashed rgba(255,255,255,0.3);
+      padding-bottom: 0.5rem;
       margin-bottom: 1rem;
     }
 
-    /* INVITATION LIST – hanya teks, tanpa efek tombol */
-    .invitation-box {
-      background: #f5f5f5;
-      border: 2px solid #000;
-      border-radius: 28px;
-      padding: 1.6rem 1.5rem;
+    .hari-tanggal {
+      background: rgba(255,255,255,0.03);
+      padding: 1rem 0;
+      border-radius: 24px;
+      margin-bottom: 2rem;
     }
-
-    .invitation-box h2 {
-      font-size: 1.5rem;
+    .hari {
+      font-size: 2rem;
+      font-weight: 300;
+      color: white;
+      line-height: 1.1;
+    }
+    .tanggal-bulan {
+      font-size: 2.8rem;
       font-weight: 700;
-      color: #000;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.3px;
+      color: white;
+      letter-spacing: -2px;
+    }
+    .tanggal-bulan small {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      margin-left: 0.3rem;
     }
 
-    .invitation-grid {
+    .pinterest-ref {
+      margin: 2rem 0 1rem;
+    }
+    .pinterest-ref .label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+    }
+    .pinterest-ref .ref-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: white;
+      margin: 0.2rem 0 0.5rem;
+    }
+    .discover-link {
+      margin-top: 1.8rem;
+    }
+    .discover-link a {
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.6rem 1.8rem;
+      border-radius: 40px;
+      display: inline-block;
+      transition: 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    .discover-link a:hover {
+      background: white;
+      color: black;
+      border-color: white;
+    }
+
+    .creative-style {
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+    }
+    .creative-style strong {
+      color: white;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    /* daftar invitation (list nama) ala minimal, diletakkan di bawah kolom kiri */
+    .invitation-list-compact {
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 1.5rem;
+    }
+    .invitation-list-compact h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+    .compact-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.4rem 1rem;
-      max-height: 340px;
+      max-height: 140px;
       overflow-y: auto;
-      padding-right: 8px;
+      padding-right: 0.5rem;
     }
-
-    .invitation-grid::-webkit-scrollbar {
-      width: 5px;
-    }
-    .invitation-grid::-webkit-scrollbar-track {
-      background: #ddd;
-    }
-    .invitation-grid::-webkit-scrollbar-thumb {
-      background: #000;
-      border-radius: 12px;
-    }
-
-    /* NAMA INVITATION: hanya teks biasa, tanpa border, tanpa background kotak */
-    .invitee-name {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #111;
-      padding: 0.3rem 0;
-      border-bottom: 1px dotted #aaa;
-      line-height: 1.4;
+    .compact-grid .invitee {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.8);
+      padding: 0.2rem 0;
+      border-bottom: 1px dotted rgba(255,255,255,0.2);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
-    /* GUESTBOOK FORM */
-    .guestbook-box {
-      background: #ffffff;
-      border: 2px solid #000;
-      border-radius: 28px;
-      padding: 1.6rem 1.5rem;
+    .compact-grid::-webkit-scrollbar {
+      width: 4px;
+    }
+    .compact-grid::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+    }
+    .compact-grid::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.3);
+      border-radius: 8px;
     }
 
-    .guestbook-box h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #000;
-      margin-bottom: 1.8rem;
-      letter-spacing: -0.3px;
-    }
-
-    .field-group {
-      margin-bottom: 1.4rem;
-    }
-
-    .field-group label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: #000;
-      margin-bottom: 0.3rem;
-      letter-spacing: 0.3px;
-    }
-
-    .field-group input {
-      width: 100%;
-      background: #ffffff;
-      border: 2px solid #000;
-      border-radius: 50px;
-      padding: 0.9rem 1.2rem;
-      font-size: 1rem;
-      color: #000;
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      transition: 0.1s;
-    }
-
-    .field-group input:focus {
-      outline: none;
-      background: #f2f2f2;
-      border-color: #000;
-    }
-
-    .field-group input::placeholder {
-      color: #888;
-      font-weight: 300;
-      opacity: 0.9;
-    }
-
-    .sign-btn {
-      background: #000;
-      border: none;
-      color: #ffffff;
-      font-weight: 700;
-      padding: 1rem 1.8rem;
-      border-radius: 60px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.15s;
-      border: 2px solid #000;
-      width: 100%;
-      margin-top: 0.8rem;
-      letter-spacing: 0.3px;
-    }
-
-    .sign-btn:hover {
-      background: #333;
-      border-color: #333;
-    }
-
-    .sign-btn:active {
-      background: #000;
-      transform: scale(0.98);
-    }
-
-    /* notifikasi "Thank you!" */
-    .thankyou-notif {
+    /* notifikasi glass */
+    .notif-thanks {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #000;
-      color: #fff;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(20px);
+      color: white;
       font-weight: 700;
-      font-size: 2rem;
+      font-size: 2.2rem;
       padding: 1.5rem 3rem;
       border-radius: 60px;
-      border: 3px solid #fff;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow: 0 30px 60px black;
       z-index: 9999;
-      animation: popFade 1.5s ease forwards;
-      text-align: center;
+      animation: glassFade 1.6s ease forwards;
       white-space: nowrap;
     }
-
-    @keyframes popFade {
-      0% { opacity: 0; transform: translate(-50%, -30%); }
-      20% { opacity: 1; transform: translate(-50%, -50%); }
-      80% { opacity: 1; transform: translate(-50%, -50%); }
-      100% { opacity: 0; transform: translate(-50%, -70%); }
+    @keyframes glassFade {
+      0% { opacity: 0; transform: translate(-50%, -30%); backdrop-filter: blur(0); }
+      20% { opacity: 1; transform: translate(-50%, -50%); backdrop-filter: blur(20px); }
+      80% { opacity: 1; transform: translate(-50%, -50%); backdrop-filter: blur(20px); }
+      100% { opacity: 0; transform: translate(-50%, -70%); backdrop-filter: blur(0); }
     }
 
-    .form-message {
+    .back-lobby {
+      text-align: right;
+      margin-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.2rem;
+    }
+    .back-lobby a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1.8rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 60px;
+      transition: 0.2s;
+    }
+    .back-lobby a:hover {
+      background: white;
+      color: black;
+      border-color: white;
+    }
+
+    .form-message-glass {
       margin-top: 0.8rem;
       font-size: 0.85rem;
-      color: #000;
-      background: #eaeaea;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
       padding: 0.5rem 1rem;
-      border-radius: 40px;
+      border-radius: 60px;
       text-align: center;
-      font-weight: 500;
-      border: 1px solid #aaa;
+      border: 1px solid rgba(255,255,255,0.2);
       display: none;
     }
 
-    /* Back to Lobby link sesuai URL */
-    .back-lobby-link {
-      margin-top: 2rem;
-      text-align: right;
-    }
-
-    .back-btn {
-      display: inline-block;
-      background: transparent;
-      border: 2px solid #000;
-      color: #000;
-      font-weight: 600;
-      padding: 0.7rem 2rem;
-      border-radius: 60px;
-      text-decoration: none;
-      transition: 0.15s;
-      font-size: 0.95rem;
-    }
-
-    .back-btn:hover {
-      background: #000;
-      color: #fff;
-    }
-
-    /* ========== TAMPILAN MOBILE LEBIH KEREN ========== */
-    @media (max-width: 800px) {
-      .top-section {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      .invitation-grid {
-        max-height: 260px;
-        grid-template-columns: repeat(2, 1fr); /* tetap dua kolom agar kompak */
-      }
-      .invitee-name {
-        font-size: 0.9rem;
-        white-space: normal; /* jadi bisa wrap, lebih enak di mobile */
-        overflow: visible;
-        text-overflow: clip;
-        border-bottom: 1px dashed #aaa;
-        padding: 0.4rem 0;
-      }
-      .guestbook-box {
-        padding: 1.4rem;
-      }
-    }
-
-    @media (max-width: 500px) {
-      body {
-        padding: 0.8rem;
-      }
-      .grandhall-container {
-        padding: 1.5rem 1rem;
-        border-radius: 28px;
-      }
-      .hall-header h1 {
-        font-size: 2.2rem;
-      }
-      .hall-header p {
-        font-size: 1rem;
-      }
-      .invitation-box, .guestbook-box {
-        padding: 1.2rem;
-        border-radius: 22px;
-      }
-      .invitation-grid {
-        grid-template-columns: 1fr; /* mobile: satu kolom, lebih bersih */
-        gap: 0.2rem;
-        max-height: 300px;
-      }
-      .invitee-name {
-        font-size: 0.95rem;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid #ccc;
-      }
-      .field-group input {
-        padding: 0.8rem 1rem;
-        font-size: 0.95rem;
-      }
-      .sign-btn {
-        padding: 0.9rem 1rem;
-      }
-      .back-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.9rem;
-      }
-      .thankyou-notif {
-        font-size: 1.5rem;
-        padding: 1.2rem 2rem;
-        white-space: normal;
-        width: 80%;
-        text-align: center;
-      }
-    }
-
-    /* tambahan sentuhan: pastikan invitee-name tidak seperti tombol */
-    .invitee-name {
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      text-decoration: none;
+    @media (max-width: 850px) {
+      .grid-dua { grid-template-columns: 1fr; }
+      .left-auth { border-right: none; }
+      .glass-panel { padding: 1.8rem; }
+      .compact-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <div class="grandhall-container">
-    <!-- header: Attend the Event -->
-    <div class="hall-header">
-      <h1>Attend the Event</h1>
-      <p>Grand Hall · Kachoo Building</p>
-    </div>
+  <div class="glass-panel">
+    <!-- grid utama: kiri = guestbook dengan tampilan login, kanan = pinterest -->
+    <div class="grid-dua">
+      <!-- KIRI: gaya sign up/login, isi guestbook -->
+      <div class="left-auth">
+        <!-- sign up / login toggle (hanya visual) -->
+        <div class="auth-switch">
+          <span class="btn-switch active">Sign up</span>
+          <span class="btn-switch">Login</span>
+        </div>
 
-    <!-- bagian kiri: invitation list + kanan: guestbook form -->
-    <div class="top-section">
-      <!-- INVITATION LIST – TANPA TOMBOL, HANYA NAMA -->
-      <div class="invitation-box">
-        <h2>Invitation</h2>
-        <div class="invitation-grid" id="invitationGrid"></div>
+        <!-- guestbook form (tapi tampak seperti input email/password) -->
+        <div class="guestbook-fields">
+          <div class="field-row">
+            <label>Email address</label>
+            <input type="email" id="emailField" placeholder="your@email.com" autocomplete="off">
+          </div>
+          <div class="field-row">
+            <label>Password</label>
+            <input type="password" id="passwordField" placeholder="········">
+          </div>
+          <div class="forget-link">
+            <a href="#">forget</a>
+          </div>
+
+          <!-- teks panjang ala foto -->
+          <div class="long-text">
+            Tidak semua orang suka dengan kerumitan, ada beberapa diminta mengirim dan menandatangani dokumen yang tidak sesuai, dan hanya akan berusaha kepada email iklan keinginan.
+          </div>
+
+          <div class="click-here">
+            <a href="#">Click here for more info.</a>
+          </div>
+
+          <!-- ini guestbook fields tambahan (fullname, username) tapi tampil beda -->
+          <div class="field-row">
+            <label>Full name</label>
+            <input type="text" id="fullNameInput" placeholder="Nama Lengkap" autocomplete="off">
+          </div>
+          <div class="field-row">
+            <label>Username</label>
+            <input type="text" id="usernameInput" placeholder="@username" autocomplete="off">
+          </div>
+
+          <!-- tombol sign guestbook (hitam putih glass) -->
+          <button class="sign-guestbook-btn" id="signGuestbookBtn">Sign guestbook →</button>
+          <div id="formFeedback" class="form-message-glass"></div>
+        </div>
+
+        <!-- Invitation list di taruh di bawah (tetap ada) -->
+        <div class="invitation-list-compact">
+          <h3>Invitation</h3>
+          <div class="compact-grid" id="invitationMiniList"></div>
+        </div>
       </div>
 
-      <!-- GUESTBOOK FORM dengan contoh placeholder yang diminta -->
-      <div class="guestbook-box">
-        <h2>Guestbook</h2>
-        <div class="field-group">
-          <label>Full name</label>
-          <input type="text" id="fullNameInput" placeholder="Contoh: Nama Depan Nama Belakang" autocomplete="off">
+      <!-- KANAN: pinterest / jan 2025 / references -->
+      <div class="right-pinterest">
+        <div class="date-block">
+          <span class="month">Jan</span>
+          <span class="year">2025</span>
         </div>
-        <div class="field-group">
-          <label>Username</label>
-          <input type="text" id="usernameInput" placeholder="@Contoh" autocomplete="off">
+        <div class="minimal-typo">Minimalism style Typography</div>
+
+        <div class="hari-tanggal">
+          <div class="hari">Selasa</div>
+          <div class="tanggal-bulan">06 <small>January 2025</small></div>
         </div>
-        <button class="sign-btn" id="signGuestbookBtn">Sign guestbook</button>
-        <div id="formFeedback" class="form-message"></div>
+
+        <div class="pinterest-ref">
+          <div class="label">Pinterest</div>
+          <div class="ref-title">References</div>
+          <div style="color:rgba(255,255,255,0.5); margin: 0.3rem 0 1rem;">By Pinterest</div>
+        </div>
+
+        <div class="discover-link">
+          <a href="#">Discover</a>
+        </div>
+
+        <div class="creative-style">
+          Creative.style <strong>Click Here</strong>
+        </div>
       </div>
     </div>
 
-    <!-- Back to Lobby link (sesuai URL: https://thekachoo.github.io/Office/) -->
-    <div class="back-lobby-link">
-      <a href="https://thekachoo.github.io/Office/" class="back-btn" id="backToLobby">← Back to Lobby</a>
+    <!-- back to lobby link -->
+    <div class="back-lobby">
+      <a href="https://thekachoo.github.io/Office/" id="backToLobby">← Back to Lobby</a>
     </div>
   </div>
 
   <script>
     (function() {
-      // ==================== DATA INVITATION (list nama saja) ====================
+      // DATA UNDANGAN
       const komunitas = [
         "Kachoo Teams", "Urbanc Studio", "Cadence", "Modex", "Kriya Nusaca",
         "Amére", "Altday Project", "Our Dream", "TROY Bakery & Cafe", "Taskit",
@@ -398,136 +536,82 @@
         "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma",
         "Sheila Kanna", "Elijah Gilead"
       ];
+      const semuaNama = [...komunitas, ...undangan];
 
-      // Gabungkan semua undangan (tanpa label apapun, sesuai permintaan)
-      const semuaNamaUndangan = [...komunitas, ...undangan];
-
-      // ==================== ELEMEN DOM ====================
-      const invitationGrid = document.getElementById('invitationGrid');
+      const invitationGrid = document.getElementById('invitationMiniList');
       const fullNameInput = document.getElementById('fullNameInput');
       const usernameInput = document.getElementById('usernameInput');
       const signBtn = document.getElementById('signGuestbookBtn');
       const formFeedback = document.getElementById('formFeedback');
-      const backBtn = document.getElementById('backToLobby'); // link sudah langsung ke URL
+      const emailField = document.getElementById('emailField');
+      const passwordField = document.getElementById('passwordField');
 
-      // ==================== RENDER INVITATION (hanya teks) ====================
-      function renderInvitation() {
+      // render invitation (nama saja)
+      function renderInvite() {
         let html = '';
-        semuaNamaUndangan.forEach(nama => {
-          const safeNama = escapeHtml(nama);
-          // Menggunakan <span> dengan class invitee-name, tanpa efek tombol
-          html += `<div class="invitee-name">${safeNama}</div>`;
+        semuaNama.forEach(n => {
+          html += `<div class="invitee">${escapeHtml(n)}</div>`;
         });
         invitationGrid.innerHTML = html;
       }
-
       function escapeHtml(unsafe) {
-        return unsafe.replace(/[&<>"]/g, function(m) {
-          if (m === '&') return '&amp;';
-          if (m === '<') return '&lt;';
-          if (m === '>') return '&gt;';
-          if (m === '"') return '&quot;';
+        return unsafe.replace(/[&<>"]/g, m => {
+          if(m === '&') return '&amp;';
+          if(m === '<') return '&lt;';
+          if(m === '>') return '&gt;';
+          if(m === '"') return '&quot;';
           return m;
         });
       }
 
-      // ==================== NOTIFIKASI THANK YOU & REDIRECT ====================
-      function showThankYouAndRedirect() {
+      // notif thank you + redirect
+      function showThanksAndRedirect() {
         const notif = document.createElement('div');
-        notif.className = 'thankyou-notif';
+        notif.className = 'notif-thanks';
         notif.textContent = 'Thank you!';
         document.body.appendChild(notif);
-
-        // Setelah animasi, refresh ke halaman yang sama (GH.html)
         setTimeout(() => {
-          window.location.href = 'GH.html'; // redirect ke halaman grand hall (refresh)
+          window.location.href = 'GH.html'; 
         }, 1400);
       }
 
-      // ==================== KIRIM KE SPREADSHEET via APPS SCRIPT ====================
-      // GANTI URL INI DENGAN ENDPOINT APPS SCRIPT YAK
-      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH2V7J1U_8p0jX5sL3xK9mW6nR4tY7uI2oP3cE/exec'; // contoh placeholder
-
-      async function submitToSpreadsheet(fullname, username) {
-        const payload = new URLSearchParams();
-        payload.append('fullname', fullname);
-        payload.append('username', username);
-        
+      // fake apps script
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH2V7J1U_8p0jX5sL3xK9mW6nR4tY7uI2oP3cE/exec';
+      async function submitToSheet(fullname, username) {
+        const payload = new URLSearchParams({ fullname, username });
         try {
-          await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // no-cors tetap mengirim
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: payload
-          });
-          return true;
-        } catch (error) {
-          console.warn('Gagal kirim ke spreadsheet:', error);
-          return false;
-        }
+          await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: payload });
+        } catch (e) { console.warn(e); }
       }
 
-      // ==================== HANDLE SIGN ====================
       async function handleSign() {
         const fullname = fullNameInput.value.trim();
         const username = usernameInput.value.trim();
-
-        if (fullname === '' || username === '') {
+        if (!fullname || !username) {
           formFeedback.style.display = 'block';
           formFeedback.textContent = 'Nama dan username harus diisi';
-          formFeedback.style.background = '#ffeeee';
-          formFeedback.style.color = '#cc0000';
-          formFeedback.style.border = '1px solid #cc0000';
-          setTimeout(() => {
-            formFeedback.style.display = 'none';
-          }, 2000);
+          formFeedback.style.background = 'rgba(255,80,80,0.2)';
+          formFeedback.style.color = '#ff9f9f';
+          setTimeout(() => formFeedback.style.display = 'none', 2000);
           return;
         }
 
-        // Validasi sederhana username minimal berisi @? tidak wajib, sesuai contoh
-        // Boleh apa saja
-
         signBtn.disabled = true;
         signBtn.textContent = 'Mengirim...';
+        await submitToSheet(fullname, username);
+        showThanksAndRedirect();
 
-        await submitToSpreadsheet(fullname, username);
-
-        // Tampilkan notifikasi dan redirect
-        showThankYouAndRedirect();
-
-        // Reset (opsional karena akan redirect)
-        fullNameInput.value = '';
-        usernameInput.value = '';
-        signBtn.disabled = false;
-        signBtn.textContent = 'Sign guestbook';
+        fullNameInput.value = ''; usernameInput.value = '';
+        signBtn.disabled = false; signBtn.textContent = 'Sign guestbook →';
       }
 
-      // ==================== EVENT LISTENERS ====================
       signBtn.addEventListener('click', handleSign);
+      usernameInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleSign(); });
 
-      fullNameInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          usernameInput.focus();
-        }
-      });
-      usernameInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          handleSign();
-        }
-      });
+      renderInvite();
 
-      // Back to Lobby langsung menggunakan href, jadi tidak perlu javascript lagi
-      // Tapi jika ingin menjaga agar tidak ada konflik, kita biarkan saja.
-
-      // ==================== INIT ====================
-      renderInvitation();
-
-      // Catatan: ganti APPS_SCRIPT_URL dengan endpoint asli dari Apps Script.
+      // email & password field tidak difungsikan untuk guestbook, hanya visual
     })();
   </script>
 </body>
-</html>
+  </html>
