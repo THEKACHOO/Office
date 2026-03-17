@@ -65,7 +65,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.15); 
+      background-color: rgba(0, 0, 0, 0.17); 
       pointer-events: none;
       z-index: 1;
     }
@@ -598,7 +598,7 @@
     <div class="content">
       <!-- Button container normal -->
       <div class="button-container" id="lobby-button-container">
-        <button class="floor-btn" id="lift-btn">Lift</button>
+        <button class="floor-btn" id="lift-btn">Elevator</button>
         <button class="floor-btn" id="info-desk-btn">Information desk</button>
         <a href="GH.html" class="floor-btn" target="_blank">Grand Hall</a>
         <a href="Exhibition.html" class="floor-btn" target="_blank">Exhibition Center</a>
@@ -607,7 +607,7 @@
       </div>
       <!-- Tempat untuk konten khusus (information desk / food court) -->
       <div id="lobby-special-content"></div>
-      <div class="floor-label" id="lobby-floor-label">THE KACHOO · GROUND FLOOR</div>
+      <div class="floor-label" id="lobby-floor-label">MAIN LOBBY · GROUND FLOOR</div>
     </div>
   </div>
 
@@ -618,7 +618,7 @@
       <div class="lift-panel" id="lift-panel">
         <!-- Tombol akan diisi JavaScript -->
       </div>
-      <div class="floor-label">LIFT</div>
+      <div class="floor-label">ELEVATOR</div>
       <div style="height: 1rem;"></div>
     </div>
   </div>
@@ -736,12 +736,12 @@
             </div>
             
             <div class="contact-line">
-              <span class="contact-label">Director’s Contact:</span>
+              <span class="contact-label">Executive Assistant:</span>
               <a href="https://x.com/sekrenite" target="_blank">@sekrenite</a>
             </div>
             
             <div class="contact-line">
-              <span class="contact-label">Kazine Contact:</span>
+              <span class="contact-label">Kazine's Public Relation:</span>
               <a href="https://x.com/Chaarmente" target="_blank">@Chaarmente</a>
             </div>
             
@@ -808,7 +808,7 @@
         
         const btnBack = document.createElement('button');
         btnBack.className = 'lift-btn';
-        btnBack.textContent = '← Back to Lift';
+        btnBack.textContent = '← Back to Elevator';
         btnBack.addEventListener('click', () => {
           switchLiftScene(basementScene, liftScene, null);
         });
