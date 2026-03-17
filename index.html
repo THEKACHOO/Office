@@ -587,7 +587,7 @@
       <div class="enter-area" id="enter-lobby-trigger" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
         <div class="welcome-message">
           <h1>WELCOME TO THE KACHOO</h1>
-          <p>Explore the building</p>
+          <p>Explore the building!</p>
         </div>
       </div>
     </div>
@@ -775,4 +775,82 @@
           btn.className = 'lift-btn';
           btn.textContent = floor;
           
-          btn.addEventListener('
+          btn.addEventListener('click', function() {
+            if (floor === 'B1') {
+              switchLiftScene(liftScene, basementScene, createBasementButtons);
+            }
+            else if (floor === 'G') {
+              switchLiftScene(liftScene, lobbyScene, resetLobbyToDefault);
+            }
+            else if (floor === 'L1') {
+              liftScene.classList.add('shake-animation');
+              setTimeout(() => {
+                liftScene.classList.remove('shake-animation');
+                window.location.href = 'L1.html';
+              }, 400);
+            }
+            else {
+              liftScene.classList.add('shake-animation');
+              setTimeout(() => {
+                liftScene.classList.remove('shake-animation');
+                showNotification('This floor is only accessible by employees');
+              }, 400);
+            }
+          });
+          
+          liftPanel.appendChild(btn);
+        });
+      }
+
+      // Fungsi buat tombol basement
+      function createBasementButtons() {
+        basementPanel.innerHTML = '';
+        
+        const btnBack = document.createElement('button');
+        btnBack.className = 'lift-btn';
+        btnBack.textContent = '← Back to Lift';
+        btnBack.addEventListener('click', () => {
+          switchLiftScene(basementScene, liftScene, null);
+        });
+        
+        basementPanel.appendChild(btnBack);
+      }
+
+      // Event listeners
+      document.getElementById('enter-lobby-trigger').addEventListener('click', () => {
+        showSceneDirect(lobbyScene);
+        resetLobbyToDefault();
+      });
+
+      document.getElementById('lift-btn').addEventListener('click', () => {
+        createFloorButtons();
+        showSceneDirect(liftScene);
+      });
+
+      document.getElementById('info-desk-btn').addEventListener('click', () => {
+        showInformationDesk();
+      });
+
+      document.getElementById('food-court-btn').addEventListener('click', () => {
+        showFoodCourt();
+      });
+
+      // Override showSceneDirect untuk lobby
+      const originalShowSceneDirect = showSceneDirect;
+      showSceneDirect = function(scene) {
+        if (scene === lobbyScene) {
+          resetLobbyToDefault();
+        }
+        originalShowSceneDirect(scene);
+      };
+
+      // Initial state
+      window.addEventListener('load', () => {
+        showSceneDirect(buildingScene);
+        resetLobbyToDefault();
+      });
+
+    })();
+  </script>
+</body>
+</html>
