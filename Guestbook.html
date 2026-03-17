@@ -25,25 +25,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1rem;
     }
 
     .grandhall-container {
-      max-width: 1100px;
+      max-width: 1200px;
       width: 100%;
       background: #ffffff;
       border: 2px solid #000000;
       border-radius: 32px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-      padding: 2.5rem 2rem;
+      padding: 2rem 2rem;
     }
 
-    /* header putih bersih */
+    /* header */
     .hall-header {
       text-align: left;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.2rem;
       border-bottom: 2px solid #000;
-      padding-bottom: 1.2rem;
+      padding-bottom: 1rem;
     }
 
     .hall-header h1 {
@@ -61,7 +61,7 @@
       margin-top: 0.5rem;
     }
 
-    /* dua kolom untuk bagian atas (invitation list + form) */
+    /* dua kolom utama */
     .top-section {
       display: grid;
       grid-template-columns: 1.2fr 0.9fr;
@@ -69,11 +69,11 @@
       margin-bottom: 1rem;
     }
 
-    /* INVITATION LIST – langsung daftar tanpa tombol */
+    /* INVITATION LIST – hanya teks, tanpa efek tombol */
     .invitation-box {
       background: #f5f5f5;
       border: 2px solid #000;
-      border-radius: 24px;
+      border-radius: 28px;
       padding: 1.6rem 1.5rem;
     }
 
@@ -88,14 +88,14 @@
     .invitation-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.6rem 1rem;
+      gap: 0.4rem 1rem;
       max-height: 340px;
       overflow-y: auto;
-      padding-right: 6px;
+      padding-right: 8px;
     }
 
     .invitation-grid::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
     .invitation-grid::-webkit-scrollbar-track {
       background: #ddd;
@@ -105,25 +105,24 @@
       border-radius: 12px;
     }
 
-    .invitee-item {
-      padding: 0.6rem 0.8rem;
-      background: #ffffff;
-      border: 1.5px solid #000;
-      border-radius: 40px;
-      font-size: 0.9rem;
+    /* NAMA INVITATION: hanya teks biasa, tanpa border, tanpa background kotak */
+    .invitee-name {
+      font-size: 0.95rem;
       font-weight: 500;
-      color: #000;
+      color: #111;
+      padding: 0.3rem 0;
+      border-bottom: 1px dotted #aaa;
+      line-height: 1.4;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      box-shadow: 0 2px 0 #000;
     }
 
     /* GUESTBOOK FORM */
     .guestbook-box {
       background: #ffffff;
       border: 2px solid #000;
-      border-radius: 24px;
+      border-radius: 28px;
       padding: 1.6rem 1.5rem;
     }
 
@@ -145,7 +144,7 @@
       font-weight: 600;
       text-transform: uppercase;
       color: #000;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
       letter-spacing: 0.3px;
     }
 
@@ -171,7 +170,7 @@
     .field-group input::placeholder {
       color: #888;
       font-weight: 300;
-      opacity: 0.8;
+      opacity: 0.9;
     }
 
     .sign-btn {
@@ -186,7 +185,7 @@
       transition: 0.15s;
       border: 2px solid #000;
       width: 100%;
-      margin-top: 0.5rem;
+      margin-top: 0.8rem;
       letter-spacing: 0.3px;
     }
 
@@ -200,8 +199,8 @@
       transform: scale(0.98);
     }
 
-    /* notifikasi custom (Thank you!) */
-    .notification-thankyou {
+    /* notifikasi "Thank you!" */
+    .thankyou-notif {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -215,21 +214,20 @@
       border: 3px solid #fff;
       box-shadow: 0 20px 40px rgba(0,0,0,0.5);
       z-index: 9999;
-      animation: fadePop 1.5s ease forwards;
+      animation: popFade 1.5s ease forwards;
       text-align: center;
       white-space: nowrap;
     }
 
-    @keyframes fadePop {
+    @keyframes popFade {
       0% { opacity: 0; transform: translate(-50%, -30%); }
       20% { opacity: 1; transform: translate(-50%, -50%); }
       80% { opacity: 1; transform: translate(-50%, -50%); }
       100% { opacity: 0; transform: translate(-50%, -70%); }
     }
 
-    /* pesan / loading kecil (opsional) */
     .form-message {
-      margin-top: 1rem;
+      margin-top: 0.8rem;
       font-size: 0.85rem;
       color: #000;
       background: #eaeaea;
@@ -241,7 +239,7 @@
       display: none;
     }
 
-    /* back link minimal */
+    /* Back to Lobby link sesuai URL */
     .back-lobby-link {
       margin-top: 2rem;
       text-align: right;
@@ -265,29 +263,83 @@
       color: #fff;
     }
 
-    /* responsive */
+    /* ========== TAMPILAN MOBILE LEBIH KEREN ========== */
     @media (max-width: 800px) {
       .top-section {
         grid-template-columns: 1fr;
         gap: 1.5rem;
       }
       .invitation-grid {
-        max-height: 240px;
+        max-height: 260px;
+        grid-template-columns: repeat(2, 1fr); /* tetap dua kolom agar kompak */
+      }
+      .invitee-name {
+        font-size: 0.9rem;
+        white-space: normal; /* jadi bisa wrap, lebih enak di mobile */
+        overflow: visible;
+        text-overflow: clip;
+        border-bottom: 1px dashed #aaa;
+        padding: 0.4rem 0;
+      }
+      .guestbook-box {
+        padding: 1.4rem;
       }
     }
 
     @media (max-width: 500px) {
+      body {
+        padding: 0.8rem;
+      }
       .grandhall-container {
         padding: 1.5rem 1rem;
+        border-radius: 28px;
+      }
+      .hall-header h1 {
+        font-size: 2.2rem;
+      }
+      .hall-header p {
+        font-size: 1rem;
+      }
+      .invitation-box, .guestbook-box {
+        padding: 1.2rem;
+        border-radius: 22px;
       }
       .invitation-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* mobile: satu kolom, lebih bersih */
+        gap: 0.2rem;
+        max-height: 300px;
       }
-      .notification-thankyou {
-        font-size: 1.4rem;
-        padding: 1rem 2rem;
+      .invitee-name {
+        font-size: 0.95rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #ccc;
+      }
+      .field-group input {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+      }
+      .sign-btn {
+        padding: 0.9rem 1rem;
+      }
+      .back-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      .thankyou-notif {
+        font-size: 1.5rem;
+        padding: 1.2rem 2rem;
         white-space: normal;
+        width: 80%;
+        text-align: center;
       }
+    }
+
+    /* tambahan sentuhan: pastikan invitee-name tidak seperti tombol */
+    .invitee-name {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -301,37 +353,37 @@
 
     <!-- bagian kiri: invitation list + kanan: guestbook form -->
     <div class="top-section">
-      <!-- INVITATION LIST – langsung tampil, tanpa label -->
+      <!-- INVITATION LIST – TANPA TOMBOL, HANYA NAMA -->
       <div class="invitation-box">
         <h2>Invitation</h2>
         <div class="invitation-grid" id="invitationGrid"></div>
       </div>
 
-      <!-- GUESTBOOK FORM: fullname + username -->
+      <!-- GUESTBOOK FORM dengan contoh placeholder yang diminta -->
       <div class="guestbook-box">
         <h2>Guestbook</h2>
         <div class="field-group">
           <label>Full name</label>
-          <input type="text" id="fullNameInput" placeholder="Rachel Theodora Hearst" autocomplete="off">
+          <input type="text" id="fullNameInput" placeholder="Contoh: Nama Depan Nama Belakang" autocomplete="off">
         </div>
         <div class="field-group">
           <label>Username</label>
-          <input type="text" id="usernameInput" placeholder="rachel_hearts" autocomplete="off">
+          <input type="text" id="usernameInput" placeholder="@Contoh" autocomplete="off">
         </div>
         <button class="sign-btn" id="signGuestbookBtn">Sign guestbook</button>
         <div id="formFeedback" class="form-message"></div>
       </div>
     </div>
 
-    <!-- link kembali (simulasi) -->
+    <!-- Back to Lobby link (sesuai URL: https://thekachoo.github.io/Office/) -->
     <div class="back-lobby-link">
-      <a href="#" class="back-btn" id="backToLobby">← Kembali ke Lobby</a>
+      <a href="https://thekachoo.github.io/Office/" class="back-btn" id="backToLobby">← Back to Lobby</a>
     </div>
   </div>
 
   <script>
     (function() {
-      // ==================== DATA INVITATION ====================
+      // ==================== DATA INVITATION (list nama saja) ====================
       const komunitas = [
         "Kachoo Teams", "Urbanc Studio", "Cadence", "Modex", "Kriya Nusaca",
         "Amére", "Altday Project", "Our Dream", "TROY Bakery & Cafe", "Taskit",
@@ -347,7 +399,7 @@
         "Sheila Kanna", "Elijah Gilead"
       ];
 
-      // Gabungkan semua (tanpa label)
+      // Gabungkan semua undangan (tanpa label apapun, sesuai permintaan)
       const semuaNamaUndangan = [...komunitas, ...undangan];
 
       // ==================== ELEMEN DOM ====================
@@ -356,14 +408,15 @@
       const usernameInput = document.getElementById('usernameInput');
       const signBtn = document.getElementById('signGuestbookBtn');
       const formFeedback = document.getElementById('formFeedback');
-      const backBtn = document.getElementById('backToLobby');
+      const backBtn = document.getElementById('backToLobby'); // link sudah langsung ke URL
 
-      // ==================== RENDER INVITATION ====================
+      // ==================== RENDER INVITATION (hanya teks) ====================
       function renderInvitation() {
         let html = '';
         semuaNamaUndangan.forEach(nama => {
           const safeNama = escapeHtml(nama);
-          html += `<div class="invitee-item">${safeNama}</div>`;
+          // Menggunakan <span> dengan class invitee-name, tanpa efek tombol
+          html += `<div class="invitee-name">${safeNama}</div>`;
         });
         invitationGrid.innerHTML = html;
       }
@@ -380,48 +433,43 @@
 
       // ==================== NOTIFIKASI THANK YOU & REDIRECT ====================
       function showThankYouAndRedirect() {
-        // Buat elemen notifikasi
         const notif = document.createElement('div');
-        notif.className = 'notification-thankyou';
+        notif.className = 'thankyou-notif';
         notif.textContent = 'Thank you!';
         document.body.appendChild(notif);
 
-        // Setelah animasi selesai (1.5s), redirect ke GH.html (halaman ini sendiri)
+        // Setelah animasi, refresh ke halaman yang sama (GH.html)
         setTimeout(() => {
           window.location.href = 'GH.html'; // redirect ke halaman grand hall (refresh)
-        }, 1500);
+        }, 1400);
       }
 
-      // ==================== KIRIM DATA KE SPREADSHEET (APPS SCRIPT) ====================
-      // GANTI URL INI DENGAN LINK APPS SCRIPT YANG SUDAH DIBUAT
-      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH2V7J1U_8p0jX5sL3xK9mW6nR4tY7uI2oP3cE/exec'; // contoh placeholder, harus diganti
+      // ==================== KIRIM KE SPREADSHEET via APPS SCRIPT ====================
+      // GANTI URL INI DENGAN ENDPOINT APPS SCRIPT YAK
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH2V7J1U_8p0jX5sL3xK9mW6nR4tY7uI2oP3cE/exec'; // contoh placeholder
 
       async function submitToSpreadsheet(fullname, username) {
-        // Buat FormData atau URL-encoded
         const payload = new URLSearchParams();
         payload.append('fullname', fullname);
         payload.append('username', username);
-        // Apps script bisa menerima parameter GET atau POST. Kita gunakan POST.
         
         try {
-          const response = await fetch(APPS_SCRIPT_URL, {
+          await fetch(APPS_SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors', // no-cors memungkinkan kirim walaupun tidak membaca response
+            mode: 'no-cors', // no-cors tetap mengirim
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: payload
           });
-          // Dengan no-cors, kita tidak bisa membaca response, tapi permintaan tetap terkirim.
-          // Anggap saja berhasil.
           return true;
         } catch (error) {
-          console.warn('Gagal mengirim ke spreadsheet, tapi tetap lanjut notifikasi', error);
-          return false; // tetap lanjut notifikasi
+          console.warn('Gagal kirim ke spreadsheet:', error);
+          return false;
         }
       }
 
-      // ==================== HANDLE SIGN GUESTBOOK ====================
+      // ==================== HANDLE SIGN ====================
       async function handleSign() {
         const fullname = fullNameInput.value.trim();
         const username = usernameInput.value.trim();
@@ -438,17 +486,18 @@
           return;
         }
 
-        // Nonaktifkan tombol sementara
+        // Validasi sederhana username minimal berisi @? tidak wajib, sesuai contoh
+        // Boleh apa saja
+
         signBtn.disabled = true;
         signBtn.textContent = 'Mengirim...';
 
-        // Kirim ke spreadsheet via Apps Script
         await submitToSpreadsheet(fullname, username);
 
-        // Tampilkan notifikasi Thank you dan redirect
+        // Tampilkan notifikasi dan redirect
         showThankYouAndRedirect();
 
-        // Reset form (optional, karena akan redirect)
+        // Reset (opsional karena akan redirect)
         fullNameInput.value = '';
         usernameInput.value = '';
         signBtn.disabled = false;
@@ -458,7 +507,6 @@
       // ==================== EVENT LISTENERS ====================
       signBtn.addEventListener('click', handleSign);
 
-      // enter di field
       fullNameInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
@@ -472,20 +520,14 @@
         }
       });
 
-      // Tombol kembali (simulasi)
-      backBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('Kembali ke lobby (dalam konteks demo). Jika ini tab terpisah, tutup manual.');
-      });
+      // Back to Lobby langsung menggunakan href, jadi tidak perlu javascript lagi
+      // Tapi jika ingin menjaga agar tidak ada konflik, kita biarkan saja.
 
       // ==================== INIT ====================
       renderInvitation();
 
-      // Catatan: untuk production, ganti APPS_SCRIPT_URL dengan endpoint yang benar.
-      // Contoh endpoint yang sudah dideploy dari Apps Script:
-      // const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/ABCDE12345/exec';
-      // Pastikan Apps Script menerima parameter fullname dan username dan menulis ke sheet.
+      // Catatan: ganti APPS_SCRIPT_URL dengan endpoint asli dari Apps Script.
     })();
   </script>
 </body>
-</html>
+          </html>
