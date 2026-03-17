@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Kachoo · Grand Hall</title>
+  <!-- Inter font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0c0e;
+      color: #FFFFFF;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .grandhall-container {
+      max-width: 1000px;
+      width: 100%;
+      background: rgba(20, 22, 27, 0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 215, 140, 0.1) inset;
+      padding: 2.5rem 2rem;
+      transition: all 0.3s ease;
+    }
+
+    /* judul khas grand hall */
+    .hall-header {
+      text-align: center;
+      margin-bottom: 2.2rem;
+    }
+
+    .hall-header h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #f9e1a0, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .hall-header p {
+      color: #ccc;
+      font-size: 1.1rem;
+      margin-top: 0.25rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    /* guestbook + tombol undangan */
+    .guestbook-section {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 60px;
+      padding: 2rem 2rem 1.8rem 2rem;
+      border: 1px solid rgba(255, 215, 140, 0.25);
+      box-shadow: 0 20px 30px -10px black;
+      margin-bottom: 2.5rem;
+    }
+
+    .invite-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .invite-row h3 {
+      font-weight: 500;
+      color: #ffe6b3;
+      font-size: 1.2rem;
+      letter-spacing: 0.3px;
+    }
+
+    .check-btn {
+      background: #f8e3b0;
+      border: none;
+      color: #1a1a1a;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 5px 0 #8b7355;
+      border: 1px solid #ffcf8a;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .check-btn:hover {
+      background: #ffdca8;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 0 #7a5f42;
+    }
+
+    .check-btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 3px 0 #7a5f42;
+    }
+
+    /* guestbook form */
+    .guestbook-form {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 1.5rem;
+    }
+
+    .name-field {
+      flex: 3 1 260px;
+    }
+
+    .name-field label {
+      display: block;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #e2c994;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .name-field input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 215, 140, 0.4);
+      border-radius: 50px;
+      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      transition: 0.2s;
+    }
+
+    .name-field input:focus {
+      outline: none;
+      border-color: #ffd966;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.2);
+    }
+
+    .sign-btn {
+      flex: 1 1 auto;
+      background: white;
+      border: none;
+      color: black;
+      font-weight: 700;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid #ffcf8a;
+      box-shadow: 0 4px 0 #aaa;
+      min-width: 140px;
+    }
+
+    .sign-btn:hover {
+      background: #f2f2f2;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #8f8f8f;
+    }
+
+    .sign-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #8f8f8f;
+    }
+
+    /* daftar undangan (popup style) */
+    .invitation-panel {
+      background: rgba(15, 17, 22, 0.98);
+      backdrop-filter: blur(16px);
+      border: 1px solid #ffd966;
+      border-radius: 48px;
+      padding: 2rem 2rem 1.8rem;
+      margin-top: 2rem;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.8), 0 0 0 1px #ffd966 inset;
+      animation: floatUp 0.4s ease;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .invitation-panel h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffda88;
+      margin-bottom: 1.5rem;
+      border-left: 6px solid #ffda88;
+      padding-left: 1.2rem;
+    }
+
+    .name-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .invitee-item {
+      padding: 0.5rem 0.8rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #eae2d1;
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      transition: 0.15s;
+    }
+
+    .invitee-item:hover {
+      background: rgba(255, 220, 120, 0.1);
+      border-color: #ffd966;
+      color: white;
+      padding-left: 1.2rem;
+    }
+
+    .community-badge {
+      display: inline-block;
+      background: #b8860b;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .close-panel {
+      text-align: right;
+      margin-top: 0.5rem;
+    }
+
+    .close-panel button {
+      background: none;
+      border: 1px solid #ffd966;
+      color: #ffd966;
+      font-weight: 600;
+      padding: 0.6rem 2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .close-panel button:hover {
+      background: #ffd966;
+      color: black;
+    }
+
+    /* nama tamu yang sudah tanda tangan */
+    .signed-area {
+      margin-top: 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 40px;
+      padding: 1.5rem 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .signed-title {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #e8c97c;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .guest-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem 1rem;
+    }
+
+    .guest-tag {
+      background: rgba(230, 200, 120, 0.1);
+      border: 1px solid rgba(255, 200, 100, 0.4);
+      padding: 0.5rem 1.3rem;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #ffdca8;
+    }
+
+    .empty-guest {
+      opacity: 0.6;
+      font-style: italic;
+      color: #aaa;
+    }
+
+    /* back link ke lobby / building */
+    .back-lobby-link {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .back-btn {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(255,215,140,0.5);
+      color: #ffda99;
+      font-weight: 600;
+      padding: 0.7rem 2rem;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: 0.2s;
+      font-size: 1rem;
+    }
+
+    .back-btn:hover {
+      background: rgba(255,220,140,0.1);
+      border-color: #ffd966;
+      color: white;
+    }
+
+    /* notifikasi kecil */
+    .toast-msg {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e1b16;
+      color: #ffe3b0;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      border: 1px solid #f1c40f;
+      box-shadow: 0 10px 30px black;
+      z-index: 999;
+      animation: fadeToast 2s ease forwards;
+    }
+
+    @keyframes fadeToast {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+
+    @media (max-width: 600px) {
+      .grandhall-container {
+        padding: 1.5rem 1rem;
+        border-radius: 32px;
+      }
+      .guestbook-section {
+        padding: 1.5rem 1.2rem;
+      }
+      .invite-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .check-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .guestbook-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .sign-btn {
+        width: 100%;
+      }
+      .invitation-panel {
+        padding: 1.5rem;
+      }
+      .name-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grandhall-container">
+    <!-- header khas grand hall -->
+    <div class="hall-header">
+      <h1>GRAND HALL</h1>
+      <p>kachoo building · level 2</p>
+    </div>
+
+    <!-- BAGIAN GUESTBOOK + TOMBOL CHECK INVITATION (persis permintaan) -->
+    <div class="guestbook-section">
+      <!-- baris tombol check invitation + label -->
+      <div class="invite-row">
+        <h3>📋  Guest list & community</h3>
+        <button class="check-btn" id="checkInvitationBtn">📇 Check Invitation Guest</button>
+      </div>
+
+      <!-- kolom full name guestbook -->
+      <div class="guestbook-form">
+        <div class="name-field">
+          <label for="fullName">Full name</label>
+          <input type="text" id="fullName" placeholder="e.g. Rachel Theodora Hearst" autocomplete="off">
+        </div>
+        <button class="sign-btn" id="signGuestbookBtn">✍️ Sign guestbook</button>
+      </div>
+
+      <!-- area untuk panel daftar undangan (muncul saat klik tombol) -->
+      <div id="invitationListContainer" style="margin-top: 1.5rem;"></div>
+    </div>
+
+    <!-- TAMPILAN NAMA YANG SUDAH SIGN (guestbook) -->
+    <div class="signed-area" id="signedArea">
+      <div class="signed-title">
+        <span>✨</span> Hall of guests
+      </div>
+      <div class="guest-list" id="guestListContainer">
+        <span class="empty-guest">Belum ada nama · tanda tangan tamu akan muncul di sini</span>
+      </div>
+    </div>
+
+    <!-- tautan kembali (optional, seperti di lobi ada back) -->
+    <div class="back-lobby-link">
+      <a href="#" class="back-btn" id="backToLobbyLink">← Kembali ke lobby</a>
+    </div>
+  </div>
+
+  <!-- notifikasi sederhana -->
+  <div id="notificationToast" style="display: none;"></div>
+
+  <script>
+    (function() {
+      // Data undangan (community + nama undangan) sesuai permintaan
+      const komunitas = [
+        "Kachoo Teams", "Urbanc Studio", "Cadence", "Modex", "Kriya Nusaca",
+        "Amére", "Altday Project", "Our Dream", "TROY Bakery & Cafe", "Taskit",
+        "Thesera", "A+Clothes", "Makarya", "Ayu Merona", "RAIA Group",
+        "Studio 35°", "Pancarona Studio", "Ruang Rasa"
+      ];
+
+      const undangan = [
+        "Rachel Theodora Hearst", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner",
+        "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H.P",
+        "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga",
+        "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma",
+        "Sheila Kanna", "Elijah Gilead"
+      ];
+
+      // Gabungkan untuk keperluan tampil (dengan label)
+      const semuaUndangan = [
+        { name: "Kachoo Teams", type: "community" },
+        { name: "Urbanc Studio", type: "community" },
+        { name: "Cadence", type: "community" },
+        { name: "Modex", type: "community" },
+        { name: "Kriya Nusaca", type: "community" },
+        { name: "Amére", type: "community" },
+        { name: "Altday Project", type: "community" },
+        { name: "Our Dream", type: "community" },
+        { name: "TROY Bakery & Cafe", type: "community" },
+        { name: "Taskit", type: "community" },
+        { name: "Thesera", type: "community" },
+        { name: "A+Clothes", type: "community" },
+        { name: "Makarya", type: "community" },
+        { name: "Ayu Merona", type: "community" },
+        { name: "RAIA Group", type: "community" },
+        { name: "Studio 35°", type: "community" },
+        { name: "Pancarona Studio", type: "community" },
+        { name: "Ruang Rasa", type: "community" },
+        { name: "Rachel Theodora Hearst", type: "personal" },
+        { name: "Beatrix Cecilia Atmadja", type: "personal" },
+        { name: "Nawang Wulan and Partner", type: "personal" },
+        { name: "Prudence Claire", type: "personal" },
+        { name: "Cindy Lou", type: "personal" },
+        { name: "Bagas Pradipta", type: "personal" },
+        { name: "Marcelinus Chitraditya H.P", type: "personal" },
+        { name: "Venus Dorothea", type: "personal" },
+        { name: "Vishaka Niranjana", type: "personal" },
+        { name: "Knox Caspian", type: "personal" },
+        { name: "Arunika Jingga", type: "personal" },
+        { name: "Grayson Tahitoe", type: "personal" },
+        { name: "Adiratna Danudihardja", type: "personal" },
+        { name: "Gabriel Luca Wirakusuma", type: "personal" },
+        { name: "Sheila Kanna", type: "personal" },
+        { name: "Elijah Gilead", type: "personal" }
+      ];
+
+      // State guestbook: menyimpan nama-nama yang sudah sign
+      let signedGuests = [];
+
+      // Elemen2
+      const checkBtn = document.getElementById('checkInvitationBtn');
+      const invitationContainer = document.getElementById('invitationListContainer');
+      const fullNameInput = document.getElementById('fullName');
+      const signBtn = document.getElementById('signGuestbookBtn');
+      const guestListContainer = document.getElementById('guestListContainer');
+      const backLink = document.getElementById('backToLobbyLink');
+
+      // Fungsi notifikasi
+      function showToast(msg) {
+        const toast = document.getElementById('notificationToast');
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        toast.className = 'toast-msg';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 1800);
+      }
+
+      // Render ulang guest list yang sudah sign
+      function renderSignedGuests() {
+        if (signedGuests.length === 0) {
+          guestListContainer.innerHTML = '<span class="empty-guest">Belum ada nama · tanda tangan tamu akan muncul di sini</span>';
+          return;
+        }
+        let html = '';
+        signedGuests.forEach(name => {
+          html += `<span class="guest-tag">${escapeHtml(name)}</span>`;
+        });
+        guestListContainer.innerHTML = html;
+      }
+
+      // helper escape
+      function escapeHtml(unsafe) {
+        return unsafe.replace(/[&<>"]/g, function(m) {
+          if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; if(m === '"') return '&quot;';
+          return m;
+        });
+      }
+
+      // Sign guestbook
+      signBtn.addEventListener('click', function() {
+        const name = fullNameInput.value.trim();
+        if (name === '') {
+          showToast('⚠️ Isi nama lengkap dulu');
+          return;
+        }
+
+        // cek apakah sudah ada (case insensitive)
+        const exists = signedGuests.some(n => n.toLowerCase() === name.toLowerCase());
+        if (exists) {
+          showToast(`👤 "${name}" sudah terdaftar`);
+          fullNameInput.value = '';
+          return;
+        }
+
+        signedGuests.push(name);
+        renderSignedGuests();
+        fullNameInput.value = '';
+        showToast(`✍️ Terima kasih, ${name}!`);
+      });
+
+      // Enter di input juga bisa sign
+      fullNameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          signBtn.click();
+        }
+      });
+
+      // Tombol Check Invitation Guest: munculkan panel berisi kumpulan nama (komunitas + undangan)
+      function buildInvitationHTML() {
+        let html = `
+          <div class="invitation-panel" id="invitationPanel">
+            <h2>👥  invited guests & communities</h2>
+            <div class="name-grid">
+        `;
+
+        // tampilkan semua undangan dengan label khusus (opsional)
+        semuaUndangan.forEach(item => {
+          const displayName = escapeHtml(item.name);
+          if (item.type === 'community') {
+            html += `<div class="invitee-item"><span>${displayName}</span> <span class="community-badge">Komunitas</span></div>`;
+          } else {
+            html += `<div class="invitee-item">${displayName}</div>`;
+          }
+        });
+
+        html += `</div><div class="close-panel"><button id="closeInvitationPanel">Tutup daftar</button></div></div>`;
+        return html;
+      }
+
+      // fungsi tampilkan panel
+      function showInvitationPanel() {
+        invitationContainer.innerHTML = buildInvitationHTML();
+        // tombol close
+        const closeBtn = document.getElementById('closeInvitationPanel');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function() {
+            invitationContainer.innerHTML = ''; // hilangkan panel
+          });
+        }
+        // scroll ke panel kalau perlu (biar keliatan)
+        document.getElementById('invitationPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      checkBtn.addEventListener('click', showInvitationPanel);
+
+      // (opsional) klik di luar panel? tapi udah ada tombol close
+
+      // Tombol kembali ke lobby (dalam konteks halaman ini, kita cuma bisa simulasi karena ini GH.html sendiri)
+      // Biarkan back link mengarah ke # atau ke lobby, kita kasih peringatan saja karena ini halaman terpisah.
+      backLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        // sesuai deskripsi awal, ini adalah halaman Grand Hall terpisah, jadi kita hanya munculkan notifikasi
+        // bahwa ini simulasi (karena dari index bangunan sudah ada target blank GH.html)
+        showToast('Kembali ke lobby (simulasi) — tutup tab ini');
+        // bisa juga redirect ke 'lobby' dalam konteks multi halaman, tapi biarkan friendly
+        // opsi: window.location.href = 'index.html'; tapi tidak ada index di sini.
+        // untuk pengalaman: tawarkan close panel
+        if (confirm('Tutup halaman Grand Hall dan kembali ke lobby?')) {
+          window.close(); // mungkin tidak bekerja di semua browser, alternatif:
+          showToast('Silakan tutup tab ini secara manual');
+        }
+      });
+
+      // initial render guestbook kosong
+      renderSignedGuests();
+
+      // jika ada nama panjang bisa di klik? abaikan, sudah.
+    })();
+  </script>
+</body>
+  </html>
