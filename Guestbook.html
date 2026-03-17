@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>the kachoo · guestbook</title>
-  <!-- Inter font + space grotesk untuk aksen -->
+  <title>the kachoo · guestbook · glass white</title>
+  <!-- Inter font + Space Grotesk untuk aksen -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -16,18 +16,19 @@
     }
 
     body {
-      background: #000000; /* hitam absolut */
+      /* background gradasi abu-abu ke putih - soft */
+      background: linear-gradient(145deg, #e0e0e0 0%, #f5f5f5 100%);
       font-family: 'Inter', 'Space Grotesk', sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.2rem;
+      padding: 2.5rem; /* lebih longgar */
       position: relative;
-      color: #fff;
+      color: #000; /* default hitam untuk semua teks di luar container, nanti di dalam container juga hitam */
     }
 
-    /* LAYER ANIMASI BACKGROUND - gerak sangat halus, modern */
+    /* background motion halus (partikel dan garis samar) */
     .motion-bg {
       position: fixed;
       top: 0;
@@ -42,69 +43,67 @@
     .motion-bg span {
       position: absolute;
       display: block;
-      width: 2px;
-      height: 2px;
-      background: rgba(255,255,255,0.2);
+      width: 3px;
+      height: 3px;
+      background: rgba(0, 0, 0, 0.1); /* partikel hitam tipis */
       border-radius: 50%;
-      box-shadow: 0 0 10px rgba(255,255,255,0.3);
-      animation: floatParticle 12s infinite linear;
+      animation: floatParticle 14s infinite linear;
     }
 
-    /* 50 partikel kecil yang bergerak acak */
     @keyframes floatParticle {
       0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.4; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.2; }
       100% { transform: translateY(-120vh) translateX(20px) scale(0.5); opacity: 0; }
     }
 
-    /* garis-garis animasi di background */
     .motion-bg .line {
       position: absolute;
       width: 100%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      animation: slideLine 8s infinite ease-in-out;
+      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08), transparent);
+      animation: slideLine 12s infinite ease-in-out;
     }
 
     @keyframes slideLine {
       0% { transform: translateX(-100%); opacity: 0; }
-      50% { opacity: 0.4; }
+      50% { opacity: 0.2; }
       100% { transform: translateX(100%); opacity: 0; }
     }
 
-    /* CARD UTAMA - glass putih bersih dengan border hitam/putih */
+    /* ===== CONTAINER GLASS BLEAM PUTIH ===== */
     .glass-card {
       position: relative;
       z-index: 20;
       width: 100%;
-      max-width: 1100px;
-      background: rgba(255, 255, 255, 0.03);
+      max-width: 1200px; /* sedikit lebih lebar */
+      background: rgba(255, 255, 255, 0.75); /* glass putih lebih opaque */
       backdrop-filter: blur(16px) saturate(200%);
       -webkit-backdrop-filter: blur(16px) saturate(200%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 60px;
-      padding: 2.8rem 2.8rem;
-      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1);
-      transition: box-shadow 0.3s, border-color 0.3s;
-      animation: cardAppear 0.8s ease-out;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 64px; /* lebih rounded */
+      padding: 3.5rem 3.5rem; /* lebih longgar */
+      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.2), inset 0 1px 3px rgba(255,255,255,0.9);
+      transition: box-shadow 0.4s, border-color 0.3s;
+      animation: cardAppear 0.9s ease-out;
+      color: #000; /* teks dalam container hitam */
     }
 
     @keyframes cardAppear {
-      0% { opacity: 0; transform: scale(0.98) translateY(20px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
+      0% { opacity: 0; transform: scale(0.96) translateY(30px); backdrop-filter: blur(0); }
+      100% { opacity: 1; transform: scale(1) translateY(0); backdrop-filter: blur(16px); }
     }
 
     .glass-card:hover {
-      border-color: rgba(255,255,255,0.3);
-      box-shadow: 0 40px 70px -15px black, inset 0 1px 2px rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.9);
+      box-shadow: 0 40px 80px -15px rgba(0,0,0,0.25), inset 0 1px 4px white;
     }
 
-    /* HEADER GUESTBOOK di tengah atas */
+    /* HEADER GUESTBOOK */
     .guestbook-header {
       text-align: center;
-      margin-bottom: 3rem;
-      animation: slideDown 0.7s ease-out;
+      margin-bottom: 3.5rem;
+      animation: slideDown 0.8s ease-out;
     }
 
     @keyframes slideDown {
@@ -113,215 +112,220 @@
     }
 
     .guestbook-header h1 {
-      font-size: clamp(3rem, 8vw, 5rem);
-      font-weight: 700;
+      font-size: clamp(3.2rem, 8vw, 5.2rem);
+      font-weight: 800;
       letter-spacing: -2px;
-      color: white;
+      color: #000;
       text-transform: uppercase;
       line-height: 1;
       margin-bottom: 0.5rem;
-      text-shadow: 0 0 20px rgba(255,255,255,0.3);
-      animation: glowPulse 3s infinite alternate;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      animation: softPulse 4s infinite alternate;
     }
 
-    @keyframes glowPulse {
-      0% { text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-      100% { text-shadow: 0 0 30px rgba(255,255,255,0.6); }
+    @keyframes softPulse {
+      0% { text-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+      100% { text-shadow: 0 4px 20px rgba(0,0,0,0.1); }
     }
 
     .guestbook-header p {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 300;
-      color: rgba(255,255,255,0.7);
-      letter-spacing: 2px;
+      color: #333;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
+      border-bottom: 1px solid rgba(0,0,0,0.15);
       display: inline-block;
-      padding-bottom: 0.4rem;
+      padding-bottom: 0.5rem;
     }
 
-    /* grid dua kolom: kiri invitation, kanan form */
+    /* grid dua kolom dengan jarak lebih lega */
     .dashboard {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      margin: 2rem 0 2.5rem;
+      gap: 3rem; /* lebih longgar */
+      margin: 2.5rem 0 3rem;
     }
 
-    /* INVITATION LIST - minimal, banyak whitespace */
+    /* INVITATION SECTION - putih dengan bayangan */
     .invitation-section {
-      background: rgba(0,0,0,0.3);
+      background: rgba(255, 255, 255, 0.5);
       border-radius: 48px;
-      padding: 2rem 1.8rem;
-      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2.2rem 2rem;
+      border: 1px solid rgba(255,255,255,0.8);
       backdrop-filter: blur(6px);
       transition: 0.3s;
-      animation: fadeLeft 0.9s ease;
+      animation: fadeLeft 1s ease;
+      box-shadow: 0 15px 30px -12px rgba(0,0,0,0.1);
     }
 
     @keyframes fadeLeft {
-      0% { opacity: 0; transform: translateX(-30px); }
+      0% { opacity: 0; transform: translateX(-40px); }
       100% { opacity: 1; transform: translateX(0); }
     }
 
     .invitation-section:hover {
-      border-color: rgba(255,255,255,0.3);
-      background: rgba(20,20,20,0.4);
+      background: rgba(255, 255, 255, 0.7);
+      border-color: white;
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
     }
 
     .invitation-section h2 {
-      font-size: 1.8rem;
-      font-weight: 500;
-      color: white;
-      margin-bottom: 1.8rem;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 2rem;
       letter-spacing: -0.5px;
-      border-left: 4px solid white;
+      border-left: 4px solid #000;
       padding-left: 1.2rem;
     }
 
     .invitation-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.6rem 1.2rem;
-      max-height: 360px;
+      gap: 0.7rem 1.5rem;
+      max-height: 380px;
       overflow-y: auto;
-      padding-right: 10px;
+      padding-right: 12px;
     }
 
     .invitation-grid::-webkit-scrollbar {
       width: 5px;
     }
     .invitation-grid::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.05);
+      background: rgba(0,0,0,0.05);
       border-radius: 10px;
     }
     .invitation-grid::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.2);
       border-radius: 10px;
     }
 
     .invitee-item {
       font-size: 1rem;
       font-weight: 400;
-      color: rgba(255,255,255,0.9);
-      padding: 0.5rem 0.2rem;
-      border-bottom: 1px dotted rgba(255,255,255,0.2);
+      color: #222;
+      padding: 0.55rem 0.2rem;
+      border-bottom: 1px dotted rgba(0,0,0,0.15);
       transition: 0.15s;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      animation: nameFade 0.5s ease;
+      animation: nameFade 0.6s ease;
     }
 
     @keyframes nameFade {
-      from { opacity: 0; transform: translateY(5px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .invitee-item:hover {
-      color: white;
-      border-bottom-color: white;
-      padding-left: 4px;
+      color: #000;
+      border-bottom-color: #000;
+      padding-left: 6px;
+      font-weight: 500;
     }
 
-    /* FORM SECTION - glass effect lebih tebal */
+    /* FORM SECTION */
     .form-section {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.6);
       border-radius: 48px;
-      padding: 2rem 2rem;
-      border: 1px solid rgba(255,255,255,0.15);
-      backdrop-filter: blur(12px);
+      padding: 2.2rem 2.2rem;
+      border: 1px solid rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
       transition: 0.3s;
-      animation: fadeRight 0.9s ease;
+      animation: fadeRight 1s ease;
+      box-shadow: 0 15px 30px -12px rgba(0,0,0,0.1);
     }
 
     @keyframes fadeRight {
-      0% { opacity: 0; transform: translateX(30px); }
+      0% { opacity: 0; transform: translateX(40px); }
       100% { opacity: 1; transform: translateX(0); }
     }
 
     .form-section:hover {
-      border-color: rgba(255,255,255,0.35);
-      background: rgba(40,40,40,0.2);
+      background: rgba(255,255,255,0.8);
+      border-color: white;
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
     }
 
     .form-section h2 {
-      font-size: 1.8rem;
-      font-weight: 500;
-      color: white;
-      margin-bottom: 2.2rem;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 2.5rem;
       letter-spacing: -0.5px;
       text-align: right;
-      border-right: 4px solid white;
+      border-right: 4px solid #000;
       padding-right: 1.2rem;
     }
 
     .field {
-      margin-bottom: 2rem;
+      margin-bottom: 2.2rem;
       position: relative;
     }
 
     .field label {
       display: block;
       font-size: 0.8rem;
-      font-weight: 500;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 2px;
-      color: rgba(255,255,255,0.5);
+      color: #444;
       margin-bottom: 0.5rem;
       transition: 0.2s;
     }
 
     .field input {
       width: 100%;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: white;
+      border: 1px solid rgba(0,0,0,0.15);
       border-radius: 50px;
-      padding: 1rem 1.5rem;
+      padding: 1.1rem 1.6rem;
       font-size: 1.1rem;
-      color: white;
+      color: #000;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
-      backdrop-filter: blur(4px);
       transition: 0.25s all cubic-bezier(0.2, 0.9, 0.3, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
 
     .field input:focus {
       outline: none;
-      border-color: white;
-      background: rgba(30,30,30,0.8);
+      border-color: #000;
+      background: #ffffff;
       transform: scale(1.02);
-      box-shadow: 0 0 25px rgba(255,255,255,0.2);
+      box-shadow: 0 10px 25px -10px rgba(0,0,0,0.2);
     }
 
     .field input::placeholder {
-      color: rgba(255,255,255,0.25);
+      color: #aaa;
       font-weight: 300;
       font-size: 0.95rem;
     }
 
     .field:hover label {
-      color: white;
+      color: #000;
       transform: translateX(5px);
     }
 
     /* tombol sign */
     .sign-btn {
-      background: white;
+      background: #000;
       border: none;
-      color: black;
+      color: white;
       font-weight: 700;
-      padding: 1.1rem 2rem;
+      padding: 1.2rem 2rem;
       border-radius: 60px;
       font-size: 1.1rem;
       width: 100%;
       cursor: pointer;
       transition: 0.25s all cubic-bezier(0.2, 0.9, 0.3, 1);
-      border: 1px solid white;
+      border: 1px solid #000;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-top: 0.5rem;
-      box-shadow: 0 10px 30px -10px rgba(255,255,255,0.3);
+      margin-top: 0.8rem;
+      box-shadow: 0 10px 25px -8px rgba(0,0,0,0.3);
       position: relative;
       overflow: hidden;
     }
@@ -334,20 +338,20 @@
       width: 0;
       height: 0;
       border-radius: 50%;
-      background: rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.2);
       transform: translate(-50%, -50%);
-      transition: width 0.5s, height 0.5s;
+      transition: width 0.6s, height 0.6s;
     }
 
     .sign-btn:hover::before {
-      width: 400px;
-      height: 400px;
+      width: 500px;
+      height: 500px;
     }
 
     .sign-btn:hover {
-      background: #f0f0f0;
+      background: #222;
       transform: scale(0.98);
-      box-shadow: 0 15px 40px -5px white;
+      box-shadow: 0 15px 35px -5px rgba(0,0,0,0.4);
     }
 
     .sign-btn:active {
@@ -360,9 +364,10 @@
       padding: 0.7rem 1.2rem;
       border-radius: 60px;
       text-align: center;
-      background: rgba(255,255,255,0.1);
+      background: white;
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(0,0,0,0.1);
+      color: #000;
       display: none;
       animation: feedbackPop 0.3s ease;
     }
@@ -372,17 +377,17 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* ROLEPLAY BANNER - menggantikan area pinterest */
+    /* ROLEPLAY BANNER */
     .roleplay-footer {
-      margin-top: 2.5rem;
-      padding: 1.5rem 0 0.5rem;
-      border-top: 1px solid rgba(255,255,255,0.15);
+      margin-top: 3rem;
+      padding: 1.8rem 0 0.8rem;
+      border-top: 1px solid rgba(0,0,0,0.1);
       text-align: center;
-      animation: fadeUp 1s ease;
+      animation: fadeUp 1.1s ease;
     }
 
     @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(20px); }
+      0% { opacity: 0; transform: translateY(25px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
@@ -390,24 +395,24 @@
       font-size: 1.2rem;
       font-weight: 300;
       letter-spacing: 4px;
-      color: rgba(255,255,255,0.6);
+      color: #444;
       text-transform: uppercase;
       margin-bottom: 0.4rem;
     }
 
     .kachoo-brand {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       font-weight: 700;
-      color: white;
+      color: #000;
       letter-spacing: -0.5px;
       display: inline-block;
       position: relative;
-      animation: softGlow 3s infinite alternate;
+      animation: softGlowBlack 3s infinite alternate;
     }
 
-    @keyframes softGlow {
-      0% { text-shadow: 0 0 10px white; }
-      100% { text-shadow: 0 0 30px white, 0 0 10px rgba(255,255,255,0.5); }
+    @keyframes softGlowBlack {
+      0% { text-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+      100% { text-shadow: 0 6px 18px rgba(0,0,0,0.2); }
     }
 
     .kachoo-brand::before, .kachoo-brand::after {
@@ -415,7 +420,7 @@
       position: absolute;
       width: 100%;
       height: 2px;
-      background: white;
+      background: #000;
       bottom: -5px;
       left: 0;
       transform: scaleX(0);
@@ -429,30 +434,31 @@
     /* back to lobby */
     .back-lobby {
       text-align: right;
-      margin-top: 2rem;
+      margin-top: 2.2rem;
     }
 
     .back-lobby a {
       display: inline-block;
-      color: rgba(255,255,255,0.7);
+      color: #333;
       text-decoration: none;
       font-weight: 400;
-      padding: 0.6rem 2rem;
-      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.7rem 2.2rem;
+      border: 1px solid rgba(0,0,0,0.2);
       border-radius: 60px;
       transition: 0.2s;
       font-size: 0.95rem;
+      background: rgba(255,255,255,0.3);
       backdrop-filter: blur(8px);
     }
 
     .back-lobby a:hover {
-      background: white;
-      color: black;
-      border-color: white;
+      background: #000;
+      color: white;
+      border-color: #000;
       transform: translateX(-5px);
     }
 
-    /* notifikasi thank you */
+    /* notifikasi thank you (hitam putih) */
     .notif-thanks {
       position: fixed;
       top: 50%;
@@ -461,13 +467,13 @@
       background: white;
       color: black;
       font-weight: 800;
-      font-size: 2.5rem;
-      padding: 1.8rem 3.5rem;
+      font-size: 2.8rem;
+      padding: 2rem 4rem;
       border-radius: 80px;
-      border: 1px solid rgba(255,255,255,0.5);
-      box-shadow: 0 40px 70px black;
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.2);
       z-index: 9999;
-      animation: notifPop 1.4s ease forwards;
+      animation: notifPop 1.5s ease forwards;
       white-space: nowrap;
       letter-spacing: -1px;
     }
@@ -479,20 +485,22 @@
       100% { opacity: 0; transform: translate(-50%, -70%) scale(0.9); backdrop-filter: blur(0); }
     }
 
+    /* responsive */
     @media (max-width: 800px) {
-      .dashboard { grid-template-columns: 1fr; }
-      .glass-card { padding: 1.8rem; }
+      body { padding: 1.5rem; }
+      .glass-card { padding: 2rem; }
+      .dashboard { grid-template-columns: 1fr; gap: 2rem; }
       .invitation-grid { grid-template-columns: 1fr; }
-      .form-section h2 { text-align: left; border-right: none; border-left: 4px solid white; padding-left: 1.2rem; }
+      .form-section h2 { text-align: left; border-right: none; border-left: 4px solid #000; padding-left: 1.2rem; }
     }
   </style>
 </head>
 <body>
-  <!-- background animasi -->
+  <!-- background motion tipis -->
   <div class="motion-bg" id="motionBg"></div>
 
   <div class="glass-card">
-    <!-- GUESTBOOK HEADER di tengah atas -->
+    <!-- GUESTBOOK HEADER -->
     <div class="guestbook-header">
       <h1>GUESTBOOK</h1>
       <p>sign the attendance</p>
@@ -500,13 +508,13 @@
 
     <!-- grid invitation + form -->
     <div class="dashboard">
-      <!-- INVITATION LIST (kiri) -->
+      <!-- INVITATION LIST -->
       <div class="invitation-section">
         <h2>Invitation</h2>
         <div class="invitation-grid" id="invitationGrid"></div>
       </div>
 
-      <!-- FORM (kanan) dengan FULLNAME & USERNAME saja -->
+      <!-- FORM (hanya Fullname & Username) -->
       <div class="form-section">
         <h2>Sign here</h2>
         <div class="field">
@@ -522,7 +530,7 @@
       </div>
     </div>
 
-    <!-- ROLEPLAY BANNER (pengganti area pinterest) -->
+    <!-- ROLEPLAY BANNER -->
     <div class="roleplay-footer">
       <div class="roleplay-text">For Roleplay Purpose Only</div>
       <div class="kachoo-brand">by The Kachoo</div>
@@ -567,7 +575,7 @@
           const div = document.createElement('div');
           div.className = 'invitee-item';
           div.textContent = nama;
-          div.style.animationDelay = (index * 0.02) + 's';
+          div.style.animationDelay = (index * 0.015) + 's';
           grid.appendChild(div);
         });
       }
@@ -598,8 +606,8 @@
         if (!full || !user) {
           feedback.style.display = 'block';
           feedback.textContent = 'Full name and username required';
-          feedback.style.background = 'rgba(255,80,80,0.2)';
-          feedback.style.color = '#ffb0b0';
+          feedback.style.background = 'rgba(255,80,80,0.1)';
+          feedback.style.color = '#b00020';
           setTimeout(() => feedback.style.display = 'none', 2000);
           return;
         }
@@ -617,27 +625,27 @@
 
       renderNames();
 
-      // background particles (animasi tambahan)
+      // background particles
       const motionBg = document.getElementById('motionBg');
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < 30; i++) {
         const span = document.createElement('span');
         const size = Math.random() * 4 + 1;
         span.style.width = size + 'px';
         span.style.height = size + 'px';
         span.style.left = Math.random() * 100 + '%';
         span.style.top = Math.random() * 100 + '%';
-        span.style.animationDuration = (Math.random() * 10 + 8) + 's';
-        span.style.animationDelay = (Math.random() * 5) + 's';
+        span.style.animationDuration = (Math.random() * 12 + 10) + 's';
+        span.style.animationDelay = (Math.random() * 6) + 's';
         motionBg.appendChild(span);
       }
       for (let i = 0; i < 4; i++) {
         const line = document.createElement('div');
         line.className = 'line';
-        line.style.top = (20 + i * 20) + '%';
-        line.style.animationDelay = (i * 0.5) + 's';
+        line.style.top = (15 + i * 20) + '%';
+        line.style.animationDelay = (i * 0.6) + 's';
         motionBg.appendChild(line);
       }
     })();
   </script>
 </body>
-                       </html>
+        </html>
