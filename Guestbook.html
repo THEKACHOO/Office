@@ -27,16 +27,13 @@
       color: #000;
     }
 
-    /* ===== BACKGROUND MOTION DIHAPUS ===== */
-    /* Semua elemen .motion-bg dan animasinya dihapus */
-
     /* ===== CONTAINER GLASS BLEAM PUTIH ===== */
     .glass-card {
       position: relative;
       z-index: 20;
       width: 100%;
-      max-width: 1000px; /* lebih proporsional */
-      margin: 0 auto; /* center horizontal */
+      max-width: 1000px;
+      margin: 0 auto;
       background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(20px) saturate(200%);
       -webkit-backdrop-filter: blur(20px) saturate(200%);
@@ -59,7 +56,7 @@
       box-shadow: 0 35px 70px -15px rgba(0,0,0,0.25), inset 0 1px 4px white;
     }
 
-    /* HEADER GUESTBOOK - selalu di tengah */
+    /* HEADER GUESTBOOK */
     .guestbook-header {
       text-align: center;
       margin-bottom: 2.5rem;
@@ -93,7 +90,7 @@
       padding-bottom: 0.4rem;
     }
 
-    /* grid dua kolom - rapi di desktop, stack di mobile */
+    /* grid dua kolom */
     .dashboard {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -143,10 +140,6 @@
       letter-spacing: -0.3px;
       border-left: 4px solid #000;
       padding-left: 1rem;
-    }
-
-    .form-section h2 {
-      text-align: left; /* konsisten kiri */
     }
 
     /* invitation grid */
@@ -335,7 +328,7 @@
       transform: scaleX(1);
     }
 
-    /* back to lobby */
+    /* back to lobby - default kanan */
     .back-lobby {
       text-align: right;
       margin-top: 1.5rem;
@@ -389,11 +382,11 @@
       100% { opacity: 0; transform: translate(-50%, -70%) scale(0.9); }
     }
 
-    /* ===== RESPONSIVE UNTUK MOBILE ===== */
+    /* ===== RESPONSIVE MOBILE ===== */
     @media (max-width: 700px) {
       body {
         padding: 1rem;
-        align-items: flex-start; /* biar ngga mentok atas */
+        align-items: flex-start;
         padding-top: 2rem;
         padding-bottom: 2rem;
       }
@@ -404,7 +397,7 @@
       }
 
       .dashboard {
-        grid-template-columns: 1fr; /* stack vertikal */
+        grid-template-columns: 1fr;
         gap: 1.2rem;
         margin: 1.2rem 0;
       }
@@ -420,13 +413,13 @@
       }
 
       .invitation-grid {
-        grid-template-columns: 1fr; /* satu kolom di mobile */
+        grid-template-columns: 1fr;
         max-height: 250px;
       }
 
       .invitee-item {
         font-size: 0.9rem;
-        white-space: normal; /* wrap jika perlu */
+        white-space: normal;
         overflow: visible;
       }
 
@@ -447,9 +440,16 @@
         font-size: 1.8rem;
       }
 
+      /* BACK TO LOBBY DI MOBILE: TENGAH, TANPA SIMBOL */
+      .back-lobby {
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+      
       .back-lobby a {
-        padding: 0.4rem 1.4rem;
-        font-size: 0.85rem;
+        padding: 0.5rem 2rem;
+        font-size: 0.9rem;
+        /* tidak ada ::before atau konten tambahan */
       }
 
       .notif-thanks {
@@ -461,7 +461,6 @@
       }
     }
 
-    /* untuk layar sangat kecil */
     @media (max-width: 400px) {
       .glass-card {
         padding: 1.2rem 1rem;
@@ -478,24 +477,16 @@
   </style>
 </head>
 <body>
-  <!-- BACKGROUND MOTION DIHAPUS - tidak ada lagi elemen motion-bg -->
-
   <div class="glass-card">
-    <!-- GUESTBOOK HEADER -->
+    <!-- HEADER -->
     <div class="guestbook-header">
       <h1>GUESTBOOK</h1>
       <p>Sign the attendance</p>
     </div>
 
-    <!-- grid invitation + form -->
+    <!-- GRID: SIGN HERE dulu, baru VIP GUEST -->
     <div class="dashboard">
-      <!-- INVITATION LIST -->
-      <div class="invitation-section">
-        <h2>VIP Guest</h2>
-        <div class="invitation-grid" id="invitationGrid"></div>
-      </div>
-
-      <!-- FORM (hanya Fullname & Username) -->
+      <!-- FORM SECTION (Sign here - pertama) -->
       <div class="form-section">
         <h2>Sign here</h2>
         <div class="field">
@@ -509,6 +500,12 @@
         <button class="sign-btn" id="signGuestbookBtn">Sign guestbook</button>
         <div id="formFeedback" class="feedback-message"></div>
       </div>
+
+      <!-- INVITATION SECTION (VIP Guest - kedua) -->
+      <div class="invitation-section">
+        <h2>VIP Guest</h2>
+        <div class="invitation-grid" id="invitationGrid"></div>
+      </div>
     </div>
 
     <!-- ROLEPLAY BANNER -->
@@ -517,9 +514,9 @@
       <div class="kachoo-brand">by The Kachoo</div>
     </div>
 
-    <!-- back to lobby -->
+    <!-- BACK TO LOBBY - tanpa simbol, di mobile tengah -->
     <div class="back-lobby">
-      <a href="https://thekachoo.github.io/Office/Lobby.html" id="backToLobby">← Back to Lobby</a>
+      <a href="https://thekachoo.github.io/Office/Lobby.html" id="backToLobby">Back to Lobby</a>
     </div>
   </div>
 
@@ -571,7 +568,7 @@
         }, 1400);
       }
 
-      // fake submit
+      // submit ke spreadsheet
       async function submitToSheet(full, user) {
         const url = 'https://script.google.com/macros/s/AKfycbzH2V7J1U_8p0jX5sL3xK9mW6nR4tY7uI2oP3cE/exec';
         const payload = new URLSearchParams({ fullname: full, username: user });
@@ -604,9 +601,7 @@
       userName.addEventListener('keypress', e => { if (e.key === 'Enter') handleSign(); });
 
       renderNames();
-
-      // BACKGROUND MOTION DIHAPUS - tidak ada kode untuk membuat partikel/garis
     })();
   </script>
 </body>
-      </html>
+  </html>
