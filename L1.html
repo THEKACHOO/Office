@@ -370,8 +370,6 @@
           roomScene.className = 'scene room-scene';
           // background image
           roomScene.style.backgroundImage = `url('${roomData.image}')`;
-          // fallback untuk mobile via media query tidak perlu, karena background image inline menangani semua
-          // tambahkan fallback gradient jika perlu
           roomScene.style.backgroundSize = 'cover';
           roomScene.style.backgroundPosition = 'center';
           
@@ -400,7 +398,6 @@
                   currentRoom.classList.remove('shake-animation');
                   currentRoom.remove();
                   liftScene.classList.remove('hidden');
-                  // reset sedikit fokus
                 }, 300);
               } else {
                 liftScene.classList.remove('hidden');
@@ -424,29 +421,16 @@
           
           btn.addEventListener('click', (e) => {
             e.preventDefault();
-            // Efek pindah ke ruangan dengan animasi
             switchToRoom(room);
           });
           
           liftPanel.appendChild(btn);
         });
         
-        // Opsional: tambahkan tombol kembali ke lobby? (karena L1 terpisah, bisa tetap ada tombol Ground jika diperlukan, 
-        // tapi spesifikasi hanya elevator dan ruangan L1. Bisa ditambah tombol "Exit to Main Lobby" sebagai akses ke Lobby.html?
-        // sesuai permintaan "LOBBY SEPENUHNYA DIHAPUS, jadi yg diambil hanya elevator itu aja" — tapi user mungkin ingin navigasi ke lobby? 
-        // Tidak disebutkan akses ke lobby, tapi agar tidak terjebak di L1, kita beri tombol "← Exit Building" yang mengarah ke Lobby.html (karena Lobby.html adalah halaman utama)
-        // Namun karena dokumen ini adalah L1.html, dan ingin sistem elevator dengan ruangan, tapi tidak ada building/lobby dalam file ini. 
-        // Tapi agar pengguna bisa kembali ke lobby utama, kita tambah satu tombol subtle "Lobby (G)" sesuai gaya lift sebelumnya?
-        // Original Lobby.html punya tombol di lift: B1, G, L1, L2... disini kita hanya punya tombol ruangan. Tapi untuk keluar ke lobby bisa pakai tombol tambahan "Ground Floor" 
-        // agar pengguna bisa kembali ke halaman lobby (Lobby.html). Karena permintaan hanya "buat seperti Lobby.html tp bedanya ini untuk L1.html jd ga perlu basement dan lantainya diganti 
-        // Room 1-5, Restroom, background elevator dan sistem di elevatornya tetap. LOBBY SEPENUHNYA DIHAPUS, jadi yg diambil hanya elevator itu aja."
-        // Artinya kita tidak menampilkan konten lobby di halaman ini, tapi sistem elevator tetap berfungsi untuk menavigasi ke ruangan. Namun user mungkin butuh cara kembali ke lobby utama (Lobby.html)
-        // karena biasanya dari lantai L1 ingin kembali ke lobi utama gedung. Maka kita tambah tombol "G · Main Lobby" yang navigasi ke Lobby.html.
-        // Agar sesuai ekspektasi, kita tambahkan tombol terpisah yang mengarah ke Lobby.html dengan konfirmasi animasi.
-        
+        // Tombol G (Ground Floor) tanpa teks tambahan — hanya "G"
         const exitBtn = document.createElement('button');
         exitBtn.className = 'lift-btn';
-        exitBtn.textContent = '🚪 G · Main Lobby';
+        exitBtn.textContent = 'G';
         exitBtn.style.background = '#f0f0f0';
         exitBtn.style.border = '2px solid #111';
         exitBtn.addEventListener('click', (e) => {
@@ -492,8 +476,7 @@
         initL1();
       });
       
-      // Dukungan fallback image jika gambar tidak ada, tidak perlu error besar
-      // tambahkan fungsi preload sederhana untuk menjaga pengalaman
+      // Preload gambar ruangan
       function preloadRoomImages() {
         rooms.forEach(room => {
           const img = new Image();
