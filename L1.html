@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>L1 · Elevator & Rooms</title>
+  <!-- Inter font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #000000;
+      color: #FFFFFF;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* scene layers */
+    .scene {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* LIFT & ROOMS: konten di bawah, tulisan di tengah */
+    #scene-lift, .room-scene {
+      align-items: flex-end;
+    }
+    
+    #scene-lift .content, .room-scene .content {
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      padding-bottom: 3rem;
+    }
+
+    /* dark overlay – lebih transparan (17% agar terang) */
+    .scene::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.17); 
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      max-width: 1280px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scene.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* BACKGROUND UNTUK DESKTOP (default) */
+    #scene-lift {
+      background-image: url('lift1.png');
+    }
+    /* background ruangan khusus — akan di-override inline/dinamis */
+    .room-scene {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* BACKGROUND UNTUK MOBILE & TABLET */
+    @media (max-width: 1024px) {
+      #scene-lift {
+        background-image: url('lift2.png');
+      }
+    }
+
+    /* Fallback SVG untuk lift */
+    @media (min-width: 1025px) {
+      #scene-lift {
+        background-image: url('lift1.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%231a2e3f%22/><rect x=%2260%22 y=%2250%22 width=%22280%22 height=%22200%22 fill=%22%233a526b%22 rx=%2220%22/><circle cx=%22200%22 cy=%22150%22 r=%2230%22 fill=%22%236a859f%22 opacity=%220.7%22/><rect x=%22160%22 y=%22135%22 width=%2280%22 height=%2230%22 fill=%22%23aac3d9%22 rx=%226%22/></svg>');
+      }
+    }
+    @media (max-width: 1024px) {
+      #scene-lift {
+        background-image: url('lift2.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 600%22><rect width=%22400%22 height=%22600%22 fill=%22%231a2e3f%22/><rect x=%2260%22 y=%22120%22 width=%22280%22 height=%22360%22 fill=%22%233a526b%22 rx=%2230%22/><circle cx=%22200%22 cy=%22300%22 r=%2240%22 fill=%22%236a859f%22 opacity=%220.7%22/><rect x=%22150%22 y=%22280%22 width=%22100%22 height=%2240%22 fill=%22%23aac3d9%22 rx=%228%22/></svg>');
+      }
+    }
+
+    /* LIFT PANEL - KHUSUS LIFT (kecil di bawah) */
+    .lift-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
+      max-width: 700px;
+      width: auto;
+      margin: 0 auto 1rem auto;
+    }
+
+    /* TOMBOL KHUSUS LIFT - KECIL */
+    .lift-btn {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #000000;
+      background: #FFFFFF;
+      border: 2px solid #000000;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .lift-btn:hover {
+      background: #000000;
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+      transform: scale(1.03) translateY(-2px);
+      box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.8);
+    }
+
+    /* tombol back khusus ruangan */
+    .back-button {
+      display: inline-block;
+      margin: 2rem auto 0 auto;
+      padding: 0.8rem 2rem;
+      background: white;
+      color: black;
+      font-weight: 700;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      min-width: 160px;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+    }
+    .back-button:hover {
+      background: #ddd;
+      transform: scale(0.98);
+    }
+
+    /* floor indicator */
+    .floor-label {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: #FFFFFF;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      padding: 0.5rem 1.8rem;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* label khusus lift */
+    #scene-lift .floor-label {
+      margin-top: 0;
+      margin-bottom: 0;
+      display: inline-block;
+    }
+
+    /* notifikasi */
+    .notification {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      z-index: 1000;
+      animation: fadeInOut 2s ease;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+
+    /* animasi kecil */
+    @keyframes microShake {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-2px, 1px); }
+      40% { transform: translate(2px, -1px); }
+      60% { transform: translate(-1px, 1px); }
+      80% { transform: translate(1px, -1px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .shake-animation {
+      animation: microShake 0.4s ease-in-out;
+    }
+
+    /* konten ruangan (tulisan atau info opsional) */
+    .room-message {
+      text-align: center;
+      font-size: clamp(1.5rem, 6vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: white;
+      text-shadow: 0 0 15px rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(12px);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.4);
+      margin-bottom: 1rem;
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width: 700px) {
+      .lift-panel {
+        padding: 0.8rem 1rem;
+        gap: 0.5rem;
+        border-radius: 30px;
+      }
+      .lift-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+      .back-button {
+        margin-top: 1.5rem;
+        padding: 0.7rem 1.5rem;
+        min-width: 140px;
+        font-size: 0.9rem;
+      }
+      .room-message {
+        padding: 0.8rem 1.5rem;
+        font-size: clamp(1.2rem, 5vw, 2rem);
+      }
+      #scene-lift .content, .room-scene .content {
+        padding-bottom: 2rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .lift-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+      }
+      .lift-panel {
+        width: 95%;
+      }
+      .back-button {
+        padding: 0.6rem 1.2rem;
+        min-width: 120px;
+        font-size: 0.85rem;
+      }
+      .room-message {
+        padding: 0.6rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ELEVATOR SCENE (L1) -->
+  <div id="scene-lift" class="scene">
+    <div class="content">
+      <div style="flex: 1;"></div>
+      <div class="lift-panel" id="lift-panel">
+        <!-- Tombol ruangan akan diisi JavaScript -->
+      </div>
+      <div class="floor-label">ELEVATOR · LEVEL 1</div>
+      <div style="height: 1rem;"></div>
+    </div>
+  </div>
+
+  <!-- TEMPAT DINAMIS UNTUK RUANGAN (Room 1-5, Restroom) akan dibuat & dihapus otomatis -->
+  <div id="room-container"></div>
+
+  <!-- NOTIFICATION AREA -->
+  <div id="notification" class="notification" style="display: none;"></div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // Scene references
+      const liftScene = document.getElementById('scene-lift');
+      const roomContainer = document.getElementById('room-container');
+      
+      // Notification
+      const notification = document.getElementById('notification');
+
+      // Data ruangan: nama, file gambar, label opsional (tampil cantik)
+      const rooms = [
+        { id: 'room1', label: 'Room 1', image: 'room1.png', displayName: 'ROOM 1 · MEETING SUITE' },
+        { id: 'room2', label: 'Room 2', image: 'room2.png', displayName: 'ROOM 2 · CONFERENCE' },
+        { id: 'room3', label: 'Room 3', image: 'room3.png', displayName: 'ROOM 3 · WORKSHOP' },
+        { id: 'room4', label: 'Room 4', image: 'room4.png', displayName: 'ROOM 4 · EXECUTIVE' },
+        { id: 'room5', label: 'Room 5', image: 'room5.png', displayName: 'ROOM 5 · LOUNGE' },
+        { id: 'restroom', label: 'Restroom', image: 'Restroom1.png', displayName: 'RESTROOM' }
+      ];
+
+      // Fungsi show notifikasi
+      function showNotification(message) {
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+          notification.style.display = 'none';
+        }, 2000);
+      }
+
+      // Fungsi ganti scene dengan animasi shake dan transisi
+      function switchToRoom(roomData) {
+        // Animasi shake pada lift sebelum pindah
+        liftScene.classList.add('shake-animation');
+        setTimeout(() => {
+          liftScene.classList.remove('shake-animation');
+          // sembunyikan lift scene
+          liftScene.classList.add('hidden');
+          
+          // Buat scene ruangan baru (dinamis)
+          const existingRoomScene = document.getElementById('dynamic-room-scene');
+          if (existingRoomScene) existingRoomScene.remove();
+          
+          // Buat div scene untuk ruangan
+          const roomScene = document.createElement('div');
+          roomScene.id = 'dynamic-room-scene';
+          roomScene.className = 'scene room-scene';
+          // background image
+          roomScene.style.backgroundImage = `url('${roomData.image}')`;
+          // fallback untuk mobile via media query tidak perlu, karena background image inline menangani semua
+          // tambahkan fallback gradient jika perlu
+          roomScene.style.backgroundSize = 'cover';
+          roomScene.style.backgroundPosition = 'center';
+          
+          // konten dalam ruangan
+          roomScene.innerHTML = `
+            <div class="content">
+              <div style="flex:1"></div>
+              <div class="room-message">${roomData.displayName}</div>
+              <button class="back-button" id="back-to-lift-btn">← Back to Elevator</button>
+              <div style="height:1rem"></div>
+            </div>
+          `;
+          
+          roomContainer.appendChild(roomScene);
+          
+          // Event listener tombol back
+          const backBtn = document.getElementById('back-to-lift-btn');
+          if (backBtn) {
+            backBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              // animasi balik ke lift
+              const currentRoom = document.getElementById('dynamic-room-scene');
+              if (currentRoom) {
+                currentRoom.classList.add('shake-animation');
+                setTimeout(() => {
+                  currentRoom.classList.remove('shake-animation');
+                  currentRoom.remove();
+                  liftScene.classList.remove('hidden');
+                  // reset sedikit fokus
+                }, 300);
+              } else {
+                liftScene.classList.remove('hidden');
+              }
+            });
+          }
+        }, 400);
+      }
+
+      // Buat tombol-tombol di panel lift L1
+      function createL1Buttons() {
+        const liftPanel = document.getElementById('lift-panel');
+        if (!liftPanel) return;
+        liftPanel.innerHTML = '';
+        
+        // Tombol untuk setiap ruangan (Room 1-5, Restroom)
+        rooms.forEach(room => {
+          const btn = document.createElement('button');
+          btn.className = 'lift-btn';
+          btn.textContent = room.label;
+          
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Efek pindah ke ruangan dengan animasi
+            switchToRoom(room);
+          });
+          
+          liftPanel.appendChild(btn);
+        });
+        
+        // Opsional: tambahkan tombol kembali ke lobby? (karena L1 terpisah, bisa tetap ada tombol Ground jika diperlukan, 
+        // tapi spesifikasi hanya elevator dan ruangan L1. Bisa ditambah tombol "Exit to Main Lobby" sebagai akses ke Lobby.html?
+        // sesuai permintaan "LOBBY SEPENUHNYA DIHAPUS, jadi yg diambil hanya elevator itu aja" — tapi user mungkin ingin navigasi ke lobby? 
+        // Tidak disebutkan akses ke lobby, tapi agar tidak terjebak di L1, kita beri tombol "← Exit Building" yang mengarah ke Lobby.html (karena Lobby.html adalah halaman utama)
+        // Namun karena dokumen ini adalah L1.html, dan ingin sistem elevator dengan ruangan, tapi tidak ada building/lobby dalam file ini. 
+        // Tapi agar pengguna bisa kembali ke lobby utama, kita tambah satu tombol subtle "Lobby (G)" sesuai gaya lift sebelumnya?
+        // Original Lobby.html punya tombol di lift: B1, G, L1, L2... disini kita hanya punya tombol ruangan. Tapi untuk keluar ke lobby bisa pakai tombol tambahan "Ground Floor" 
+        // agar pengguna bisa kembali ke halaman lobby (Lobby.html). Karena permintaan hanya "buat seperti Lobby.html tp bedanya ini untuk L1.html jd ga perlu basement dan lantainya diganti 
+        // Room 1-5, Restroom, background elevator dan sistem di elevatornya tetap. LOBBY SEPENUHNYA DIHAPUS, jadi yg diambil hanya elevator itu aja."
+        // Artinya kita tidak menampilkan konten lobby di halaman ini, tapi sistem elevator tetap berfungsi untuk menavigasi ke ruangan. Namun user mungkin butuh cara kembali ke lobby utama (Lobby.html)
+        // karena biasanya dari lantai L1 ingin kembali ke lobi utama gedung. Maka kita tambah tombol "G · Main Lobby" yang navigasi ke Lobby.html.
+        // Agar sesuai ekspektasi, kita tambahkan tombol terpisah yang mengarah ke Lobby.html dengan konfirmasi animasi.
+        
+        const exitBtn = document.createElement('button');
+        exitBtn.className = 'lift-btn';
+        exitBtn.textContent = '🚪 G · Main Lobby';
+        exitBtn.style.background = '#f0f0f0';
+        exitBtn.style.border = '2px solid #111';
+        exitBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          // efek shake lalu redirect ke Lobby.html
+          liftScene.classList.add('shake-animation');
+          setTimeout(() => {
+            liftScene.classList.remove('shake-animation');
+            window.location.href = 'Lobby.html';
+          }, 400);
+        });
+        liftPanel.appendChild(exitBtn);
+      }
+
+      // Fungsi tambahan: pastikan saat inisialisasi, tidak ada scene ruangan tersisa, lift aktif
+      function initL1() {
+        // bersihkan container ruangan
+        roomContainer.innerHTML = '';
+        // pastikan lift scene terlihat
+        liftScene.classList.remove('hidden');
+        // buat tombol
+        createL1Buttons();
+      }
+
+      // Event listener untuk tombol back dari ruangan secara global (delegation)
+      document.body.addEventListener('click', (e) => {
+        if (e.target && e.target.id === 'back-to-lift-btn') {
+          // sudah ditangani di switchToRoom, tapi fallback untuk keamanan
+          const roomScene = document.getElementById('dynamic-room-scene');
+          if (roomScene) {
+            roomScene.classList.add('shake-animation');
+            setTimeout(() => {
+              roomScene.classList.remove('shake-animation');
+              roomScene.remove();
+              liftScene.classList.remove('hidden');
+            }, 300);
+          }
+        }
+      });
+
+      // Inisialisasi saat window load
+      window.addEventListener('load', () => {
+        initL1();
+      });
+      
+      // Dukungan fallback image jika gambar tidak ada, tidak perlu error besar
+      // tambahkan fungsi preload sederhana untuk menjaga pengalaman
+      function preloadRoomImages() {
+        rooms.forEach(room => {
+          const img = new Image();
+          img.src = room.image;
+        });
+      }
+      preloadRoomImages();
+      
+    })();
+  </script>
+</body>
+</html>
