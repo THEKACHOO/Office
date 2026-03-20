@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>L1 · Elevator & Rooms</title>
+  <title>L1</title>
   <!-- Inter font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <style>
@@ -310,7 +310,7 @@
       <div class="lift-panel" id="lift-panel">
         <!-- Tombol ruangan akan diisi JavaScript -->
       </div>
-      <div class="floor-label">ELEVATOR · LEVEL 1</div>
+      <div class="floor-label">ELEVATOR · FLOOR 1</div>
       <div style="height: 1rem;"></div>
     </div>
   </div>
@@ -439,7 +439,7 @@
           liftScene.classList.add('shake-animation');
           setTimeout(() => {
             liftScene.classList.remove('shake-animation');
-            window.location.href = 'Lobby.html';
+            window.location.href = 'Elevator.html';
           }, 400);
         });
         liftPanel.appendChild(exitBtn);
