@@ -461,7 +461,7 @@
         }
       }
 
-      // Buka pintu (otomatis, tanpa notifikasi manual)
+      // Buka pintu (otomatis)
       function openDoors(silent = false) {
         if (isDoorOpen) return;
         if (isProcessing && !silent) return;
@@ -479,8 +479,8 @@
         if (!silent) showNotification('Pintu tertutup');
       }
 
-      // Fungsi untuk melakukan perjalanan ke lantai dengan alur: tutup -> buka -> pindah
-      function travelToDestination(floorName, targetUrl, isBasementTransition = false, targetScene = null) {
+      // Fungsi untuk B1 dan L1: tutup -> getar -> buka -> pindah scene atau navigasi
+      function travelWithDoorCloseOpen(targetType, targetUrl, targetScene = null) {
         if (isProcessing) {
           showNotification('Lift sedang beroperasi, tunggu sebentar');
           return false;
@@ -488,48 +488,64 @@
         
         isProcessing = true;
         
-        // Step 1: Tutup pintu jika terbuka
-        const executeTravel = () => {
-          // Step 2: Efek getar (simulasi bergerak)
-          const currentScene = isBasementTransition ? basementScene : liftScene;
+        const executeSequence = () => {
+          // Efek getar (simulasi bergerak)
+          const currentScene = liftScene;
           currentScene.classList.add('shake-animation');
           
           setTimeout(() => {
             currentScene.classList.remove('shake-animation');
             
-            // Step 3: Buka pintu
+            // Buka pintu
             openDoors(false);
             
-            // Step 4: Setelah pintu terbuka, pindah ke tujuan
+            // Setelah pintu terbuka, pindah ke tujuan
             setTimeout(() => {
-              if (isBasementTransition && targetScene) {
-                // Pindah scene basement
-                showSceneDirect(targetScene);
-                // Buat tombol basement setelah pindah
-                if (targetScene === basementScene) {
-                  createBasementButtons();
-                }
+              if (targetType === 'basement') {
+                showSceneDirect(basementScene);
+                createBasementButtons();
                 isProcessing = false;
-              } else if (targetUrl) {
-                // Navigasi ke halaman
-                window.location.href = targetUrl;
+              } else if (targetType === 'lobby') {
+                window.location.href = 'Lobby.html';
+              } else if (targetType === 'l1') {
+                window.location.href = 'L1.html';
               } else {
                 isProcessing = false;
               }
-            }, 400); // Beri waktu untuk melihat pintu terbuka
-          }, 350); // Efek getar
+            }, 450);
+          }, 400);
         };
         
+        // Jika pintu terbuka, tutup dulu baru jalankan sequence
         if (isDoorOpen) {
           closeDoors(true);
           setTimeout(() => {
-            executeTravel();
-          }, 550);
+            executeSequence();
+          }, 580);
         } else {
-          executeTravel();
+          executeSequence();
         }
         
         return true;
+      }
+
+      // Fungsi untuk lantai terbatas (L2 - Rooftop): hanya notifikasi, pintu tidak berubah
+      function showRestrictedAccess() {
+        if (isProcessing) {
+          showNotification('Lift sedang beroperasi, tunggu sebentar');
+          return;
+        }
+        
+        isProcessing = true;
+        
+        const currentScene = liftScene;
+        currentScene.classList.add('shake-animation');
+        
+        setTimeout(() => {
+          currentScene.classList.remove('shake-animation');
+          showNotification('This floor is only accessible by employees');
+          isProcessing = false;
+        }, 400);
       }
 
       // Fungsi ganti scene langsung (tanpa animasi pintu untuk internal)
@@ -551,8 +567,8 @@
         btnBack.className = 'lift-btn';
         btnBack.textContent = '← Back to Elevator';
         btnBack.addEventListener('click', () => {
-          // Kembali ke elevator dengan alur pintu
-          travelToDestination('Elevator', null, true, liftScene);
+          // Kembali ke elevator dengan alur tutup -> buka -> pindah scene
+          travelWithDoorCloseOpen('elevator', null, liftScene);
         });
         
         basementPanel.appendChild(btnBack);
@@ -563,6 +579,7 @@
         liftPanel.innerHTML = '';
         
         const floors = ['B1', 'G', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'Rooftop'];
+        const restrictedFloors = ['L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'Rooftop'];
         
         floors.forEach(floor => {
           const btn = document.createElement('button');
@@ -575,55 +592,21 @@
               return;
             }
             
-            // L2 sampai Rooftop: hanya notifikasi, tidak pindah halaman
-            const restrictedFloors = ['L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'Rooftop'];
-            
             if (floor === 'B1') {
-              // B1: pindah ke basement scene dengan alur pintu
-              travelToDestination('Basement', null, true, basementScene);
+              // B1: tutup pintu -> getar -> buka pintu -> pindah ke basement scene
+              travelWithDoorCloseOpen('basement', null, basementScene);
             }
             else if (floor === 'G') {
-              // G: pindah ke Lobby.html
-              travelToDestination('Lobby', 'Lobby.html', false, null);
+              // G: tutup pintu -> getar -> buka pintu -> pindah ke Lobby.html
+              travelWithDoorCloseOpen('lobby', 'Lobby.html', null);
             }
             else if (floor === 'L1') {
-              // L1: pindah ke L1.html
-              travelToDestination('L1', 'L1.html', false, null);
+              // L1: tutup pintu -> getar -> buka pintu -> pindah ke L1.html
+              travelWithDoorCloseOpen('l1', 'L1.html', null);
             }
             else if (restrictedFloors.includes(floor)) {
-              // Lantai terbatas: hanya notifikasi, tidak pindah halaman
-              isProcessing = true;
-              
-              const showRestrictedMessage = () => {
-                const currentScene = liftScene;
-                currentScene.classList.add('shake-animation');
-                setTimeout(() => {
-                  currentScene.classList.remove('shake-animation');
-                  showNotification('This floor is only accessible by employees');
-                  isProcessing = false;
-                }, 400);
-              };
-              
-              if (isDoorOpen) {
-                closeDoors(true);
-                setTimeout(() => {
-                  showRestrictedMessage();
-                  // Buka pintu kembali setelah notifikasi
-                  setTimeout(() => {
-                    if (!isDoorOpen && !isProcessing) {
-                      openDoors(false);
-                    }
-                  }, 800);
-                }, 550);
-              } else {
-                showRestrictedMessage();
-                // Buka pintu kembali setelah notifikasi
-                setTimeout(() => {
-                  if (!isDoorOpen && !isProcessing) {
-                    openDoors(false);
-                  }
-                }, 800);
-              }
+              // Lantai terbatas: hanya notifikasi, pintu tidak berubah
+              showRestrictedAccess();
             }
           });
           
@@ -643,7 +626,6 @@
         createFloorButtons();
         showSceneDirect(liftScene);
         initDoors();
-        // Tampilkan notifikasi awal
         setTimeout(() => {
           showNotification('Pintu terbuka, silakan pilih lantai');
         }, 500);
@@ -651,4 +633,4 @@
     })();
   </script>
 </body>
-  </html>
+</html>
