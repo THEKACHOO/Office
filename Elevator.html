@@ -3,70 +3,248 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Elevator Hitam - Pintu Buka Tutup</title>
+  <title>Elevator</title>
+  <!-- Inter font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      user-select: none;
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #050505;
+      background-color: #000000;
       color: #FFFFFF;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow: hidden;
       width: 100%;
-      height: 100vh;
-      position: relative;
+      height: 100%;
     }
 
-    .elevator-stage {
+    /* scene layers */
+    .scene {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: #0a0a0a;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .elevator-shaft {
-      position: relative;
-      width: 90%;
-      max-width: 680px;
-      aspect-ratio: 3 / 4;
-      background: #0f0f0f;
-      border-radius: 32px;
-      box-shadow: 0 30px 50px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.03);
-      border: 1px solid #2a2a2a;
-      overflow: hidden;
-      cursor: pointer;
+    /* LIFT & BASEMENT - konten di bawah */
+    #scene-lift, #scene-basement {
+      align-items: flex-end;
+    }
+    
+    #scene-lift .content, #scene-basement .content {
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      padding-bottom: 3rem;
     }
 
-    .elevator-interior {
+    /* dark overlay – lebih transparan */
+    .scene::after {
+      content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #181818 0%, #080808 100%);
+      background-color: rgba(0, 0, 0, 0.17); 
+      pointer-events: none;
       z-index: 1;
     }
 
-    .elevator-interior::before {
-      content: "";
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      right: 20px;
-      bottom: 20px;
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 20px;
+    .content {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      max-width: 1280px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scene.hidden {
+      opacity: 0;
       pointer-events: none;
+    }
+
+    /* BACKGROUND UNTUK DESKTOP (default) */
+    #scene-lift {
+      background-image: url('lift1.png');
+    }
+    #scene-basement {
+      background-image: url('Basement1.png');
+    }
+
+    /* BACKGROUND UNTUK MOBILE & TABLET */
+    @media (max-width: 1024px) {
+      #scene-lift {
+        background-image: url('lift2.png');
+      }
+      #scene-basement {
+        background-image: url('Basement2.png');
+      }
+    }
+
+    /* Fallback SVG */
+    @media (min-width: 1025px) {
+      #scene-lift {
+        background-image: url('lift1.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%231a2e3f%22/><rect x=%2260%22 y=%2250%22 width=%22280%22 height=%22200%22 fill=%22%233a526b%22 rx=%2220%22/><circle cx=%22200%22 cy=%22150%22 r=%2230%22 fill=%22%236a859f%22 opacity=%220.7%22/><rect x=%22160%22 y=%22135%22 width=%2280%22 height=%2230%22 fill=%22%23aac3d9%22 rx=%226%22/></svg>');
+      }
+      #scene-basement {
+        background-image: url('Basement1.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%23223544%22/><rect x=%2250%22 y=%2260%22 width=%22300%22 height=%22180%22 fill=%22%233d576e%22 rx=%2212%22/><rect x=%22120%22 y=%22110%22 width=%2250%22 height=%2250%22 fill=%22%235d7a94%22 rx=%226%22/><rect x=%22230%22 y=%22110%22 width=%2250%22 height=%2250%22 fill=%22%235d7a94%22 rx=%226%22/><rect x=%22175%22 y=%22170%22 width=%2250%22 height=%2220%22 fill=%22%237a98b3%22 rx=%224%22/></svg>');
+      }
+    }
+    @media (max-width: 1024px) {
+      #scene-lift {
+        background-image: url('lift2.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 600%22><rect width=%22400%22 height=%22600%22 fill=%22%231a2e3f%22/><rect x=%2260%22 y=%22120%22 width=%22280%22 height=%22360%22 fill=%22%233a526b%22 rx=%2230%22/><circle cx=%22200%22 cy=%22300%22 r=%2240%22 fill=%22%236a859f%22 opacity=%220.7%22/><rect x=%22150%22 y=%22280%22 width=%22100%22 height=%2240%22 fill=%22%23aac3d9%22 rx=%228%22/></svg>');
+      }
+      #scene-basement {
+        background-image: url('Basement2.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 600%22><rect width=%22400%22 height=%22600%22 fill=%22%23223544%22/><rect x=%2240%22 y=%22150%22 width=%22320%22 height=%22300%22 fill=%22%233d576e%22 rx=%2220%22/><rect x=%22110%22 y=%22220%22 width=%2250%22 height=%2250%22 fill=%22%235d7a94%22 rx=%226%22/><rect x=%22240%22 y=%22220%22 width=%2250%22 height=%2250%22 fill=%22%235d7a94%22 rx=%226%22/><rect x=%22175%22 y=%22350%22 width=%2250%22 height=%2220%22 fill=%22%237a98b3%22 rx=%224%22/></svg>');
+      }
+    }
+
+    /* LIFT PANEL */
+    .lift-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
+      max-width: 700px;
+      width: auto;
+      margin: 0 auto 1rem auto;
+    }
+
+    /* TOMBOL LIFT */
+    .lift-btn {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #000000;
+      background: #FFFFFF;
+      border: 2px solid #000000;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .lift-btn:hover {
+      background: #000000;
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+      transform: scale(1.03) translateY(-2px);
+      box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.8);
+    }
+
+    /* floor indicator */
+    .floor-label {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: #FFFFFF;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      padding: 0.5rem 1.8rem;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    #scene-lift .floor-label, #scene-basement .floor-label {
+      margin-top: 0;
+      margin-bottom: 0;
+      display: inline-block;
+    }
+
+    /* notifikasi */
+    .notification {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      z-index: 1000;
+      animation: fadeInOut 2s ease;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+
+    /* animasi shake */
+    @keyframes microShake {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-2px, 1px); }
+      40% { transform: translate(2px, -1px); }
+      60% { transform: translate(-1px, 1px); }
+      80% { transform: translate(1px, -1px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .shake-animation {
+      animation: microShake 0.4s ease-in-out;
+    }
+
+    /* ELEVATOR DOOR OVERLAY - pintu lift hitam */
+    .elevator-doors-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .door-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      margin: auto;
     }
 
     .door-left, .door-right {
@@ -74,23 +252,23 @@
       top: 0;
       width: 50%;
       height: 100%;
-      background: radial-gradient(ellipse at 30% 40%, #2a2a2a, #0a0a0a);
-      box-shadow: inset -3px 0 10px rgba(0,0,0,0.8), inset 1px 0 2px rgba(255,255,255,0.08);
-      z-index: 20;
+      background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
+      box-shadow: inset -3px 0 10px rgba(0,0,0,0.8), 2px 0 5px rgba(0,0,0,0.3);
       transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.05);
-      backdrop-filter: blur(1px);
+      z-index: 60;
+      backdrop-filter: blur(2px);
+      border-right: 1px solid #3a3a3a;
+      border-left: 1px solid #2a2a2a;
     }
 
     .door-left {
       left: 0;
-      border-right: 1px solid #3a3a3a;
-      border-radius: 0 12px 12px 0;
+      border-radius: 0 8px 8px 0;
     }
 
     .door-right {
       right: 0;
-      border-left: 1px solid #3a3a3a;
-      border-radius: 12px 0 0 12px;
+      border-radius: 8px 0 0 8px;
     }
 
     .door-left::after, .door-right::after {
@@ -98,17 +276,19 @@
       position: absolute;
       top: 50%;
       width: 8px;
-      height: 44px;
-      background: #6a6a6a;
+      height: 45px;
+      background: #5a5a5a;
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.6);
       transform: translateY(-50%);
     }
+
     .door-left::after {
-      right: 32px;
+      right: 35px;
     }
+
     .door-right::after {
-      left: 32px;
+      left: 35px;
     }
 
     .door-left::before, .door-right::before {
@@ -118,17 +298,19 @@
       width: 3px;
       height: 60%;
       background: rgba(100,100,100,0.5);
-      left: 38%;
+      left: 40%;
       border-radius: 2px;
     }
+
     .door-right::before {
       left: auto;
-      right: 38%;
+      right: 40%;
     }
 
     .door-open .door-left {
       transform: translateX(-101%);
     }
+
     .door-open .door-right {
       transform: translateX(101%);
     }
@@ -136,453 +318,415 @@
     .door-closed .door-left {
       transform: translateX(0%);
     }
+
     .door-closed .door-right {
       transform: translateX(0%);
     }
 
-    .indicator-light {
-      position: absolute;
-      top: 20px;
+    /* indikator lampu pintu */
+    .door-indicator {
+      position: fixed;
+      top: 30px;
       left: 50%;
       transform: translateX(-50%);
-      width: 48px;
-      height: 14px;
+      width: 50px;
+      height: 12px;
       background: #2a2a2a;
       border-radius: 20px;
-      z-index: 25;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.8), 0 0 2px rgba(255,255,255,0.2);
+      z-index: 70;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.8);
       transition: all 0.2s;
+      pointer-events: none;
     }
 
-    .door-open .indicator-light {
-      background: #3a8c6e;
-      box-shadow: 0 0 12px #3a8c6e;
+    .door-open .door-indicator {
+      background: #4caf50;
+      box-shadow: 0 0 12px #4caf50;
     }
 
-    .floor-panel {
-      position: absolute;
-      bottom: 28px;
-      left: 20px;
-      background: rgba(8, 8, 8, 0.85);
-      backdrop-filter: blur(14px);
-      border-radius: 48px;
-      padding: 14px 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      max-width: 260px;
-      z-index: 30;
-      border: 1px solid rgba(255,255,255,0.15);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    }
-
-    .floor-btn {
-      background: #202020;
-      border: none;
-      color: #eaeaea;
-      font-weight: 600;
-      font-size: 0.8rem;
+    /* tombol buka tutup tambahan */
+    .door-control-btn {
+      position: fixed;
+      bottom: 140px;
+      right: 20px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
       padding: 8px 16px;
       border-radius: 40px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      font-family: 'Inter', monospace;
-      letter-spacing: 0.3px;
-      box-shadow: 0 1px 2px black;
-    }
-
-    .floor-btn:hover {
-      background: #3a3a3a;
-      transform: translateY(-1px);
-    }
-
-    .floor-btn:active {
-      transform: scale(0.96);
-      background: #4a6a6a;
-    }
-
-    .floor-btn.disabled-floor {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .control-panel {
-      position: absolute;
-      bottom: 28px;
-      right: 20px;
-      background: rgba(8, 8, 8, 0.85);
-      backdrop-filter: blur(14px);
-      border-radius: 48px;
-      padding: 12px 20px;
       display: flex;
-      gap: 16px;
-      z-index: 30;
-      border: 1px solid rgba(255,255,255,0.15);
+      gap: 12px;
+      z-index: 80;
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
-    .ctrl-btn {
+    .door-action-btn {
       background: #2c2c2c;
       border: none;
       color: white;
       font-weight: 600;
-      font-size: 0.85rem;
-      padding: 8px 20px;
+      font-size: 0.8rem;
+      padding: 6px 16px;
       border-radius: 40px;
       cursor: pointer;
       transition: all 0.2s;
       font-family: 'Inter', sans-serif;
     }
 
-    .ctrl-btn:active {
+    .door-action-btn:hover {
+      background: #4a4a4a;
+      transform: translateY(-1px);
+    }
+
+    .door-action-btn:active {
       transform: scale(0.96);
     }
 
-    .ctrl-btn:hover {
-      background: #424242;
-    }
-
-    .floor-indicator {
-      position: absolute;
-      top: 28px;
-      left: 28px;
-      background: #000000aa;
-      backdrop-filter: blur(10px);
-      padding: 6px 18px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      border-left: 3px solid #c0a050;
-      z-index: 30;
-      font-family: monospace;
-      letter-spacing: 1px;
-    }
-
-    .notification {
-      position: fixed;
-      bottom: 35px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #111111dd;
-      backdrop-filter: blur(20px);
-      color: #f0f0f0;
-      padding: 10px 28px;
-      border-radius: 60px;
-      font-weight: 500;
-      font-size: 0.85rem;
-      border: 1px solid #6a6a6a;
-      z-index: 2000;
-      pointer-events: none;
-      white-space: nowrap;
-      font-family: monospace;
-    }
-
-    @keyframes elevatorShake {
-      0% { transform: translateX(0px) translateY(0px); }
-      25% { transform: translateX(-2px) translateY(1px); }
-      50% { transform: translateX(2px) translateY(-1px); }
-      75% { transform: translateX(-1px) translateY(1px); }
-      100% { transform: translateX(0) translateY(0); }
-    }
-
-    .shake-effect {
-      animation: elevatorShake 0.25s ease-in-out;
-    }
-
-    @media (max-width: 650px) {
-      .floor-panel { padding: 10px 12px; gap: 8px; bottom: 20px; left: 12px; max-width: 200px; }
-      .control-panel { padding: 8px 14px; gap: 10px; bottom: 20px; right: 12px; }
-      .floor-btn { padding: 5px 12px; font-size: 0.7rem; }
-      .ctrl-btn { padding: 6px 14px; font-size: 0.75rem; }
-      .floor-indicator { font-size: 0.75rem; top: 18px; left: 18px; }
-      .indicator-light { width: 36px; height: 10px; top: 14px; }
+    @media (max-width: 700px) {
+      .lift-panel {
+        padding: 0.8rem 1rem;
+        gap: 0.5rem;
+        border-radius: 30px;
+      }
+      .lift-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+      #scene-lift .content, #scene-basement .content {
+        padding-bottom: 2rem;
+      }
+      .door-control-btn {
+        bottom: 110px;
+        right: 12px;
+        padding: 6px 12px;
+      }
+      .door-action-btn {
+        padding: 4px 12px;
+        font-size: 0.7rem;
+      }
+      .door-left::after, .door-right::after {
+        width: 6px;
+        height: 35px;
+        right: 20px;
+      }
+      .door-right::after {
+        left: 20px;
+        right: auto;
+      }
     }
 
     @media (max-width: 480px) {
-      .floor-panel { max-width: 170px; gap: 6px; }
-      .floor-btn { padding: 4px 10px; font-size: 0.65rem; }
+      .lift-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+      }
+      .lift-panel {
+        width: 95%;
+      }
+      #scene-lift .content, #scene-basement .content {
+        padding-bottom: 1.5rem;
+      }
+      .door-control-btn {
+        bottom: 90px;
+      }
+      .door-left::after, .door-right::after {
+        width: 5px;
+        height: 28px;
+        right: 12px;
+      }
+      .door-right::after {
+        left: 12px;
+      }
     }
   </style>
 </head>
 <body>
-
-<div class="elevator-stage">
-  <div class="elevator-shaft" id="elevatorShaft">
-    <div class="elevator-interior"></div>
-    <div class="door-left" id="doorLeft"></div>
-    <div class="door-right" id="doorRight"></div>
-    <div class="indicator-light" id="indicatorLight"></div>
-    
-    <div class="floor-panel" id="floorPanel"></div>
-    
-    <div class="control-panel">
-      <button class="ctrl-btn" id="openDoorBtn">BUKA PINTU</button>
-      <button class="ctrl-btn" id="closeDoorBtn">TUTUP PINTU</button>
+  <!-- ELEVATOR SCENE -->
+  <div id="scene-lift" class="scene">
+    <div class="content">
+      <div style="flex: 1;"></div>
+      <div class="lift-panel" id="lift-panel">
+        <!-- Tombol akan diisi JavaScript -->
+      </div>
+      <div class="floor-label">ELEVATOR</div>
+      <div style="height: 1rem;"></div>
     </div>
-    
-    <div class="floor-indicator" id="floorIndicator">LANTAI LOBBY</div>
   </div>
-</div>
 
-<div id="notificationMsg" class="notification" style="display: none;"></div>
+  <!-- BASEMENT SCENE -->
+  <div id="scene-basement" class="scene hidden">
+    <div class="content">
+      <div style="flex: 1;"></div>
+      <div class="lift-panel" id="basement-panel">
+        <!-- Tombol untuk basement -->
+      </div>
+      <div class="floor-label">BASEMENT</div>
+      <div style="height: 1rem;"></div>
+    </div>
+  </div>
 
-<script>
-  (function() {
-    let isDoorOpen = false;
-    let currentFloor = "LOBBY";
-    let isMoving = false;
-    
-    const floorsConfig = [
-      { label: "LOBBY", targetUrl: "Lobby.html", restricted: false, display: "LOBBY" },
-      { label: "B1", targetUrl: "Basement.html", restricted: false, display: "BASEMENT" },
-      { label: "L1", targetUrl: "L1.html", restricted: false, display: "LANTAI 1" },
-      { label: "L2", targetUrl: null, restricted: true, display: "LANTAI 2" },
-      { label: "L3", targetUrl: null, restricted: true, display: "LANTAI 3" },
-      { label: "ROOF", targetUrl: null, restricted: true, display: "ROOFTOP" }
-    ];
-    
-    const elevatorShaft = document.getElementById('elevatorShaft');
-    const openBtn = document.getElementById('openDoorBtn');
-    const closeBtn = document.getElementById('closeDoorBtn');
-    const floorIndicator = document.getElementById('floorIndicator');
-    const notificationDiv = document.getElementById('notificationMsg');
-    const floorPanelDiv = document.getElementById('floorPanel');
-    
-    function showNotification(message, isError = false) {
-      notificationDiv.textContent = message;
-      notificationDiv.style.display = 'block';
-      notificationDiv.style.background = isError ? '#2a1010dd' : '#0a1a1add';
-      notificationDiv.style.borderColor = isError ? '#aa5555' : '#6a8a6a';
-      setTimeout(() => {
-        notificationDiv.style.display = 'none';
-      }, 2000);
-    }
-    
-    function updateDoorVisual() {
-      if (isDoorOpen) {
-        elevatorShaft.classList.add('door-open');
-        elevatorShaft.classList.remove('door-closed');
-      } else {
-        elevatorShaft.classList.add('door-closed');
-        elevatorShaft.classList.remove('door-open');
+  <!-- ELEVATOR DOORS VISUAL -->
+  <div class="elevator-doors-overlay" id="elevatorDoorsOverlay">
+    <div class="door-container">
+      <div class="door-left" id="elevatorDoorLeft"></div>
+      <div class="door-right" id="elevatorDoorRight"></div>
+    </div>
+    <div class="door-indicator" id="doorIndicator"></div>
+  </div>
+
+  <!-- TOMBOL KONTROL PINTU -->
+  <div class="door-control-btn" id="doorControlButtons">
+    <button class="door-action-btn" id="openDoorBtn">BUKA PINTU</button>
+    <button class="door-action-btn" id="closeDoorBtn">TUTUP PINTU</button>
+  </div>
+
+  <!-- NOTIFICATION AREA -->
+  <div id="notification" class="notification" style="display: none;"></div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      const liftScene = document.getElementById('scene-lift');
+      const basementScene = document.getElementById('scene-basement');
+      const liftPanel = document.getElementById('lift-panel');
+      const basementPanel = document.getElementById('basement-panel');
+      const notification = document.getElementById('notification');
+      
+      // ELEMEN PINTU
+      const doorsOverlay = document.getElementById('elevatorDoorsOverlay');
+      const doorLeft = document.getElementById('elevatorDoorLeft');
+      const doorRight = document.getElementById('elevatorDoorRight');
+      const openDoorBtn = document.getElementById('openDoorBtn');
+      const closeDoorBtn = document.getElementById('closeDoorBtn');
+      
+      let isDoorOpen = false;
+      let isProcessing = false;
+
+      function showNotification(message) {
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+          notification.style.display = 'none';
+        }, 2000);
       }
-    }
-    
-    function openDoors(manual = true) {
-      if (isDoorOpen) {
-        if (manual) showNotification("Pintu sudah terbuka");
-        return;
+
+      // Fungsi update visual pintu
+      function updateDoorVisual() {
+        if (isDoorOpen) {
+          doorsOverlay.classList.add('door-open');
+          doorsOverlay.classList.remove('door-closed');
+        } else {
+          doorsOverlay.classList.add('door-closed');
+          doorsOverlay.classList.remove('door-open');
+        }
       }
-      if (isMoving) {
-        if (manual) showNotification("Lift sedang bergerak, tunggu sebentar");
-        return;
+
+      // Buka pintu
+      function openDoors(manual = true) {
+        if (isDoorOpen) {
+          if (manual) showNotification('Pintu sudah terbuka');
+          return;
+        }
+        if (isProcessing) {
+          if (manual) showNotification('Lift sedang bergerak');
+          return;
+        }
+        isDoorOpen = true;
+        updateDoorVisual();
+        if (manual) showNotification('Pintu terbuka');
+        // efek getar
+        liftScene.classList.add('shake-animation');
+        setTimeout(() => liftScene.classList.remove('shake-animation'), 300);
       }
-      isDoorOpen = true;
-      updateDoorVisual();
-      if (manual) showNotification("Pintu terbuka");
-      elevatorShaft.classList.add('shake-effect');
-      setTimeout(() => elevatorShaft.classList.remove('shake-effect'), 200);
-    }
-    
-    function closeDoors(manual = true) {
-      if (!isDoorOpen) {
-        if (manual) showNotification("Pintu sudah tertutup");
-        return;
+
+      // Tutup pintu
+      function closeDoors(manual = true) {
+        if (!isDoorOpen) {
+          if (manual) showNotification('Pintu sudah tertutup');
+          return;
+        }
+        if (isProcessing) {
+          if (manual) showNotification('Lift sedang bergerak');
+          return;
+        }
+        isDoorOpen = false;
+        updateDoorVisual();
+        if (manual) showNotification('Pintu tertutup');
+        liftScene.classList.add('shake-animation');
+        setTimeout(() => liftScene.classList.remove('shake-animation'), 300);
       }
-      if (isMoving) {
-        if (manual) showNotification("Lift sedang bergerak");
-        return;
+
+      // Fungsi ganti scene
+      function showSceneDirect(sceneToShow) {
+        [liftScene, basementScene].forEach(scene => {
+          if (scene === sceneToShow) {
+            scene.classList.remove('hidden');
+          } else {
+            scene.classList.add('hidden');
+          }
+        });
       }
-      isDoorOpen = false;
-      updateDoorVisual();
-      if (manual) showNotification("Pintu tertutup");
-      elevatorShaft.classList.add('shake-effect');
-      setTimeout(() => elevatorShaft.classList.remove('shake-effect'), 200);
-    }
-    
-    function getFloorByLabel(label) {
-      return floorsConfig.find(f => f.label === label);
-    }
-    
-    function updateFloorIndicator(label) {
-      const floorData = getFloorByLabel(label);
-      if (floorData) {
-        floorIndicator.innerText = `LANTAI ${floorData.display}`;
-      } else {
-        floorIndicator.innerText = `LANTAI ${label}`;
-      }
-    }
-    
-    function executeFloorTransition(targetFloor) {
-      return new Promise((resolve) => {
-        if (currentFloor === targetFloor.label) {
-          resolve({ alreadyHere: true });
+
+      // Fungsi pindah scene dengan animasi pintu
+      function switchLiftSceneWithDoor(currentScene, targetScene, callback) {
+        if (isProcessing) {
+          showNotification('Tunggu, proses sebelumnya masih berjalan');
           return;
         }
         
-        isMoving = true;
-        elevatorShaft.classList.add('shake-effect');
+        // Alur: tutup pintu dulu jika terbuka
+        const proceedToSwitch = () => {
+          isProcessing = true;
+          currentScene.classList.add('shake-animation');
+          setTimeout(() => {
+            currentScene.classList.remove('shake-animation');
+            showSceneDirect(targetScene);
+            isProcessing = false;
+            // setelah pindah scene, buka pintu otomatis
+            setTimeout(() => {
+              if (!isDoorOpen) {
+                openDoors(false);
+              }
+            }, 200);
+            if (callback) callback();
+          }, 400);
+        };
         
-        setTimeout(() => {
-          elevatorShaft.classList.remove('shake-effect');
-          currentFloor = targetFloor.label;
-          updateFloorIndicator(currentFloor);
-          isMoving = false;
-          resolve({ alreadyHere: false });
-        }, 350);
-      });
-    }
-    
-    async function handleFloorRequest(floor) {
-      if (isMoving) {
-        showNotification("Lift sedang bergerak, harap tunggu", true);
-        return false;
-      }
-      
-      const floorData = getFloorByLabel(floor.label);
-      if (!floorData) {
-        showNotification("Lantai tidak tersedia", true);
-        return false;
-      }
-      
-      if (floorData.restricted) {
-        showNotification("Lantai ini hanya untuk karyawan", true);
-        elevatorShaft.classList.add('shake-effect');
-        setTimeout(() => elevatorShaft.classList.remove('shake-effect'), 300);
-        return false;
-      }
-      
-      if (currentFloor === floor.label && isDoorOpen) {
-        showNotification(`Anda sudah berada di ${floorData.display} dan pintu terbuka`);
-        return false;
-      }
-      
-      if (currentFloor === floor.label && !isDoorOpen) {
-        openDoors(true);
-        return false;
-      }
-      
-      if (isDoorOpen) {
-        await closeDoors(false);
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-      
-      const transition = await executeFloorTransition(floorData);
-      
-      await new Promise(resolve => setTimeout(resolve, 180));
-      
-      await openDoors(false);
-      
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
-      if (floorData.targetUrl) {
-        showNotification(`Membuka ${floorData.display}`);
-        setTimeout(() => {
-          window.location.href = floorData.targetUrl;
-        }, 400);
-      } else if (!floorData.restricted && !floorData.targetUrl) {
-        showNotification(`${floorData.display} - tidak ada halaman tujuan`, false);
-      }
-      
-      return true;
-    }
-    
-    function buildFloorButtons() {
-      floorPanelDiv.innerHTML = '';
-      floorsConfig.forEach(floor => {
-        const btn = document.createElement('button');
-        btn.className = 'floor-btn';
-        if (floor.restricted) {
-          btn.classList.add('disabled-floor');
+        if (isDoorOpen) {
+          // tutup pintu dulu baru pindah
+          const originalIsDoorOpen = isDoorOpen;
+          closeDoors(false);
+          setTimeout(() => {
+            proceedToSwitch();
+          }, 550);
+        } else {
+          proceedToSwitch();
         }
+      }
+
+      // Fungsi buat tombol basement (tombol kembali ke elevator)
+      function createBasementButtons() {
+        basementPanel.innerHTML = '';
         
-        let displayText = floor.label;
-        if (floor.label === 'LOBBY') displayText = 'LOBBY';
-        else if (floor.label === 'B1') displayText = 'B1';
-        else if (floor.label === 'L1') displayText = 'L1';
-        else if (floor.label === 'L2') displayText = 'L2';
-        else if (floor.label === 'L3') displayText = 'L3';
-        else if (floor.label === 'ROOF') displayText = 'ROOF';
-        
-        btn.innerText = displayText;
-        
-        btn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          if (isMoving) {
-            showNotification("Lift sedang bergerak, tunggu sebentar", true);
-            return;
-          }
-          await handleFloorRequest(floor);
+        const btnBack = document.createElement('button');
+        btnBack.className = 'lift-btn';
+        btnBack.textContent = '← Back to Elevator';
+        btnBack.addEventListener('click', () => {
+          switchLiftSceneWithDoor(basementScene, liftScene, null);
         });
         
-        floorPanelDiv.appendChild(btn);
-      });
-    }
-    
-    function initControls() {
-      openBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openDoors(true);
-      });
-      
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeDoors(true);
-      });
-    }
-    
-    function addShaftClickInteraction() {
-      elevatorShaft.addEventListener('click', (e) => {
-        if (e.target.closest('.floor-btn') || e.target.closest('.ctrl-btn')) return;
-        if (isMoving) {
-          showNotification("Lift sedang bergerak", true);
+        basementPanel.appendChild(btnBack);
+      }
+
+      // Fungsi untuk navigasi ke halaman dengan alur pintu
+      function navigateToPageWithDoor(url, floorName) {
+        if (isProcessing) {
+          showNotification('Tunggu, proses sedang berjalan');
           return;
         }
+        
+        isProcessing = true;
+        
+        const doNavigate = () => {
+          liftScene.classList.add('shake-animation');
+          setTimeout(() => {
+            liftScene.classList.remove('shake-animation');
+            window.location.href = url;
+          }, 400);
+        };
+        
         if (isDoorOpen) {
-          closeDoors(true);
+          // tutup pintu dulu baru navigasi
+          closeDoors(false);
+          setTimeout(() => {
+            doNavigate();
+          }, 550);
         } else {
+          doNavigate();
+        }
+      }
+
+      // Fungsi buat tombol lift
+      function createFloorButtons() {
+        liftPanel.innerHTML = '';
+        
+        const floors = ['B1', 'G', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'Rooftop'];
+        
+        floors.forEach(floor => {
+          const btn = document.createElement('button');
+          btn.className = 'lift-btn';
+          btn.textContent = floor;
+          
+          btn.addEventListener('click', function() {
+            if (isProcessing) {
+              showNotification('Tunggu, proses sedang berjalan');
+              return;
+            }
+            
+            if (floor === 'B1') {
+              // B1: pindah ke basement scene dengan alur pintu
+              switchLiftSceneWithDoor(liftScene, basementScene, createBasementButtons);
+            }
+            else if (floor === 'G') {
+              // G: pindah ke Lobby.html dengan alur pintu
+              navigateToPageWithDoor('Lobby.html', 'Lobby');
+            }
+            else if (floor === 'L1') {
+              // L1: pindah ke L1.html dengan alur pintu
+              navigateToPageWithDoor('L1.html', 'L1');
+            }
+            else {
+              // Lantai lain: notifikasi dengan animasi pintu
+              isProcessing = true;
+              const showRestricted = () => {
+                liftScene.classList.add('shake-animation');
+                setTimeout(() => {
+                  liftScene.classList.remove('shake-animation');
+                  showNotification('This floor is only accessible by employees');
+                  isProcessing = false;
+                }, 400);
+              };
+              
+              if (isDoorOpen) {
+                closeDoors(false);
+                setTimeout(() => {
+                  showRestricted();
+                }, 550);
+              } else {
+                showRestricted();
+              }
+            }
+          });
+          
+          liftPanel.appendChild(btn);
+        });
+      }
+
+      // Inisialisasi event tombol pintu
+      function initDoorControls() {
+        openDoorBtn.addEventListener('click', () => {
           openDoors(true);
-        }
+        });
+        
+        closeDoorBtn.addEventListener('click', () => {
+          closeDoors(true);
+        });
+      }
+
+      // Inisialisasi pintu dalam keadaan tertutup
+      function initDoors() {
+        isDoorOpen = false;
+        updateDoorVisual();
+      }
+
+      // Inisialisasi
+      window.addEventListener('load', () => {
+        createFloorButtons();
+        showSceneDirect(liftScene);
+        initDoors();
+        initDoorControls();
       });
-    }
-    
-    function initializeElevator() {
-      isDoorOpen = false;
-      currentFloor = "LOBBY";
-      isMoving = false;
-      updateDoorVisual();
-      updateFloorIndicator("LOBBY");
-      buildFloorButtons();
-      initControls();
-      addShaftClickInteraction();
-      showNotification("Lift siap | Pintu tertutup", false);
-    }
-    
-    window.addEventListener('load', () => {
-      initializeElevator();
-    });
-    
-    window.addEventListener('keydown', (e) => {
-      if (e.code === 'KeyO') {
-        openDoors(true);
-        e.preventDefault();
-      } else if (e.code === 'KeyC') {
-        closeDoors(true);
-        e.preventDefault();
-      }
-    });
-    
-    const observer = new MutationObserver(() => {
-      const interior = document.querySelector('.elevator-interior');
-      if (interior) {
-        if (isDoorOpen) {
-          interior.style.background = "linear-gradient(135deg, #242424 0%, #101010 100%)";
-        } else {
-          interior.style.background = "linear-gradient(135deg, #181818 0%, #080808 100%)";
-        }
-      }
-    });
-    observer.observe(elevatorShaft, { attributes: true, attributeFilter: ['class'] });
-  })();
-</script>
+    })();
+  </script>
 </body>
-</html>
+  </html>
