@@ -461,26 +461,24 @@
         }
       }
 
-      // Buka pintu (otomatis)
+      // Buka pintu
       function openDoors(silent = false) {
         if (isDoorOpen) return;
-        if (isProcessing && !silent) return;
         isDoorOpen = true;
         updateDoorVisual();
         if (!silent) showNotification('Pintu terbuka');
       }
 
-      // Tutup pintu (otomatis)
+      // Tutup pintu
       function closeDoors(silent = false) {
         if (!isDoorOpen) return;
-        if (isProcessing && !silent) return;
         isDoorOpen = false;
         updateDoorVisual();
         if (!silent) showNotification('Pintu tertutup');
       }
 
-      // Fungsi untuk B1 dan L1: tutup -> getar -> buka -> pindah scene atau navigasi
-      function travelWithDoorCloseOpen(targetType, targetUrl, targetScene = null) {
+      // Fungsi untuk B1, G, L1: tutup 1 detik -> buka lagi -> lalu pindah
+      function travelWithDoorAnimation(targetType, targetUrl, targetScene = null) {
         if (isProcessing) {
           showNotification('Lift sedang beroperasi, tunggu sebentar');
           return false;
@@ -488,48 +486,56 @@
         
         isProcessing = true;
         
-        const executeSequence = () => {
-          // Efek getar (simulasi bergerak)
-          const currentScene = liftScene;
-          currentScene.classList.add('shake-animation');
-          
+        // Step 1: Tutup pintu jika terbuka
+        const executeAfterClose = () => {
+          // Pintu sudah tertutup, tunggu 1 detik (pintu tetap tertutup)
           setTimeout(() => {
-            currentScene.classList.remove('shake-animation');
+            // Efek getar (simulasi bergerak ke lantai)
+            const currentScene = liftScene;
+            currentScene.classList.add('shake-animation');
             
-            // Buka pintu
-            openDoors(false);
-            
-            // Setelah pintu terbuka, pindah ke tujuan
             setTimeout(() => {
-              if (targetType === 'basement') {
-                showSceneDirect(basementScene);
-                createBasementButtons();
-                isProcessing = false;
-              } else if (targetType === 'lobby') {
-                window.location.href = 'Lobby.html';
-              } else if (targetType === 'l1') {
-                window.location.href = 'L1.html';
-              } else {
-                isProcessing = false;
-              }
-            }, 450);
-          }, 400);
+              currentScene.classList.remove('shake-animation');
+              
+              // Step 2: Buka pintu kembali
+              openDoors(false);
+              
+              // Step 3: Setelah pintu terbuka, pindah ke tujuan
+              setTimeout(() => {
+                if (targetType === 'basement') {
+                  showSceneDirect(basementScene);
+                  createBasementButtons();
+                  isProcessing = false;
+                } else if (targetType === 'lobby') {
+                  window.location.href = 'Lobby.html';
+                } else if (targetType === 'l1') {
+                  window.location.href = 'L1.html';
+                } else if (targetType === 'elevator') {
+                  showSceneDirect(liftScene);
+                  isProcessing = false;
+                } else {
+                  isProcessing = false;
+                }
+              }, 400);
+            }, 400);
+          }, 1000); // Pintu tertutup selama 1 detik
         };
         
-        // Jika pintu terbuka, tutup dulu baru jalankan sequence
+        // Jika pintu terbuka, tutup dulu
         if (isDoorOpen) {
           closeDoors(true);
           setTimeout(() => {
-            executeSequence();
-          }, 580);
+            executeAfterClose();
+          }, 100); // Beri waktu animasi tutup selesai
         } else {
-          executeSequence();
+          // Jika sudah tertutup, langsung jalankan
+          executeAfterClose();
         }
         
         return true;
       }
 
-      // Fungsi untuk lantai terbatas (L2 - Rooftop): hanya notifikasi, pintu tidak berubah
+      // Fungsi untuk lantai terbatas (L2 - Rooftop): hanya notifikasi, pintu tidak berubah (tetap terbuka)
       function showRestrictedAccess() {
         if (isProcessing) {
           showNotification('Lift sedang beroperasi, tunggu sebentar');
@@ -548,7 +554,7 @@
         }, 400);
       }
 
-      // Fungsi ganti scene langsung (tanpa animasi pintu untuk internal)
+      // Fungsi ganti scene langsung
       function showSceneDirect(sceneToShow) {
         [liftScene, basementScene].forEach(scene => {
           if (scene === sceneToShow) {
@@ -567,8 +573,8 @@
         btnBack.className = 'lift-btn';
         btnBack.textContent = '← Back to Elevator';
         btnBack.addEventListener('click', () => {
-          // Kembali ke elevator dengan alur tutup -> buka -> pindah scene
-          travelWithDoorCloseOpen('elevator', null, liftScene);
+          // Kembali ke elevator dengan animasi pintu: tutup 1 detik -> buka -> pindah scene
+          travelWithDoorAnimation('elevator', null, liftScene);
         });
         
         basementPanel.appendChild(btnBack);
@@ -593,19 +599,19 @@
             }
             
             if (floor === 'B1') {
-              // B1: tutup pintu -> getar -> buka pintu -> pindah ke basement scene
-              travelWithDoorCloseOpen('basement', null, basementScene);
+              // B1: tutup 1 detik -> buka -> pindah ke basement scene
+              travelWithDoorAnimation('basement', null, basementScene);
             }
             else if (floor === 'G') {
-              // G: tutup pintu -> getar -> buka pintu -> pindah ke Lobby.html
-              travelWithDoorCloseOpen('lobby', 'Lobby.html', null);
+              // G: tutup 1 detik -> buka -> pindah ke Lobby.html
+              travelWithDoorAnimation('lobby', 'Lobby.html', null);
             }
             else if (floor === 'L1') {
-              // L1: tutup pintu -> getar -> buka pintu -> pindah ke L1.html
-              travelWithDoorCloseOpen('l1', 'L1.html', null);
+              // L1: tutup 1 detik -> buka -> pindah ke L1.html
+              travelWithDoorAnimation('l1', 'L1.html', null);
             }
             else if (restrictedFloors.includes(floor)) {
-              // Lantai terbatas: hanya notifikasi, pintu tidak berubah
+              // Lantai terbatas: hanya notifikasi, pintu tetap terbuka
               showRestrictedAccess();
             }
           });
