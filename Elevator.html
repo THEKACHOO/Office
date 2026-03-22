@@ -224,7 +224,7 @@
       animation: microShake 0.4s ease-in-out;
     }
 
-    /* ELEVATOR DOORS OVERLAY - pintu lift hitam dengan efek cahaya putih */
+    /* ELEVATOR DOORS OVERLAY - pintu lift hitam */
     .elevator-doors-overlay {
       position: fixed;
       top: 0;
@@ -323,7 +323,7 @@
       transform: translateX(0%);
     }
 
-    /* indikator lampu pintu dengan efek cahaya putih */
+    /* indikator lampu pintu - hijau saat terbuka, putih saat proses */
     .door-indicator {
       position: fixed;
       top: 30px;
@@ -340,48 +340,19 @@
     }
 
     .door-open .door-indicator {
-      background: #ffffff;
-      box-shadow: 0 0 25px #ffffff, inset 0 1px 2px rgba(255,255,255,0.8);
+      background: #2ecc71;
+      box-shadow: 0 0 12px #2ecc71;
     }
 
-    /* Efek cahaya putih menyala saat pintu terbuka */
-    .light-glow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 55;
-      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.25) 30%, rgba(255, 255, 255, 0.1) 60%, transparent 90%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
+    .processing .door-indicator {
+      background: #ffffff;
+      box-shadow: 0 0 15px #ffffff;
+      animation: pulseWhite 0.6s ease-in-out infinite alternate;
     }
-    
-    /* Efek sinar dari dalam lift (cahaya putih) */
-    .elevator-interior-glow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 53;
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 245, 0.2) 40%, transparent 85%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-    
-    .door-open .light-glow,
-    .door-open .elevator-interior-glow {
-      opacity: 1;
-    }
-    
-    /* Efek cahaya tambahan pada pintu saat terbuka */
-    .door-open .door-left, 
-    .door-open .door-right {
-      filter: brightness(1.15);
-      box-shadow: inset -2px 0 15px rgba(255,255,200,0.3), 0 0 8px rgba(255,255,200,0.2);
+
+    @keyframes pulseWhite {
+      0% { opacity: 0.6; box-shadow: 0 0 5px #ffffff; }
+      100% { opacity: 1; box-shadow: 0 0 20px #ffffff; }
     }
 
     @media (max-width: 700px) {
@@ -455,16 +426,14 @@
     </div>
   </div>
 
-  <!-- ELEVATOR DOORS VISUAL dengan efek cahaya putih -->
+  <!-- ELEVATOR DOORS VISUAL -->
   <div class="elevator-doors-overlay" id="elevatorDoorsOverlay">
     <div class="door-container">
       <div class="door-left" id="elevatorDoorLeft"></div>
       <div class="door-right" id="elevatorDoorRight"></div>
     </div>
     <div class="door-indicator" id="doorIndicator"></div>
-    <div class="elevator-interior-glow"></div>
   </div>
-  <div class="light-glow" id="lightGlow"></div>
 
   <!-- NOTIFICATION AREA -->
   <div id="notification" class="notification" style="display: none;"></div>
@@ -502,13 +471,22 @@
           doorsOverlay.classList.remove('door-open');
         }
       }
+      
+      // Set indicator processing (lampu putih berkedip)
+      function setProcessingIndicator(active) {
+        if (active) {
+          doorsOverlay.classList.add('processing');
+        } else {
+          doorsOverlay.classList.remove('processing');
+        }
+      }
 
-      // Buka pintu dengan efek cahaya putih
+      // Buka pintu
       function openDoors(silent = false) {
         if (isDoorOpen) return;
         isDoorOpen = true;
         updateDoorVisual();
-        if (!silent) showNotification('Pintu terbuka dengan cahaya putih');
+        if (!silent) showNotification('Pintu terbuka');
       }
 
       // Tutup pintu
@@ -519,20 +497,19 @@
         if (!silent) showNotification('Pintu tertutup');
       }
 
-      // Fungsi untuk semua lantai (B1, G, L1, dan lantai terbatas): 
-      // tutup pintu dulu selama 1 detik -> buka dengan cahaya putih -> lalu pindah (untuk B1, G, L1)
-      // untuk lantai terbatas: tutup pintu -> buka dengan cahaya putih -> tampilkan notifikasi employee
-      function processFloorRequest(floorType, targetUrl, targetScene = null, isRestricted = false) {
+      // Fungsi untuk B1, G, L1: tutup 2 detik -> pindah scene/navigasi -> buka pintu
+      function travelWithDoorSequence(targetType, targetUrl, targetScene = null) {
         if (isProcessing) {
           showNotification('Lift sedang beroperasi, tunggu sebentar');
           return false;
         }
         
         isProcessing = true;
+        setProcessingIndicator(true);
         
-        // Step 1: Tutup pintu dulu (selalu tutup terlebih dahulu)
-        const executeAfterClose = () => {
-          // Pintu sudah tertutup, tunggu 1 detik
+        // Step 1: Tutup pintu terlebih dahulu
+        const executeSequence = () => {
+          // Pintu tertutup selama 2 detik
           setTimeout(() => {
             // Efek getar (simulasi bergerak)
             const currentScene = liftScene;
@@ -541,46 +518,63 @@
             setTimeout(() => {
               currentScene.classList.remove('shake-animation');
               
-              // Step 2: Buka pintu dengan cahaya putih
-              openDoors(false);
+              // Step 2: Pindah ke tujuan (scene atau halaman)
+              if (targetType === 'basement') {
+                showSceneDirect(basementScene);
+                createBasementButtons();
+              } else if (targetType === 'lobby') {
+                window.location.href = 'Lobby.html';
+                return;
+              } else if (targetType === 'l1') {
+                window.location.href = 'L1.html';
+                return;
+              } else if (targetType === 'elevator') {
+                showSceneDirect(liftScene);
+              }
               
-              // Step 3: Setelah pintu terbuka dengan cahaya, lakukan aksi
+              // Step 3: Setelah pindah, buka pintu kembali
               setTimeout(() => {
-                if (isRestricted) {
-                  // Untuk lantai terbatas: tampilkan notifikasi, pintu tetap terbuka
-                  showNotification('This floor is only accessible by employees');
-                  isProcessing = false;
-                } else if (floorType === 'basement') {
-                  showSceneDirect(basementScene);
-                  createBasementButtons();
-                  isProcessing = false;
-                } else if (floorType === 'lobby') {
-                  window.location.href = 'Lobby.html';
-                } else if (floorType === 'l1') {
-                  window.location.href = 'L1.html';
-                } else if (floorType === 'elevator') {
-                  showSceneDirect(liftScene);
-                  isProcessing = false;
-                } else {
-                  isProcessing = false;
-                }
-              }, 500); // Memberi waktu untuk melihat efek cahaya putih
+                openDoors(false);
+                isProcessing = false;
+                setProcessingIndicator(false);
+              }, 300);
             }, 400);
-          }, 1000); // Pintu tertutup selama 1 detik
+          }, 2000); // Pintu tertutup selama 2 detik
         };
         
         // Jika pintu terbuka, tutup dulu
         if (isDoorOpen) {
           closeDoors(true);
           setTimeout(() => {
-            executeAfterClose();
+            executeSequence();
           }, 100);
         } else {
           // Jika sudah tertutup, langsung jalankan
-          executeAfterClose();
+          executeSequence();
         }
         
         return true;
+      }
+
+      // Fungsi untuk lantai terbatas (L2 - Rooftop): hanya notifikasi, pintu TIDAK ditutup
+      function showRestrictedAccess() {
+        if (isProcessing) {
+          showNotification('Lift sedang beroperasi, tunggu sebentar');
+          return;
+        }
+        
+        isProcessing = true;
+        setProcessingIndicator(true);
+        
+        const currentScene = liftScene;
+        currentScene.classList.add('shake-animation');
+        
+        setTimeout(() => {
+          currentScene.classList.remove('shake-animation');
+          showNotification('This floor is only accessible by employees');
+          isProcessing = false;
+          setProcessingIndicator(false);
+        }, 400);
       }
 
       // Fungsi ganti scene langsung
@@ -602,8 +596,8 @@
         btnBack.className = 'lift-btn';
         btnBack.textContent = '← Back to Elevator';
         btnBack.addEventListener('click', () => {
-          // Kembali ke elevator dengan alur: tutup 1 detik -> buka dengan cahaya putih -> pindah scene
-          processFloorRequest('elevator', null, liftScene, false);
+          // Kembali ke elevator dengan urutan: tutup 2 detik -> pindah scene -> buka
+          travelWithDoorSequence('elevator', null, liftScene);
         });
         
         basementPanel.appendChild(btnBack);
@@ -628,20 +622,20 @@
             }
             
             if (floor === 'B1') {
-              // B1: tutup 1 detik -> buka dengan cahaya putih -> pindah ke basement scene
-              processFloorRequest('basement', null, basementScene, false);
+              // B1: tutup 2 detik -> pindah basement scene -> buka pintu
+              travelWithDoorSequence('basement', null, basementScene);
             }
             else if (floor === 'G') {
-              // G: tutup 1 detik -> buka dengan cahaya putih -> pindah ke Lobby.html
-              processFloorRequest('lobby', 'Lobby.html', null, false);
+              // G: tutup 2 detik -> pindah Lobby.html -> buka pintu
+              travelWithDoorSequence('lobby', 'Lobby.html', null);
             }
             else if (floor === 'L1') {
-              // L1: tutup 1 detik -> buka dengan cahaya putih -> pindah ke L1.html
-              processFloorRequest('l1', 'L1.html', null, false);
+              // L1: tutup 2 detik -> pindah L1.html -> buka pintu
+              travelWithDoorSequence('l1', 'L1.html', null);
             }
             else if (restrictedFloors.includes(floor)) {
-              // Lantai terbatas: tutup 1 detik -> buka dengan cahaya putih -> notifikasi employee
-              processFloorRequest(null, null, null, true);
+              // Lantai terbatas: hanya notifikasi, pintu TIDAK ditutup
+              showRestrictedAccess();
             }
           });
           
@@ -649,11 +643,12 @@
         });
       }
 
-      // Inisialisasi pintu: di awal terbuka dengan cahaya putih
+      // Inisialisasi pintu: di awal terbuka dengan lampu hijau
       function initDoors() {
         isDoorOpen = true;
         isProcessing = false;
         updateDoorVisual();
+        setProcessingIndicator(false);
       }
 
       // Inisialisasi
@@ -662,10 +657,10 @@
         showSceneDirect(liftScene);
         initDoors();
         setTimeout(() => {
-          showNotification('Pintu terbuka dengan cahaya putih, silakan pilih lantai');
+          showNotification('Pintu terbuka, silakan pilih lantai');
         }, 500);
       });
     })();
   </script>
 </body>
-</html>
+      </html>
