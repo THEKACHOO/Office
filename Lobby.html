@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Lobby & Elevator</title>
+  <title>Lobby — The Kachoo</title>
   <!-- Inter font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <style>
@@ -25,7 +25,7 @@
       height: 100%;
     }
 
-    /* scene layers */
+    /* scene utama hanya lobby (elevator system dihapus) */
     .scene {
       position: absolute;
       top: 0;
@@ -35,37 +35,19 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: opacity 0.5s ease;
       opacity: 1;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* LOBBY - konten di tengah */
-    #scene-lobby .content {
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* LIFT & BASEMENT - konten di bawah, tulisan di tengah */
-    #scene-lift, #scene-basement {
-      align-items: flex-end;
-    }
-    
-    #scene-lift .content, #scene-basement .content {
-      align-items: center;
-      justify-content: flex-end;
-      height: 100%;
-      padding-bottom: 3rem;
-    }
-
-    /* dark overlay – lebih transparan (17% agar terang) */
+    /* dark overlay – lembut agar teks terbaca */
     .scene::after {
       content: '';
       position: absolute;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.17); 
+      background-color: rgba(0, 0, 0, 0.2);
       pointer-events: none;
       z-index: 1;
     }
@@ -78,47 +60,26 @@
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
-    .scene.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* BACKGROUND UNTUK DESKTOP (default) */
+    /* BACKGROUND LOBBY (desktop default) */
     #scene-lobby {
       background-image: url('lobby1.png');
     }
-    #scene-lift {
-      background-image: url('lift1.png');
-    }
-    #scene-basement {
-      background-image: url('Basement1.png');
-    }
 
-    /* BACKGROUND UNTUK MOBILE & TABLET */
+    /* background mobile & tablet */
     @media (max-width: 1024px) {
       #scene-lobby {
         background-image: url('lobby2.png');
       }
-      #scene-lift {
-        background-image: url('lift2.png');
-      }
-      #scene-basement {
-        background-image: url('Basement2.png');
-      }
     }
 
-    /* Fallback SVG */
+    /* fallback SVG jika gambar tidak ada */
     @media (min-width: 1025px) {
       #scene-lobby {
         background-image: url('lobby1.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%23354b42%22/><rect x=%2230%22 y=%2250%22 width=%22340%22 height=%22200%22 fill=%22%236a7c70%22 rx=%2216%22/><rect x=%2280%22 y=%22100%22 width=%2260%22 height=%2260%22 fill=%22%23aac3b3%22 rx=%228%22/><rect x=%22260%22 y=%22100%22 width=%2260%22 height=%2260%22 fill=%22%23aac3b3%22 rx=%228%22/><circle cx=%22200%22 cy=%22150%22 r=%2230%22 fill=%22%23cadfd1%22 opacity=%220.6%22 /></svg>');
-      }
-      #scene-lift {
-        background-image: url('lift1.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%231a2e3f%22/><rect x=%2260%22 y=%2250%22 width=%22280%22 height=%22200%22 fill=%22%233a526b%22 rx=%2220%22/><circle cx=%22200%22 cy=%22150%22 r=%2230%22 fill=%22%236a859f%22 opacity=%220.7%22/><rect x=%22160%22 y=%22135%22 width=%2280%22 height=%2230%22 fill=%22%23aac3d9%22 rx=%226%22/></svg>');
-      }
-      #scene-basement {
-        background-image: url('Basement1.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%23223544%22/><rect x=%2250%22 y=%2260%22 width=%22300%22 height=%22180%22 fill=%22%233d576e%22 rx=%2212%22/><rect x=%22120%22 y=%22110%22 width=%2250%22 height=%2250%22 fill=%22%235d7a94%22 rx=%226%22/><rect x=%22230%22 y=%22110%22 width=%2250%22 height=%2250%22 fill=%22%235d7a94%22 rx=%226%22/><rect x=%22175%22 y=%22170%22 width=%2250%22 height=%2220%22 fill=%22%237a98b3%22 rx=%224%22/></svg>');
       }
     }
 
@@ -126,15 +87,9 @@
       #scene-lobby {
         background-image: url('lobby2.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 600%22><rect width=%22400%22 height=%22600%22 fill=%22%23354b42%22/><rect x=%2230%22 y=%22100%22 width=%22340%22 height=%22400%22 fill=%22%236a7c70%22 rx=%2216%22/><rect x=%2280%22 y=%22200%22 width=%2260%22 height=%2260%22 fill=%22%23aac3b3%22 rx=%228%22/><rect x=%22260%22 y=%22200%22 width=%2260%22 height=%2260%22 fill=%22%23aac3b3%22 rx=%228%22/><circle cx=%22200%22 cy=%22300%22 r=%2230%22 fill=%22%23cadfd1%22 opacity=%220.6%22 /></svg>');
       }
-      #scene-lift {
-        background-image: url('lift2.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 600%22><rect width=%22400%22 height=%22600%22 fill=%22%231a2e3f%22/><rect x=%2260%22 y=%22120%22 width=%22280%22 height=%22360%22 fill=%22%233a526b%22 rx=%2230%22/><circle cx=%22200%22 cy=%22300%22 r=%2240%22 fill=%22%236a859f%22 opacity=%220.7%22/><rect x=%22150%22 y=%22280%22 width=%22100%22 height=%2240%22 fill=%22%23aac3d9%22 rx=%228%22/></svg>');
-      }
-      #scene-basement {
-        background-image: url('Basement2.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 600%22><rect width=%22400%22 height=%22600%22 fill=%22%23223544%22/><rect x=%2240%22 y=%22150%22 width=%22320%22 height=%22300%22 fill=%22%233d576e%22 rx=%2220%22/><rect x=%22110%22 y=%22220%22 width=%2250%22 height=%2250%22 fill=%22%235d7a94%22 rx=%226%22/><rect x=%22240%22 y=%22220%22 width=%2250%22 height=%2250%22 fill=%22%235d7a94%22 rx=%226%22/><rect x=%22175%22 y=%22350%22 width=%2250%22 height=%2220%22 fill=%22%237a98b3%22 rx=%224%22/></svg>');
-      }
     }
 
-    /* welcome message (hanya untuk lobby, karena building dihapus) */
+    /* pesan selamat datang */
     .welcome-message {
       text-align: center;
       margin-bottom: 2.5rem;
@@ -146,7 +101,7 @@
       font-weight: 900;
       letter-spacing: -0.02em;
       color: #FFFFFF;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
       line-height: 1.1;
     }
 
@@ -158,7 +113,7 @@
       margin-top: 0.75rem;
     }
 
-    /* CONTAINER TOMBOL UNTUK LOBBY - BESAR DI TENGAH */
+    /* CONTAINER TOMBOL UTAMA - BESAR DI TENGAH */
     .button-container {
       display: flex;
       flex-wrap: wrap;
@@ -170,61 +125,13 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-radius: 32px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6);
       max-width: 1000px;
       margin: 0 auto;
     }
 
-    /* LIFT PANEL - KHUSUS LIFT DAN BASEMENT (kecil di bawah) */
-    .lift-panel {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-radius: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
-      max-width: 700px;
-      width: auto;
-      margin: 0 auto 1rem auto;
-    }
-
-    /* TOMBOL KHUSUS LIFT & BASEMENT - KECIL */
-    .lift-btn {
-      padding: 0.6rem 1.2rem;
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      color: #000000;
-      background: #FFFFFF;
-      border: 2px solid #000000;
-      border-radius: 40px;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 0;
-      white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .lift-btn:hover {
-      background: #000000;
-      color: #FFFFFF;
-      border-color: #FFFFFF;
-      transform: scale(1.03) translateY(-2px);
-      box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.8);
-    }
-
-    /* TOMBOL UNTUK LOBBY - BESAR */
+    /* TOMBOL LOBBY - BESAR */
     .floor-btn {
       padding: 1rem 2rem;
       font-size: 1.15rem;
@@ -253,69 +160,41 @@
       box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.8);
     }
 
-    /* floor indicator */
+    /* label lantai */
     .floor-label {
       margin-top: 2rem;
       font-size: 0.9rem;
       font-weight: 500;
       letter-spacing: 0.5px;
       color: #FFFFFF;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.45);
       backdrop-filter: blur(4px);
       padding: 0.5rem 1.8rem;
       border-radius: 40px;
       border: 1px solid rgba(255, 255, 255, 0.3);
       text-transform: uppercase;
       text-align: center;
-    }
-
-    /* KHUSUS label LIFT & BASEMENT (tetap di tengah) */
-    #scene-lift .floor-label, #scene-basement .floor-label {
-      margin-top: 0;
-      margin-bottom: 0;
       display: inline-block;
     }
 
-    /* notifikasi */
-    .notification {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: 1px solid rgba(255, 215, 0, 0.5);
-      z-index: 1000;
-      animation: fadeInOut 2s ease;
+    /* konten khusus (information desk / food court) */
+    .hidden-content {
+      display: none !important;
     }
 
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    #lobby-special-content {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      max-height: 80vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
-    /* animasi kecil KHUSUS LIFT & BASEMENT */
-    @keyframes microShake {
-      0% { transform: translate(0, 0); }
-      20% { transform: translate(-2px, 1px); }
-      40% { transform: translate(2px, -1px); }
-      60% { transform: translate(-1px, 1px); }
-      80% { transform: translate(1px, -1px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    .shake-animation {
-      animation: microShake 0.4s ease-in-out;
-    }
-
-    /* ========== STYLE UNTUK KONTEN KHUSUS ========== */
+    /* style food court */
     .foodcourt-message {
       text-align: center;
       font-size: clamp(2rem, 10vw, 4rem);
@@ -323,27 +202,28 @@
       letter-spacing: 4px;
       text-transform: uppercase;
       color: white;
-      text-shadow: 0 0 20px rgba(255,255,255,0.3);
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(8px);
+      text-shadow: 0 0 20px rgba(255,255,255,0.4);
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(12px);
       padding: 2rem 4rem;
       border-radius: 60px;
-      border: 2px solid rgba(255,255,255,0.5);
+      border: 2px solid rgba(255,255,255,0.6);
       width: 100%;
       max-width: 800px;
       margin: 0 auto;
     }
 
+    /* info desk card */
     .info-content {
       width: 100%;
       max-width: 900px;
       margin: 0 auto;
-      background: rgba(10, 10, 10, 0.8);
+      background: rgba(10, 10, 10, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-radius: 40px;
       padding: 2.5rem;
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.3);
       color: #f0f0f0;
       box-shadow: 0 30px 60px rgba(0,0,0,0.8);
     }
@@ -353,7 +233,6 @@
       margin-bottom: 1.5rem;
       line-height: 1.6;
       font-weight: 400;
-      word-wrap: break-word;
     }
 
     .info-content .address {
@@ -362,7 +241,6 @@
       padding-top: 1rem;
       border-top: 1px solid rgba(255,255,255,0.2);
       line-height: 1.5;
-      word-break: break-word;
     }
 
     .info-content .contact-line {
@@ -377,7 +255,6 @@
     .info-content .contact-label {
       font-weight: 500;
       opacity: 0.8;
-      white-space: nowrap;
     }
 
     .info-content a {
@@ -385,7 +262,7 @@
       text-decoration: none;
       font-weight: 600;
       border-bottom: 1px dotted #ffdb8e;
-      transition: color 0.2s, border-color 0.2s;
+      transition: color 0.2s;
       word-break: break-all;
     }
 
@@ -396,13 +273,12 @@
 
     .info-content .closing-note {
       margin-top: 2rem;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       opacity: 0.6;
       font-style: italic;
       text-align: center;
     }
 
-    /* Tombol kembali */
     .back-button {
       display: inline-block;
       margin: 2rem auto 0 auto;
@@ -419,264 +295,180 @@
       min-width: 160px;
       text-align: center;
     }
+
     .back-button:hover {
-      background: #ddd;
+      background: #e0e0e0;
       transform: scale(0.98);
     }
 
-    /* Sembunyikan container tombol saat konten khusus tampil */
-    .hidden-content {
-      display: none !important;
+    /* notifikasi kecil opsional (untuk feedback) */
+    .notification {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      color: #ffecb3;
+      padding: 0.7rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 215, 0, 0.6);
+      z-index: 1100;
+      animation: fadeInOut 2s ease;
+      white-space: nowrap;
+      pointer-events: none;
     }
 
-    /* Konten khusus container */
-    #lobby-special-content {
-      width: 100%;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem;
-      max-height: 80vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
     }
 
-    /* Responsive breakpoints */
+    /* responsive */
     @media (max-width: 700px) {
-      .info-content {
-        padding: 1.5rem;
-        border-radius: 32px;
-      }
-      
-      .info-content .contact-line {
-        flex-direction: column;
-        gap: 0.2rem;
-        margin: 1rem 0;
-      }
-      
-      .info-content .contact-label {
-        white-space: normal;
-      }
-      
-      .foodcourt-message {
-        padding: 1.5rem 2rem;
-        border-radius: 40px;
-      }
-      
-      .back-button {
-        margin-top: 1.5rem;
-        padding: 0.7rem 1.5rem;
-        min-width: 140px;
-      }
-      
       .button-container {
         padding: 1.5rem 1.2rem;
         gap: 0.8rem;
         border-radius: 28px;
         width: 95%;
       }
-      
-      .lift-panel {
-        padding: 0.8rem 1rem;
-        gap: 0.5rem;
-        border-radius: 30px;
-      }
-      
-      .lift-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-      }
-      
       .floor-btn {
         padding: 0.9rem 1.2rem;
         font-size: 1rem;
         min-width: 140px;
       }
-      
       .welcome-message h1 {
-        font-size: clamp(2rem, 8vw, 3rem);
+        font-size: clamp(1.8rem, 8vw, 3rem);
       }
-      
-      #scene-lift .content, #scene-basement .content {
-        padding-bottom: 2rem;
+      .info-content {
+        padding: 1.5rem;
+        border-radius: 32px;
+      }
+      .foodcourt-message {
+        padding: 1.5rem 2rem;
+        font-size: clamp(1.5rem, 8vw, 3rem);
+        border-radius: 48px;
+      }
+      .back-button {
+        margin-top: 1.5rem;
+        padding: 0.7rem 1.5rem;
+        min-width: 140px;
+      }
+      .floor-label {
+        margin-top: 1.5rem;
       }
     }
 
     @media (max-width: 480px) {
-      .info-content {
-        padding: 1.2rem;
-        border-radius: 24px;
+      .button-container {
+        padding: 1.2rem 1rem;
       }
-      
-      .info-content p {
-        margin-bottom: 1rem;
-      }
-      
-      .info-content .address {
-        margin: 1.2rem 0 1rem 0;
-      }
-      
-      .foodcourt-message {
-        padding: 1rem 1.5rem;
-        font-size: clamp(1.5rem, 8vw, 2.5rem);
-        border-radius: 30px;
-      }
-      
-      .back-button {
-        padding: 0.6rem 1.2rem;
-        min-width: 120px;
-        font-size: 0.9rem;
-      }
-      
-      .lift-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.75rem;
-      }
-      
       .floor-btn {
         min-width: 100%;
         max-width: 100%;
+        padding: 1rem;
+      }
+      .info-content {
+        padding: 1.2rem;
+        border-radius: 28px;
+      }
+      .foodcourt-message {
         padding: 1rem 1.2rem;
+        font-size: clamp(1.3rem, 6vw, 2.5rem);
+        border-radius: 36px;
       }
-      
-      .lift-panel {
-        width: 95%;
-      }
-      
-      #scene-lift .content, #scene-basement .content {
-        padding-bottom: 1.5rem;
+      .notification {
+        bottom: 70px;
+        font-size: 0.75rem;
+        white-space: nowrap;
       }
     }
   </style>
 </head>
 <body>
-  <!-- LOBBY SCENE (sekarang yang pertama muncul) -->
+  <!-- LOBBY SCENE (satu-satunya scene, elevator system dihapus) -->
   <div id="scene-lobby" class="scene">
     <div class="content">
-      <!-- Button container normal -->
-      <div class="button-container" id="lobby-button-container">
-        <button class="floor-btn" id="lift-btn">Elevator</button>
-        <button class="floor-btn" id="info-desk-btn">Information desk</button>
-        <a href="Guestbook.html" class="floor-btn" target="_blank">Grand Hall</a>
-        <a href="Exhibition.html" class="floor-btn" target="_blank">Exhibition Center</a>
-        <a href="Chobank.html" class="floor-btn" target="_blank">Chobank</a>
-        <button class="floor-btn" id="food-court-btn">Food Court</button>
+      <!-- Sambutan selamat datang -->
+      <div class="welcome-message">
+        <h1>THE KACHOO</h1>
+        <p>Welcome to Kachoo Tower — where stories begin</p>
       </div>
-      <!-- Tempat untuk konten khusus (information desk / food court) -->
+      
+      <!-- Container tombol utama -->
+      <div class="button-container" id="lobby-button-container">
+        <!-- Tombol ELEVATOR: langsung pindah ke Elevator.html (tanpa sistem elevator di dalam halaman ini) -->
+        <button class="floor-btn" id="elevator-redirect-btn">🚪 Elevator</button>
+        <button class="floor-btn" id="info-desk-btn">📋 Information desk</button>
+        <a href="Guestbook.html" class="floor-btn" target="_blank">📖 Grand Hall</a>
+        <a href="Exhibition.html" class="floor-btn" target="_blank">🖼️ Exhibition Center</a>
+        <a href="Chobank.html" class="floor-btn" target="_blank">🏦 Chobank</a>
+        <button class="floor-btn" id="food-court-btn">🍽️ Food Court</button>
+      </div>
+      
+      <!-- Tempat konten khusus (info desk / food court) -->
       <div id="lobby-special-content"></div>
+      
+      <!-- label lantai lobby -->
       <div class="floor-label" id="lobby-floor-label">MAIN LOBBY · GROUND FLOOR</div>
     </div>
   </div>
 
-  <!-- LIFT SCENE -->
-  <div id="scene-lift" class="scene hidden">
-    <div class="content">
-      <div style="flex: 1;"></div>
-      <div class="lift-panel" id="lift-panel">
-        <!-- Tombol akan diisi JavaScript -->
-      </div>
-      <div class="floor-label">ELEVATOR</div>
-      <div style="height: 1rem;"></div>
-    </div>
-  </div>
-
-  <!-- BASEMENT SCENE -->
-  <div id="scene-basement" class="scene hidden">
-    <div class="content">
-      <div style="flex: 1;"></div>
-      <div class="lift-panel" id="basement-panel">
-        <!-- Tombol untuk basement -->
-      </div>
-      <div class="floor-label">BASEMENT</div>
-      <div style="height: 1rem;"></div>
-    </div>
-  </div>
-
-  <!-- NOTIFICATION AREA -->
+  <!-- NOTIFICATION (optional feedback) -->
   <div id="notification" class="notification" style="display: none;"></div>
 
   <script>
     (function() {
       'use strict';
 
-      // Scenes (building dihapus)
+      // Elemen DOM
       const lobbyScene = document.getElementById('scene-lobby');
-      const liftScene = document.getElementById('scene-lift');
-      const basementScene = document.getElementById('scene-basement');
-      
-      // Containers
-      const liftPanel = document.getElementById('lift-panel');
-      const basementPanel = document.getElementById('basement-panel');
-      
-      // Lobby elements
       const lobbyButtonContainer = document.getElementById('lobby-button-container');
       const lobbySpecialContent = document.getElementById('lobby-special-content');
       const lobbyFloorLabel = document.getElementById('lobby-floor-label');
+      const notificationEl = document.getElementById('notification');
 
-      // Notification
-      const notification = document.getElementById('notification');
-
-      // Fungsi show notifikasi
-      function showNotification(message) {
-        notification.textContent = message;
-        notification.style.display = 'block';
+      // Fungsi notifikasi singkat (hanya untuk feedback)
+      function showNotification(message, isError = false) {
+        if (!notificationEl) return;
+        notificationEl.textContent = message;
+        notificationEl.style.display = 'block';
+        // optional warna berbeda jika error, tapi kita konsisten
+        if (isError) {
+          notificationEl.style.borderColor = '#ff8888';
+          notificationEl.style.color = '#ffe0e0';
+        } else {
+          notificationEl.style.borderColor = 'rgba(255, 215, 0, 0.6)';
+          notificationEl.style.color = '#ffecb3';
+        }
         setTimeout(() => {
-          notification.style.display = 'none';
+          notificationEl.style.display = 'none';
+          notificationEl.style.borderColor = 'rgba(255, 215, 0, 0.6)';
+          notificationEl.style.color = '#ffecb3';
         }, 2000);
       }
 
-      // Fungsi ganti scene LANGSUNG (tanpa building)
-      function showSceneDirect(sceneToShow) {
-        [lobbyScene, liftScene, basementScene].forEach(scene => {
-          if (scene === sceneToShow) {
-            scene.classList.remove('hidden');
-          } else {
-            scene.classList.add('hidden');
-          }
-        });
-      }
-
-      // Fungsi khusus untuk pindah scene di LIFT & BASEMENT (dengan animasi)
-      function switchLiftScene(currentScene, targetScene, callback) {
-        currentScene.classList.add('shake-animation');
-        setTimeout(() => {
-          currentScene.classList.remove('shake-animation');
-          showSceneDirect(targetScene);
-          if (callback) callback();
-        }, 400);
-      }
-
-      // Fungsi untuk mereset lobby ke tampilan awal (tombol-tombol)
+      // Reset tampilan lobby ke default (menampilkan tombol, menyembunyikan konten khusus)
       function resetLobbyToDefault() {
         lobbyButtonContainer.classList.remove('hidden-content');
         lobbySpecialContent.style.display = 'none';
         lobbySpecialContent.innerHTML = '';
         lobbyFloorLabel.style.display = 'block';
-        lobbyScene.style.backgroundImage = null; // kembalikan ke default CSS
+        // pastikan background kembali ke url default (CSS akan otomatis)
+        lobbyScene.style.backgroundImage = ''; // hapus inline, pakai CSS
       }
 
-      // Fungsi untuk menampilkan food court
-      function showFoodCourt() {
-        lobbyButtonContainer.classList.add('hidden-content');
-        lobbyFloorLabel.style.display = 'none';
-        lobbyScene.style.backgroundImage = "url('foodcourt.png')";
-        lobbySpecialContent.style.display = 'flex';
-        lobbySpecialContent.innerHTML = `
-          <div class="foodcourt-message">COMING SOON</div>
-          <button class="back-button" id="back-from-foodcourt">← Back to Lobby</button>
-        `;
-        document.getElementById('back-from-foodcourt').addEventListener('click', (e) => {
-          e.stopPropagation();
-          resetLobbyToDefault();
-        });
-      }
-
-      // Fungsi untuk menampilkan information desk
+      // Menampilkan konten Information Desk
       function showInformationDesk() {
+        // sembunyikan tombol utama dan label lantai
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
-        lobbyScene.style.backgroundImage = null; // tetap pakai background lobby
+        // reset background inline agar tetap lobby1/lobby2 sesuai CSS
+        lobbyScene.style.backgroundImage = '';
         lobbySpecialContent.style.display = 'flex';
         lobbySpecialContent.innerHTML = `
           <div class="info-content">
@@ -689,17 +481,17 @@
             
             <div class="contact-line">
               <span class="contact-label">Contact:</span>
-              <a href="https://x.com/HaiKachoo" target="_blank">@HaiKachoo</a>
+              <a href="https://x.com/HaiKachoo" target="_blank" rel="noopener noreferrer">@HaiKachoo</a>
             </div>
             
             <div class="contact-line">
               <span class="contact-label">Executive Assistant:</span>
-              <a href="https://x.com/sekrenite" target="_blank">@sekrenite</a>
+              <a href="https://x.com/sekrenite" target="_blank" rel="noopener noreferrer">@sekrenite</a>
             </div>
             
             <div class="contact-line">
               <span class="contact-label">Kazine's Public Relation:</span>
-              <a href="https://x.com/Chaarmente" target="_blank">@Chaarmente</a>
+              <a href="https://x.com/Chaarmente" target="_blank" rel="noopener noreferrer">@Chaarmente</a>
             </div>
             
             <div class="closing-note">Tap outside or click below to return</div>
@@ -713,92 +505,94 @@
           backBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             resetLobbyToDefault();
+            showNotification('Back to lobby', false);
           });
         }
       }
 
-      // Fungsi buat tombol lift
-      function createFloorButtons() {
-        liftPanel.innerHTML = '';
+      // Menampilkan konten Food Court (Coming Soon)
+      function showFoodCourt() {
+        lobbyButtonContainer.classList.add('hidden-content');
+        lobbyFloorLabel.style.display = 'none';
+        // Ubah background sementara ke foodcourt.png (jika ada), jika tidak ada tetap lobby bg
+        lobbyScene.style.backgroundImage = "url('foodcourt.png')";
+        // fallback jika foodcourt.png tidak ada, tetap pakai bg lobby tapi dengan overlay.
+        // agar tidak error, background tetap terlihat.
+        lobbySpecialContent.style.display = 'flex';
+        lobbySpecialContent.innerHTML = `
+          <div class="foodcourt-message">🍔 COMING SOON 🍕</div>
+          <button class="back-button" id="back-from-foodcourt">← Back to Lobby</button>
+        `;
         
-        const floors = ['B1', 'G', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'Rooftop'];
-        
-        floors.forEach(floor => {
-          const btn = document.createElement('button');
-          btn.className = 'lift-btn';
-          btn.textContent = floor;
-          
-          btn.addEventListener('click', function() {
-            if (floor === 'B1') {
-              switchLiftScene(liftScene, basementScene, createBasementButtons);
-            }
-            else if (floor === 'G') {
-              switchLiftScene(liftScene, lobbyScene, resetLobbyToDefault);
-            }
-            else if (floor === 'L1') {
-              liftScene.classList.add('shake-animation');
-              setTimeout(() => {
-                liftScene.classList.remove('shake-animation');
-                window.location.href = 'L1.html';
-              }, 400);
-            }
-            else {
-              liftScene.classList.add('shake-animation');
-              setTimeout(() => {
-                liftScene.classList.remove('shake-animation');
-                showNotification('This floor is only accessible by employees');
-              }, 400);
-            }
+        const backBtn = document.getElementById('back-from-foodcourt');
+        if (backBtn) {
+          backBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetLobbyToDefault();
+            // hapus inline background
+            lobbyScene.style.backgroundImage = '';
+            showNotification('Return to Main Lobby', false);
           });
-          
-          liftPanel.appendChild(btn);
-        });
-      }
-
-      // Fungsi buat tombol basement
-      function createBasementButtons() {
-        basementPanel.innerHTML = '';
-        
-        const btnBack = document.createElement('button');
-        btnBack.className = 'lift-btn';
-        btnBack.textContent = '← Back to Elevator';
-        btnBack.addEventListener('click', () => {
-          switchLiftScene(basementScene, liftScene, null);
-        });
-        
-        basementPanel.appendChild(btnBack);
-      }
-
-      // Event listeners
-      document.getElementById('lift-btn').addEventListener('click', () => {
-        createFloorButtons();
-        showSceneDirect(liftScene);
-      });
-
-      document.getElementById('info-desk-btn').addEventListener('click', () => {
-        showInformationDesk();
-      });
-
-      document.getElementById('food-court-btn').addEventListener('click', () => {
-        showFoodCourt();
-      });
-
-      // Pastikan reset lobby saat kembali dari lift/basement
-      const originalShowSceneDirect = showSceneDirect;
-      window.showSceneDirect = function(scene) {
-        if (scene === lobbyScene) {
-          resetLobbyToDefault();
         }
-        originalShowSceneDirect(scene);
-      };
+      }
 
-      // Initial state: langsung lobby (building dihapus)
+      // ========== FUNGSI UTAMA: ELEVATOR LANGSUNG KE Elevator.html ==========
+      // Karena diminta "hapus sistem elevator terus kalau klik elevator pindah ke Elevator.html aja"
+      // Maka kita tidak lagi menampilkan panel lift, tidak ada scene lift/basement.
+      // Tombol "Elevator" akan langsung redirect ke Elevator.html (tanpa konfirmasi atau sistem internal)
+      function redirectToElevatorPage() {
+        // efek animasi cepat agar tidak terasa kaku
+        const btn = document.getElementById('elevator-redirect-btn');
+        if (btn) {
+          btn.style.transform = 'scale(0.97)';
+          setTimeout(() => { btn.style.transform = ''; }, 150);
+        }
+        // notifikasi opsional biar user tahu sedang dialihkan
+        showNotification('Opening Elevator panel...', false);
+        setTimeout(() => {
+          window.location.href = 'Elevator.html';
+        }, 120);
+      }
+
+      // ========== EVENT LISTENER ==========
+      // Tombol Elevator (langsung pindah ke Elevator.html)
+      const elevatorBtn = document.getElementById('elevator-redirect-btn');
+      if (elevatorBtn) {
+        elevatorBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          redirectToElevatorPage();
+        });
+      }
+
+      // Information Desk
+      const infoBtn = document.getElementById('info-desk-btn');
+      if (infoBtn) {
+        infoBtn.addEventListener('click', () => {
+          showInformationDesk();
+        });
+      }
+
+      // Food Court
+      const foodBtn = document.getElementById('food-court-btn');
+      if (foodBtn) {
+        foodBtn.addEventListener('click', () => {
+          showFoodCourt();
+        });
+      }
+
+      // Pastikan saat halaman dimuat, tidak ada sisa scene tersembunyi yang mengganggu
       window.addEventListener('load', () => {
-        showSceneDirect(lobbyScene);
         resetLobbyToDefault();
+        // hilangkan kemungkinan style inline background yang tertinggal
+        lobbyScene.style.backgroundImage = '';
+        // tampilkan notifikasi selamat datang ringan
+        showNotification('Welcome to Kachoo Tower', false);
       });
 
+      // Menambahkan event untuk mengembalikan tampilan jika user klik di luar konten khusus (opsional)
+      // tapi karena ada tombol back, biarkan pengguna memilih sendiri.
+      // Tidak perlu scene lift/basement karena sudah dihapus total.
     })();
   </script>
 </body>
-        </html>
+  </html>
