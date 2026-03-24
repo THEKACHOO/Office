@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Lobby — The Kachoo</title>
+  <title>Lobby</title>
   <!-- Inter font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <style>
@@ -25,7 +25,6 @@
       height: 100%;
     }
 
-    /* scene utama hanya lobby (elevator system dihapus) */
     .scene {
       position: absolute;
       top: 0;
@@ -35,19 +34,22 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      transition: opacity 0.5s ease;
       opacity: 1;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* dark overlay – lembut agar teks terbaca */
+    #scene-lobby .content {
+      align-items: center;
+      justify-content: center;
+    }
+
     .scene::after {
       content: '';
       position: absolute;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.17);
       pointer-events: none;
       z-index: 1;
     }
@@ -60,23 +62,20 @@
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
     }
 
-    /* BACKGROUND LOBBY (desktop default) */
+    /* BACKGROUND UNTUK DESKTOP */
     #scene-lobby {
       background-image: url('lobby1.png');
     }
 
-    /* background mobile & tablet */
     @media (max-width: 1024px) {
       #scene-lobby {
         background-image: url('lobby2.png');
       }
     }
 
-    /* fallback SVG jika gambar tidak ada */
+    /* Fallback SVG */
     @media (min-width: 1025px) {
       #scene-lobby {
         background-image: url('lobby1.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%23354b42%22/><rect x=%2230%22 y=%2250%22 width=%22340%22 height=%22200%22 fill=%22%236a7c70%22 rx=%2216%22/><rect x=%2280%22 y=%22100%22 width=%2260%22 height=%2260%22 fill=%22%23aac3b3%22 rx=%228%22/><rect x=%22260%22 y=%22100%22 width=%2260%22 height=%2260%22 fill=%22%23aac3b3%22 rx=%228%22/><circle cx=%22200%22 cy=%22150%22 r=%2230%22 fill=%22%23cadfd1%22 opacity=%220.6%22 /></svg>');
@@ -89,7 +88,6 @@
       }
     }
 
-    /* pesan selamat datang */
     .welcome-message {
       text-align: center;
       margin-bottom: 2.5rem;
@@ -101,7 +99,7 @@
       font-weight: 900;
       letter-spacing: -0.02em;
       color: #FFFFFF;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
       line-height: 1.1;
     }
 
@@ -113,7 +111,6 @@
       margin-top: 0.75rem;
     }
 
-    /* CONTAINER TOMBOL UTAMA - BESAR DI TENGAH */
     .button-container {
       display: flex;
       flex-wrap: wrap;
@@ -125,13 +122,12 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-radius: 32px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
       max-width: 1000px;
       margin: 0 auto;
     }
 
-    /* TOMBOL LOBBY - BESAR */
     .floor-btn {
       padding: 1rem 2rem;
       font-size: 1.15rem;
@@ -160,41 +156,45 @@
       box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.8);
     }
 
-    /* label lantai */
     .floor-label {
       margin-top: 2rem;
       font-size: 0.9rem;
       font-weight: 500;
       letter-spacing: 0.5px;
       color: #FFFFFF;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(4px);
       padding: 0.5rem 1.8rem;
       border-radius: 40px;
       border: 1px solid rgba(255, 255, 255, 0.3);
       text-transform: uppercase;
       text-align: center;
-      display: inline-block;
     }
 
-    /* konten khusus (information desk / food court) */
-    .hidden-content {
-      display: none !important;
+    .notification {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      z-index: 1000;
+      animation: fadeInOut 2s ease;
     }
 
-    #lobby-special-content {
-      width: 100%;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem;
-      max-height: 80vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
     }
 
-    /* style food court */
     .foodcourt-message {
       text-align: center;
       font-size: clamp(2rem, 10vw, 4rem);
@@ -202,28 +202,27 @@
       letter-spacing: 4px;
       text-transform: uppercase;
       color: white;
-      text-shadow: 0 0 20px rgba(255,255,255,0.4);
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(12px);
+      text-shadow: 0 0 20px rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
       padding: 2rem 4rem;
       border-radius: 60px;
-      border: 2px solid rgba(255,255,255,0.6);
+      border: 2px solid rgba(255,255,255,0.5);
       width: 100%;
       max-width: 800px;
       margin: 0 auto;
     }
 
-    /* info desk card */
     .info-content {
       width: 100%;
       max-width: 900px;
       margin: 0 auto;
-      background: rgba(10, 10, 10, 0.85);
+      background: rgba(10, 10, 10, 0.8);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-radius: 40px;
       padding: 2.5rem;
-      border: 1px solid rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.25);
       color: #f0f0f0;
       box-shadow: 0 30px 60px rgba(0,0,0,0.8);
     }
@@ -233,6 +232,7 @@
       margin-bottom: 1.5rem;
       line-height: 1.6;
       font-weight: 400;
+      word-wrap: break-word;
     }
 
     .info-content .address {
@@ -241,6 +241,7 @@
       padding-top: 1rem;
       border-top: 1px solid rgba(255,255,255,0.2);
       line-height: 1.5;
+      word-break: break-word;
     }
 
     .info-content .contact-line {
@@ -255,6 +256,7 @@
     .info-content .contact-label {
       font-weight: 500;
       opacity: 0.8;
+      white-space: nowrap;
     }
 
     .info-content a {
@@ -262,7 +264,7 @@
       text-decoration: none;
       font-weight: 600;
       border-bottom: 1px dotted #ffdb8e;
-      transition: color 0.2s;
+      transition: color 0.2s, border-color 0.2s;
       word-break: break-all;
     }
 
@@ -273,7 +275,7 @@
 
     .info-content .closing-note {
       margin-top: 2rem;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       opacity: 0.6;
       font-style: italic;
       text-align: center;
@@ -295,41 +297,49 @@
       min-width: 160px;
       text-align: center;
     }
-
     .back-button:hover {
-      background: #e0e0e0;
+      background: #ddd;
       transform: scale(0.98);
     }
 
-    /* notifikasi kecil opsional (untuk feedback) */
-    .notification {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      color: #ffecb3;
-      padding: 0.7rem 1.5rem;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: 1px solid rgba(255, 215, 0, 0.6);
-      z-index: 1100;
-      animation: fadeInOut 2s ease;
-      white-space: nowrap;
-      pointer-events: none;
+    .hidden-content {
+      display: none !important;
     }
 
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    #lobby-special-content {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      max-height: 80vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
-    /* responsive */
     @media (max-width: 700px) {
+      .info-content {
+        padding: 1.5rem;
+        border-radius: 32px;
+      }
+      .info-content .contact-line {
+        flex-direction: column;
+        gap: 0.2rem;
+        margin: 1rem 0;
+      }
+      .info-content .contact-label {
+        white-space: normal;
+      }
+      .foodcourt-message {
+        padding: 1.5rem 2rem;
+        border-radius: 40px;
+      }
+      .back-button {
+        margin-top: 1.5rem;
+        padding: 0.7rem 1.5rem;
+        min-width: 140px;
+      }
       .button-container {
         padding: 1.5rem 1.2rem;
         gap: 0.8rem;
@@ -342,256 +352,154 @@
         min-width: 140px;
       }
       .welcome-message h1 {
-        font-size: clamp(1.8rem, 8vw, 3rem);
-      }
-      .info-content {
-        padding: 1.5rem;
-        border-radius: 32px;
-      }
-      .foodcourt-message {
-        padding: 1.5rem 2rem;
-        font-size: clamp(1.5rem, 8vw, 3rem);
-        border-radius: 48px;
-      }
-      .back-button {
-        margin-top: 1.5rem;
-        padding: 0.7rem 1.5rem;
-        min-width: 140px;
-      }
-      .floor-label {
-        margin-top: 1.5rem;
+        font-size: clamp(2rem, 8vw, 3rem);
       }
     }
 
     @media (max-width: 480px) {
-      .button-container {
-        padding: 1.2rem 1rem;
+      .info-content {
+        padding: 1.2rem;
+        border-radius: 24px;
+      }
+      .info-content p {
+        margin-bottom: 1rem;
+      }
+      .info-content .address {
+        margin: 1.2rem 0 1rem 0;
+      }
+      .foodcourt-message {
+        padding: 1rem 1.5rem;
+        font-size: clamp(1.5rem, 8vw, 2.5rem);
+        border-radius: 30px;
+      }
+      .back-button {
+        padding: 0.6rem 1.2rem;
+        min-width: 120px;
+        font-size: 0.9rem;
       }
       .floor-btn {
         min-width: 100%;
         max-width: 100%;
-        padding: 1rem;
-      }
-      .info-content {
-        padding: 1.2rem;
-        border-radius: 28px;
-      }
-      .foodcourt-message {
         padding: 1rem 1.2rem;
-        font-size: clamp(1.3rem, 6vw, 2.5rem);
-        border-radius: 36px;
-      }
-      .notification {
-        bottom: 70px;
-        font-size: 0.75rem;
-        white-space: nowrap;
       }
     }
   </style>
 </head>
 <body>
-  <!-- LOBBY SCENE (satu-satunya scene, elevator system dihapus) -->
+  <!-- LOBBY SCENE (hanya lobby, elevator system sudah dihapus total) -->
   <div id="scene-lobby" class="scene">
     <div class="content">
-      <!-- Sambutan selamat datang -->
       <div class="welcome-message">
         <h1>THE KACHOO</h1>
-        <p>Welcome to Kachoo Tower — where stories begin</p>
+        <p>Welcome to Kachoo Tower</p>
       </div>
-      
-      <!-- Container tombol utama -->
       <div class="button-container" id="lobby-button-container">
-        <!-- Tombol ELEVATOR: langsung pindah ke Elevator.html (tanpa sistem elevator di dalam halaman ini) -->
-        <button class="floor-btn" id="elevator-redirect-btn">🚪 Elevator</button>
-        <button class="floor-btn" id="info-desk-btn">📋 Information desk</button>
-        <a href="Guestbook.html" class="floor-btn" target="_blank">📖 Grand Hall</a>
-        <a href="Exhibition.html" class="floor-btn" target="_blank">🖼️ Exhibition Center</a>
-        <a href="Chobank.html" class="floor-btn" target="_blank">🏦 Chobank</a>
-        <button class="floor-btn" id="food-court-btn">🍽️ Food Court</button>
+        <button class="floor-btn" id="lift-btn">Elevator</button>
+        <button class="floor-btn" id="info-desk-btn">Information desk</button>
+        <a href="Guestbook.html" class="floor-btn" target="_blank">Grand Hall</a>
+        <a href="Exhibition.html" class="floor-btn" target="_blank">Exhibition Center</a>
+        <a href="Chobank.html" class="floor-btn" target="_blank">Chobank</a>
+        <button class="floor-btn" id="food-court-btn">Food Court</button>
       </div>
-      
-      <!-- Tempat konten khusus (info desk / food court) -->
       <div id="lobby-special-content"></div>
-      
-      <!-- label lantai lobby -->
       <div class="floor-label" id="lobby-floor-label">MAIN LOBBY · GROUND FLOOR</div>
     </div>
   </div>
 
-  <!-- NOTIFICATION (optional feedback) -->
   <div id="notification" class="notification" style="display: none;"></div>
 
   <script>
     (function() {
-      'use strict';
-
-      // Elemen DOM
       const lobbyScene = document.getElementById('scene-lobby');
       const lobbyButtonContainer = document.getElementById('lobby-button-container');
       const lobbySpecialContent = document.getElementById('lobby-special-content');
       const lobbyFloorLabel = document.getElementById('lobby-floor-label');
-      const notificationEl = document.getElementById('notification');
+      const notification = document.getElementById('notification');
 
-      // Fungsi notifikasi singkat (hanya untuk feedback)
-      function showNotification(message, isError = false) {
-        if (!notificationEl) return;
-        notificationEl.textContent = message;
-        notificationEl.style.display = 'block';
-        // optional warna berbeda jika error, tapi kita konsisten
-        if (isError) {
-          notificationEl.style.borderColor = '#ff8888';
-          notificationEl.style.color = '#ffe0e0';
-        } else {
-          notificationEl.style.borderColor = 'rgba(255, 215, 0, 0.6)';
-          notificationEl.style.color = '#ffecb3';
-        }
+      function showNotification(message) {
+        notification.textContent = message;
+        notification.style.display = 'block';
         setTimeout(() => {
-          notificationEl.style.display = 'none';
-          notificationEl.style.borderColor = 'rgba(255, 215, 0, 0.6)';
-          notificationEl.style.color = '#ffecb3';
+          notification.style.display = 'none';
         }, 2000);
       }
 
-      // Reset tampilan lobby ke default (menampilkan tombol, menyembunyikan konten khusus)
       function resetLobbyToDefault() {
         lobbyButtonContainer.classList.remove('hidden-content');
         lobbySpecialContent.style.display = 'none';
         lobbySpecialContent.innerHTML = '';
         lobbyFloorLabel.style.display = 'block';
-        // pastikan background kembali ke url default (CSS akan otomatis)
-        lobbyScene.style.backgroundImage = ''; // hapus inline, pakai CSS
+        lobbyScene.style.backgroundImage = null;
       }
 
-      // Menampilkan konten Information Desk
-      function showInformationDesk() {
-        // sembunyikan tombol utama dan label lantai
+      function showFoodCourt() {
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
-        // reset background inline agar tetap lobby1/lobby2 sesuai CSS
-        lobbyScene.style.backgroundImage = '';
+        lobbyScene.style.backgroundImage = "url('foodcourt.png')";
+        lobbySpecialContent.style.display = 'flex';
+        lobbySpecialContent.innerHTML = `
+          <div class="foodcourt-message">COMING SOON</div>
+          <button class="back-button" id="back-from-foodcourt">Back to Lobby</button>
+        `;
+        document.getElementById('back-from-foodcourt').addEventListener('click', (e) => {
+          e.stopPropagation();
+          resetLobbyToDefault();
+        });
+      }
+
+      function showInformationDesk() {
+        lobbyButtonContainer.classList.add('hidden-content');
+        lobbyFloorLabel.style.display = 'none';
+        lobbyScene.style.backgroundImage = null;
         lobbySpecialContent.style.display = 'flex';
         lobbySpecialContent.innerHTML = `
           <div class="info-content">
             <p>The Kachoo is a media and news publishing company. The Kachoo has three projects: Kafkapages, Kazine, and Kaboom. The Kachoo is also developing a digital banking feature called Chobank and a directory system called Chonnect.</p>
-            
             <div class="address">
               <strong>Address:</strong><br>
               Jenderal Sudirman Avenue, Lots 61–62, South Jakarta 12930, Indonesia
             </div>
-            
             <div class="contact-line">
               <span class="contact-label">Contact:</span>
-              <a href="https://x.com/HaiKachoo" target="_blank" rel="noopener noreferrer">@HaiKachoo</a>
+              <a href="https://x.com/HaiKachoo" target="_blank">@HaiKachoo</a>
             </div>
-            
             <div class="contact-line">
               <span class="contact-label">Executive Assistant:</span>
-              <a href="https://x.com/sekrenite" target="_blank" rel="noopener noreferrer">@sekrenite</a>
+              <a href="https://x.com/sekrenite" target="_blank">@sekrenite</a>
             </div>
-            
             <div class="contact-line">
               <span class="contact-label">Kazine's Public Relation:</span>
-              <a href="https://x.com/Chaarmente" target="_blank" rel="noopener noreferrer">@Chaarmente</a>
+              <a href="https://x.com/Chaarmente" target="_blank">@Chaarmente</a>
             </div>
-            
-            <div class="closing-note">Tap outside or click below to return</div>
-            
-            <button class="back-button" id="back-from-info">← Back to Lobby</button>
+            <div class="closing-note">Click below to return</div>
+            <button class="back-button" id="back-from-info">Back to Lobby</button>
           </div>
         `;
-        
         const backBtn = document.getElementById('back-from-info');
         if (backBtn) {
           backBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             resetLobbyToDefault();
-            showNotification('Back to lobby', false);
           });
         }
       }
 
-      // Menampilkan konten Food Court (Coming Soon)
-      function showFoodCourt() {
-        lobbyButtonContainer.classList.add('hidden-content');
-        lobbyFloorLabel.style.display = 'none';
-        // Ubah background sementara ke foodcourt.png (jika ada), jika tidak ada tetap lobby bg
-        lobbyScene.style.backgroundImage = "url('foodcourt.png')";
-        // fallback jika foodcourt.png tidak ada, tetap pakai bg lobby tapi dengan overlay.
-        // agar tidak error, background tetap terlihat.
-        lobbySpecialContent.style.display = 'flex';
-        lobbySpecialContent.innerHTML = `
-          <div class="foodcourt-message">🍔 COMING SOON 🍕</div>
-          <button class="back-button" id="back-from-foodcourt">← Back to Lobby</button>
-        `;
-        
-        const backBtn = document.getElementById('back-from-foodcourt');
-        if (backBtn) {
-          backBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            resetLobbyToDefault();
-            // hapus inline background
-            lobbyScene.style.backgroundImage = '';
-            showNotification('Return to Main Lobby', false);
-          });
-        }
-      }
-
-      // ========== FUNGSI UTAMA: ELEVATOR LANGSUNG KE Elevator.html ==========
-      // Karena diminta "hapus sistem elevator terus kalau klik elevator pindah ke Elevator.html aja"
-      // Maka kita tidak lagi menampilkan panel lift, tidak ada scene lift/basement.
-      // Tombol "Elevator" akan langsung redirect ke Elevator.html (tanpa konfirmasi atau sistem internal)
-      function redirectToElevatorPage() {
-        // efek animasi cepat agar tidak terasa kaku
-        const btn = document.getElementById('elevator-redirect-btn');
-        if (btn) {
-          btn.style.transform = 'scale(0.97)';
-          setTimeout(() => { btn.style.transform = ''; }, 150);
-        }
-        // notifikasi opsional biar user tahu sedang dialihkan
-        showNotification('Opening Elevator panel...', false);
-        setTimeout(() => {
-          window.location.href = 'Elevator.html';
-        }, 120);
-      }
-
-      // ========== EVENT LISTENER ==========
-      // Tombol Elevator (langsung pindah ke Elevator.html)
-      const elevatorBtn = document.getElementById('elevator-redirect-btn');
-      if (elevatorBtn) {
-        elevatorBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          redirectToElevatorPage();
-        });
-      }
-
-      // Information Desk
-      const infoBtn = document.getElementById('info-desk-btn');
-      if (infoBtn) {
-        infoBtn.addEventListener('click', () => {
-          showInformationDesk();
-        });
-      }
-
-      // Food Court
-      const foodBtn = document.getElementById('food-court-btn');
-      if (foodBtn) {
-        foodBtn.addEventListener('click', () => {
-          showFoodCourt();
-        });
-      }
-
-      // Pastikan saat halaman dimuat, tidak ada sisa scene tersembunyi yang mengganggu
-      window.addEventListener('load', () => {
-        resetLobbyToDefault();
-        // hilangkan kemungkinan style inline background yang tertinggal
-        lobbyScene.style.backgroundImage = '';
-        // tampilkan notifikasi selamat datang ringan
-        showNotification('Welcome to Kachoo Tower', false);
+      // Tombol Elevator LANGSUNG ke Elevator.html
+      document.getElementById('lift-btn').addEventListener('click', () => {
+        window.location.href = 'Elevator.html';
       });
 
-      // Menambahkan event untuk mengembalikan tampilan jika user klik di luar konten khusus (opsional)
-      // tapi karena ada tombol back, biarkan pengguna memilih sendiri.
-      // Tidak perlu scene lift/basement karena sudah dihapus total.
+      document.getElementById('info-desk-btn').addEventListener('click', () => {
+        showInformationDesk();
+      });
+
+      document.getElementById('food-court-btn').addEventListener('click', () => {
+        showFoodCourt();
+      });
+
+      window.addEventListener('load', () => {
+        resetLobbyToDefault();
+      });
     })();
   </script>
 </body>
