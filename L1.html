@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>L1 · Lobby & Rooms</title>
+  <title>L1 Meeting & Lounge</title>
   <!-- Inter font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <style>
@@ -385,22 +385,22 @@
     <div class="content">
       <div class="welcome-message">
         <h1>LEVEL 1</h1>
-        <p>Meeting & Conference Floor</p>
+        <p>Meeting Room & Lounge</p>
       </div>
       <!-- Button container untuk room -->
       <div class="button-container" id="l1-button-container">
-        <button class="floor-btn" id="room1-btn">Room 1</button>
-        <button class="floor-btn" id="room2-btn">Room 2</button>
-        <button class="floor-btn" id="room3-btn">Room 3</button>
-        <button class="floor-btn" id="room4-btn">Room 4</button>
-        <button class="floor-btn" id="room5-btn">Room 5</button>
+        <button class="floor-btn" id="room1-btn">Meeting Room</button>
+        <button class="floor-btn" id="room2-btn">Conference Hall</button>
+        <button class="floor-btn" id="room3-btn">Lounge</button>
+        <button class="floor-btn" id="room4-btn">Reading Corner</button>
         <button class="floor-btn" id="restroom-btn">Restroom</button>
+        <button class="floor-btn" id="room5-btn">Emergency Exit</button>
       </div>
       <!-- Tombol Elevator di paling akhir -->
       <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
-        <button class="elevator-btn" id="elevator-exit-btn">🚪 Elevator</button>
+        <button class="elevator-btn" id="elevator-exit-btn">Elevator</button>
       </div>
-      <div class="floor-label">L1 · MEETING FLOOR</div>
+      <div class="floor-label">L1</div>
     </div>
   </div>
 
@@ -423,12 +423,12 @@
 
       // Data ruangan: nama, file gambar, label tampilan
       const rooms = [
-        { id: 'room1', label: 'Room 1', image: 'room1.png', displayName: 'ROOM 1 · MEETING SUITE' },
-        { id: 'room2', label: 'Room 2', image: 'room2.png', displayName: 'ROOM 2 · CONFERENCE' },
-        { id: 'room3', label: 'Room 3', image: 'room3.png', displayName: 'ROOM 3 · WORKSHOP' },
-        { id: 'room4', label: 'Room 4', image: 'room4.png', displayName: 'ROOM 4 · EXECUTIVE' },
-        { id: 'room5', label: 'Room 5', image: 'room5.png', displayName: 'ROOM 5 · LOUNGE' },
-        { id: 'restroom', label: 'Restroom', image: 'Restroom1.png', displayName: 'RESTROOM' }
+        { id: 'room1', label: 'Room 1', image: 'meetingroom.png', displayName: 'MEETING SUITE' },
+        { id: 'room2', label: 'Room 2', image: 'conferenceroom.png', displayName: 'CONFERENCE' },
+        { id: 'room3', label: 'Room 3', image: 'Lounge.png', displayName: 'LOUNGE' },
+        { id: 'room4', label: 'Room 4', image: 'room4.png', displayName: 'READING CORNER' },
+        { id: 'restroom', label: 'Restroom', image: 'Restroom1.png', displayName: 'RESTROOM' },
+        { id: 'room5', label: 'Room 5', image: 'EmergencyExit2.png', displayName: 'EMERGENCY EXIT' }
       ];
 
       // Fungsi show notifikasi
@@ -467,7 +467,7 @@
             <div class="content">
               <div style="flex:1"></div>
               <div class="room-message">${roomData.displayName}</div>
-              <button class="back-button" id="back-to-l1-lobby-btn">← Back to L1 Lobby</button>
+              <button class="back-button" id="back-to-l1-lobby-btn">Back to L1 Lobby</button>
               <div style="height:1rem"></div>
             </div>
           `;
