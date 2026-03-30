@@ -389,7 +389,7 @@
     <div class="content">
       <div class="welcome-message">
         <h1>THE KACHOO</h1>
-        <p>Welcome to Kachoo</p>
+        <p>Welcome to Kachoo Tower</p>
       </div>
       <div class="button-container" id="lobby-button-container">
         <button class="floor-btn" id="lift-btn">Elevator</button>
@@ -414,9 +414,10 @@
       const lobbyButtonContainer = document.getElementById('lobby-button-container');
       const lobbySpecialContent = document.getElementById('lobby-special-content');
       const lobbyFloorLabel = document.getElementById('lobby-floor-label');
-      const notification = document.getElementById('notification');
+      const welcomeMessage = document.querySelector('.welcome-message');
 
       function showNotification(message) {
+        const notification = document.getElementById('notification');
         notification.textContent = message;
         notification.style.display = 'block';
         setTimeout(() => {
@@ -430,6 +431,10 @@
         lobbySpecialContent.style.display = 'none';
         lobbySpecialContent.innerHTML = '';
         lobbyFloorLabel.style.display = 'block';
+        // Tampilkan kembali welcome message
+        if (welcomeMessage) {
+          welcomeMessage.style.display = 'block';
+        }
         // restore background lobby sesuai desktop/mobile
         const isMobile = window.matchMedia('(max-width: 1024px)').matches;
         lobbyScene.style.backgroundImage = isMobile ? "url('lobby2.png')" : "url('lobby1.png')";
@@ -438,13 +443,16 @@
 
       // ---- RESTROOM: background image langsung di scene (Restroom1.png desktop, Restroom2.png mobile) ----
       function showRestroom() {
-        // Sembunyikan tombol container dan label lantai
+        // Sembunyikan tombol container, label lantai, dan welcome message
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
+        if (welcomeMessage) {
+          welcomeMessage.style.display = 'none';
+        }
         
         // Kosongkan konten special, nanti hanya akan berisi tombol back
         lobbySpecialContent.style.display = 'flex';
-        // Hanya menampilkan tombol back di dalam content (tanpa container gambar)
+        // Hanya menampilkan tombol back di dalam content (tanpa container gambar, tanpa tulisan apapun)
         lobbySpecialContent.innerHTML = `
           <div class="restroom-back-wrapper">
             <button class="back-button" id="back-from-restroom">← Back to Lobby</button>
@@ -466,7 +474,6 @@
         // event listener tombol back
         const backBtn = document.getElementById('back-from-restroom');
         if (backBtn) {
-          // hapus listener lama jika ada (supaya tidak dobel)
           const newBackBtn = backBtn.cloneNode(true);
           backBtn.parentNode.replaceChild(newBackBtn, backBtn);
           newBackBtn.addEventListener('click', (e) => {
@@ -480,6 +487,9 @@
       function showFoodCourt() {
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
+        if (welcomeMessage) {
+          welcomeMessage.style.display = 'none';
+        }
         lobbyScene.style.backgroundImage = "url('foodcourt.png')";
         lobbyScene.style.backgroundColor = "transparent";
         lobbySpecialContent.style.display = 'flex';
@@ -502,6 +512,9 @@
       function showInformationDesk() {
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
+        if (welcomeMessage) {
+          welcomeMessage.style.display = 'none';
+        }
         lobbyScene.style.backgroundImage = "none";
         lobbyScene.style.backgroundColor = "#030303";
         lobbySpecialContent.style.display = 'flex';
@@ -524,6 +537,7 @@
               <span class="contact-label">Kazine's Public Relation:</span>
               <a href="https://x.com/Chaarmente" target="_blank">@Chaarmente</a>
             </div>
+            <div class="closing-note">Click below to return</div>
             <button class="back-button" id="back-from-info">Back to Lobby</button>
           </div>
         `;
@@ -552,7 +566,7 @@
         showFoodCourt();
       });
 
-      // Restroom tombol — menampilkan background Restroom1.png / Restroom2.png tanpa container
+      // Restroom tombol — menampilkan background Restroom1.png / Restroom2.png tanpa container dan tanpa welcome message
       const restroomBtn = document.getElementById('restroom-btn');
       if (restroomBtn) {
         restroomBtn.addEventListener('click', (e) => {
@@ -585,7 +599,6 @@
             } else if (specialContentHTML.includes('foodcourt-message')) {
               lobbyScene.style.backgroundImage = "url('foodcourt.png')";
             } else if (specialContentHTML.includes('info-content')) {
-              // info desk tidak pakai background
               lobbyScene.style.backgroundImage = "none";
               lobbyScene.style.backgroundColor = "#030303";
             }
@@ -595,4 +608,4 @@
     })();
   </script>
 </body>
-  </html>
+</html>
