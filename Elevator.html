@@ -185,29 +185,33 @@
       display: inline-block;
     }
 
-    /* notifikasi */
+    /* NOTIFICATION - DIPINDAHKAN KE ATAS (TOP) */
     .notification {
       position: fixed;
-      bottom: 100px;
+      top: 30px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border-radius: 40px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      color: #FFD966;
+      padding: 0.75rem 1.8rem;
+      border-radius: 50px;
       font-weight: 600;
-      font-size: 0.9rem;
-      border: 1px solid rgba(255, 215, 0, 0.5);
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(255, 215, 0, 0.6);
       z-index: 1000;
       animation: fadeInOut 2s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
     }
 
     @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      0% { opacity: 0; transform: translateX(-50%) translateY(-15px); }
       15% { opacity: 1; transform: translateX(-50%) translateY(0); }
       85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
     }
 
     /* animasi shake */
@@ -377,6 +381,12 @@
         left: 20px;
         right: auto;
       }
+      .notification {
+        top: 20px;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+      }
     }
 
     @media (max-width: 480px) {
@@ -397,6 +407,12 @@
       }
       .door-right::after {
         left: 12px;
+      }
+      .notification {
+        top: 15px;
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
       }
     }
   </style>
@@ -435,7 +451,7 @@
     <div class="door-indicator" id="doorIndicator"></div>
   </div>
 
-  <!-- NOTIFICATION AREA -->
+  <!-- NOTIFICATION AREA - SEKARANG DI ATAS -->
   <div id="notification" class="notification" style="display: none;"></div>
 
   <script>
@@ -663,4 +679,4 @@
     })();
   </script>
 </body>
-      </html>
+        </html>
