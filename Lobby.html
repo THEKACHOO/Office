@@ -488,28 +488,35 @@ lobbySpecialContent.innerHTML = `
       }
 
       // ---- FOOD COURT (coming soon) ----
-      function showFoodCourt() {
-        lobbyButtonContainer.classList.add('hidden-content');
-        lobbyFloorLabel.style.display = 'none';
-        if (welcomeMessage) {
-          welcomeMessage.style.display = 'none';
-        }
-        lobbyScene.style.backgroundImage = "url('foodcourt.png')";
-        lobbyScene.style.backgroundColor = "transparent";
-        lobbySpecialContent.style.display = 'flex';
-        lobbySpecialContent.innerHTML = `
-          <div class="foodcourt-message">COMING SOON</div>
-          <button class="back-button" id="back-from-foodcourt">Back to Lobby</button>
-        `;
-        const backBtn = document.getElementById('back-from-foodcourt');
-        if (backBtn) {
-          const newBackBtn = backBtn.cloneNode(true);
-          backBtn.parentNode.replaceChild(newBackBtn, backBtn);
-          newBackBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            resetLobbyToDefault();
-          });
-        }
+function showFoodCourt() {
+  lobbyButtonContainer.classList.add('hidden-content');
+  lobbyFloorLabel.style.display = 'none';
+  if (welcomeMessage) {
+    welcomeMessage.style.display = 'none';
+  }
+  
+  // Deteksi perangkat mobile berdasarkan lebar layar atau user agent
+  const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
+  // Pilih gambar berdasarkan perangkat
+  const backgroundImage = isMobile ? "url('Foodcourt2.png')" : "url('Foodcourt1.png')";
+  
+  lobbyScene.style.backgroundImage = backgroundImage;
+  lobbyScene.style.backgroundColor = "transparent";
+  lobbySpecialContent.style.display = 'flex';
+  lobbySpecialContent.innerHTML = `
+    <div class="foodcourt-message">COMING SOON</div>
+    <button class="back-button" id="back-from-foodcourt">Back to Lobby</button>
+  `;
+  const backBtn = document.getElementById('back-from-foodcourt');
+  if (backBtn) {
+    const newBackBtn = backBtn.cloneNode(true);
+    backBtn.parentNode.replaceChild(newBackBtn, backBtn);
+    newBackBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      resetLobbyToDefault();
+    });
+  }
       }
 
       // ---- INFORMATION DESK (detail kontak) ----
