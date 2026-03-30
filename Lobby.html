@@ -191,63 +191,8 @@
       100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
     }
 
-    /* RESTROOM PANEL (gambar responsif) */
-    .restroom-panel {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      background: rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(8px);
-      border-radius: 48px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.6);
-    }
-
-    .restroom-image {
-      width: 100%;
-      border-radius: 32px;
-      overflow: hidden;
-      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
-      background: #1a1a1a;
-      line-height: 0;
-    }
-
-    .restroom-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      transition: transform 0.2s ease;
-    }
-
-    /* picture + source untuk responsive image (Restroom1.png desktop, Restroom2.png mobile) */
-    .responsive-restroom {
-      width: 100%;
-      border-radius: 28px;
-    }
-
-    .restroom-caption {
-      font-size: 1rem;
-      font-weight: 500;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-      padding: 0.6rem 1.5rem;
-      border-radius: 60px;
-      letter-spacing: 0.3px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      display: inline-block;
-    }
-
-    .foodcourt-message, .info-content {
-      text-align: center;
-    }
-
     .foodcourt-message {
+      text-align: center;
       font-size: clamp(2rem, 10vw, 4rem);
       font-weight: 800;
       letter-spacing: 4px;
@@ -332,7 +277,7 @@
 
     .back-button {
       display: inline-block;
-      margin: 1rem auto 0 auto;
+      margin: 2rem auto 0 auto;
       padding: 0.8rem 2rem;
       background: white;
       color: black;
@@ -368,6 +313,16 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    /* Style khusus untuk restroom: hanya tombol back yang ditampilkan di content, background di scene */
+    .restroom-back-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 2rem;
+    }
+
     @media (max-width: 700px) {
       .info-content {
         padding: 1.5rem;
@@ -386,7 +341,7 @@
         border-radius: 40px;
       }
       .back-button {
-        margin-top: 1.2rem;
+        margin-top: 1.5rem;
         padding: 0.7rem 1.5rem;
         min-width: 140px;
       }
@@ -401,9 +356,8 @@
         font-size: 1rem;
         min-width: 140px;
       }
-      .restroom-panel {
-        padding: 1rem;
-        border-radius: 36px;
+      .restroom-back-wrapper {
+        margin-bottom: 1.5rem;
       }
     }
 
@@ -426,13 +380,6 @@
         max-width: 100%;
         padding: 0.9rem 1.2rem;
       }
-      .restroom-panel {
-        padding: 0.8rem;
-      }
-      .restroom-caption {
-        font-size: 0.85rem;
-        padding: 0.4rem 1rem;
-      }
     }
   </style>
 </head>
@@ -442,7 +389,7 @@
     <div class="content">
       <div class="welcome-message">
         <h1>THE KACHOO</h1>
-        <p>Welcome to Kachoo Office</p>
+        <p>Welcome to Kachoo</p>
       </div>
       <div class="button-container" id="lobby-button-container">
         <button class="floor-btn" id="lift-btn">Elevator</button>
@@ -450,7 +397,7 @@
         <a href="Guestbook.html" class="floor-btn" target="_blank">Grand Hall</a>
         <a href="Exhibition.html" class="floor-btn" target="_blank">Exhibition Center</a>
         <a href="Chobank.html" class="floor-btn" target="_blank">Chobank</a>
-        <!-- Restroom sekarang menggunakan fungsi internal dengan gambar Restroom1.png / Restroom2.png (bukan html terpisah) -->
+        <!-- Restroom menggunakan background image, bukan container -->
         <button class="floor-btn" id="restroom-btn">Restroom</button>
         <button class="floor-btn" id="food-court-btn">Food Court</button>
       </div>
@@ -477,52 +424,52 @@
         }, 2000);
       }
 
-      // reset ke tampilan lobby utama (tombol & label muncul, background kembali normal)
+      // reset ke tampilan lobby utama
       function resetLobbyToDefault() {
         lobbyButtonContainer.classList.remove('hidden-content');
         lobbySpecialContent.style.display = 'none';
         lobbySpecialContent.innerHTML = '';
         lobbyFloorLabel.style.display = 'block';
-        // restore background lobby sesuai desktop/mobile (tanpa override)
+        // restore background lobby sesuai desktop/mobile
         const isMobile = window.matchMedia('(max-width: 1024px)').matches;
         lobbyScene.style.backgroundImage = isMobile ? "url('lobby2.png')" : "url('lobby1.png')";
-        // fallback jika gambar tidak ada tapi tetap menggunakan properti class
-        if (!isMobile && lobbyScene.style.backgroundImage === "url('lobby1.png')") {
-          // sudah set
-        }
+        lobbyScene.style.backgroundColor = "transparent";
       }
 
-      // ---- RESTROOM (menggunakan gambar Restroom1.png untuk desktop, Restroom2.png untuk mobile) ----
+      // ---- RESTROOM: background image langsung di scene (Restroom1.png desktop, Restroom2.png mobile) ----
       function showRestroom() {
+        // Sembunyikan tombol container dan label lantai
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
-        // background lobby dihilangkan agar fokus ke konten restroom (tapi biarkan transparan)
-        lobbyScene.style.backgroundImage = "none";
-        lobbyScene.style.backgroundColor = "#0a0a0a"; // dark fallback
-        lobbySpecialContent.style.display = 'flex';
         
-        // Menggunakan <picture> untuk mengganti gambar secara responsif
-        // Restroom1.png → desktop (min-width: 1025px), Restroom2.png → mobile (max-width: 1024px)
-        const restroomHTML = `
-          <div class="restroom-panel">
-            <div class="restroom-image">
-              <picture>
-                <source media="(min-width: 1025px)" srcset="Restroom1.png">
-                <source media="(max-width: 1024px)" srcset="Restroom2.png">
-                <img src="Restroom1.png" alt="Restroom Facilities at Kachoo Tower" loading="eager">
-              </picture>
-            </div>
-            <div class="restroom-caption">
-              🚻 Premium Restroom · Clean & Modern
-            </div>
+        // Kosongkan konten special, nanti hanya akan berisi tombol back
+        lobbySpecialContent.style.display = 'flex';
+        // Hanya menampilkan tombol back di dalam content (tanpa container gambar)
+        lobbySpecialContent.innerHTML = `
+          <div class="restroom-back-wrapper">
             <button class="back-button" id="back-from-restroom">← Back to Lobby</button>
           </div>
         `;
-        lobbySpecialContent.innerHTML = restroomHTML;
         
+        // Set background image scene sesuai device (Restroom1.png untuk desktop, Restroom2.png untuk mobile)
+        const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+        if (isMobile) {
+          lobbyScene.style.backgroundImage = "url('Restroom2.png')";
+        } else {
+          lobbyScene.style.backgroundImage = "url('Restroom1.png')";
+        }
+        // pastikan background cover dan posisi center
+        lobbyScene.style.backgroundSize = "cover";
+        lobbyScene.style.backgroundPosition = "center";
+        lobbyScene.style.backgroundColor = "#000000";
+        
+        // event listener tombol back
         const backBtn = document.getElementById('back-from-restroom');
         if (backBtn) {
-          backBtn.addEventListener('click', (e) => {
+          // hapus listener lama jika ada (supaya tidak dobel)
+          const newBackBtn = backBtn.cloneNode(true);
+          backBtn.parentNode.replaceChild(newBackBtn, backBtn);
+          newBackBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             resetLobbyToDefault();
           });
@@ -534,6 +481,7 @@
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
         lobbyScene.style.backgroundImage = "url('foodcourt.png')";
+        lobbyScene.style.backgroundColor = "transparent";
         lobbySpecialContent.style.display = 'flex';
         lobbySpecialContent.innerHTML = `
           <div class="foodcourt-message">COMING SOON</div>
@@ -541,7 +489,9 @@
         `;
         const backBtn = document.getElementById('back-from-foodcourt');
         if (backBtn) {
-          backBtn.addEventListener('click', (e) => {
+          const newBackBtn = backBtn.cloneNode(true);
+          backBtn.parentNode.replaceChild(newBackBtn, backBtn);
+          newBackBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             resetLobbyToDefault();
           });
@@ -574,13 +524,14 @@
               <span class="contact-label">Kazine's Public Relation:</span>
               <a href="https://x.com/Chaarmente" target="_blank">@Chaarmente</a>
             </div>
-            <div class="closing-note">Click below to return</div>
             <button class="back-button" id="back-from-info">Back to Lobby</button>
           </div>
         `;
         const backBtn = document.getElementById('back-from-info');
         if (backBtn) {
-          backBtn.addEventListener('click', (e) => {
+          const newBackBtn = backBtn.cloneNode(true);
+          backBtn.parentNode.replaceChild(newBackBtn, backBtn);
+          newBackBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             resetLobbyToDefault();
           });
@@ -588,7 +539,7 @@
       }
 
       // ---- Event Listeners utama ----
-      // Elevator langsung menuju Elevator.html (tetap menggunakan link)
+      // Elevator langsung menuju Elevator.html
       document.getElementById('lift-btn').addEventListener('click', () => {
         window.location.href = 'Elevator.html';
       });
@@ -601,7 +552,7 @@
         showFoodCourt();
       });
 
-      // Restroom tombol baru — tidak mengarah ke Restroom.html, menampilkan gambar responsif
+      // Restroom tombol — menampilkan background Restroom1.png / Restroom2.png tanpa container
       const restroomBtn = document.getElementById('restroom-btn');
       if (restroomBtn) {
         restroomBtn.addEventListener('click', (e) => {
@@ -613,12 +564,31 @@
       // Saat load, pastikan state awal bersih
       window.addEventListener('load', () => {
         resetLobbyToDefault();
-        // optional: jika ada resize, kita perlu memastikan background lobby tetap sesuai?
+        // resize handler untuk menjaga background lobby ketika dalam keadaan default
         window.addEventListener('resize', () => {
-          // hanya jika dalam keadaan default (tombol tidak disembunyikan) kita sync background
+          // hanya jika dalam keadaan default (tombol tidak disembunyikan) kita sync background lobby
           if (!lobbyButtonContainer.classList.contains('hidden-content')) {
             const isMobile = window.matchMedia('(max-width: 1024px)').matches;
             lobbyScene.style.backgroundImage = isMobile ? "url('lobby2.png')" : "url('lobby1.png')";
+          } else {
+            // jika sedang dalam mode restroom, pastikan background restroom tetap sesuai ukuran layar
+            const specialContentHTML = lobbySpecialContent.innerHTML;
+            if (specialContentHTML.includes('back-from-restroom')) {
+              const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+              if (isMobile) {
+                lobbyScene.style.backgroundImage = "url('Restroom2.png')";
+              } else {
+                lobbyScene.style.backgroundImage = "url('Restroom1.png')";
+              }
+              lobbyScene.style.backgroundSize = "cover";
+              lobbyScene.style.backgroundPosition = "center";
+            } else if (specialContentHTML.includes('foodcourt-message')) {
+              lobbyScene.style.backgroundImage = "url('foodcourt.png')";
+            } else if (specialContentHTML.includes('info-content')) {
+              // info desk tidak pakai background
+              lobbyScene.style.backgroundImage = "none";
+              lobbyScene.style.backgroundColor = "#030303";
+            }
           }
         });
       });
