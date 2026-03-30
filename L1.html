@@ -238,6 +238,30 @@
       transform: scale(0.98);
     }
 
+    /* tombol visit kafkapages */
+    .visit-button {
+      display: inline-block;
+      margin: 1rem auto 0 auto;
+      padding: 0.8rem 2rem;
+      background: #ffd966;
+      color: #000000;
+      font-weight: 700;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      min-width: 180px;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+    }
+    .visit-button:hover {
+      background: #ffc107;
+      transform: scale(0.98);
+    }
+
     /* floor indicator */
     .floor-label {
       margin-top: 2rem;
@@ -307,6 +331,100 @@
       border-radius: 50px;
       border: 1px solid rgba(255,255,255,0.4);
       margin-bottom: 1rem;
+    }
+
+    /* PDF Container untuk Reading Corner */
+    .pdf-container {
+      width: 90%;
+      max-width: 1000px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 1rem;
+      margin: 1rem auto;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .pdf-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0 0.5rem;
+    }
+
+    .pdf-header h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .slide-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .slide-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .slide-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.02);
+    }
+
+    .slide-indicator {
+      color: white;
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .pdf-iframe-container {
+      width: 100%;
+      height: 500px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #1a1a2e;
+    }
+
+    .pdf-iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    @media (max-width: 768px) {
+      .pdf-iframe-container {
+        height: 400px;
+      }
+      .pdf-header h3 {
+        font-size: 1rem;
+      }
+      .slide-btn {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pdf-iframe-container {
+        height: 350px;
+      }
+      .pdf-container {
+        padding: 0.8rem;
+      }
     }
 
     /* Responsive breakpoints */
@@ -416,56 +534,74 @@
       // Notification
       const notification = document.getElementById('notification');
 
-      // ========= PERBAIKAN UTAMA: Mapping ruangan sesuai urutan yang benar ==========
-      // Data ruangan: (id unik, label tampilan, file gambar, displayName yang cantik)
-      // Urutan tombol di UI:
-      // 1. Meeting Room   -> MeetingRoom2.jpg
-      // 2. Conference Hall -> ConferenceRoom.png
-      // 3. Lounge          -> Lounge.png
-      // 4. Reading Corner  -> ReadingCorner.png
-      // 5. Restroom        -> Restroom2.png
-      // 6. Emergency Exit  -> EmergencyExit2.png
-      
+      // Data PDF untuk Reading Corner (3 slide)
+      const readingPdfs = [
+        'https://drive.google.com/file/d/1Iu_xvNlQuZc--nz6YIW9hIBp3LJ90zQn/preview',
+        'https://drive.google.com/file/d/1ozXEEp4zbR1-5B3007VqR8EOp9qjS2G1/preview',
+        'https://drive.google.com/file/d/1t1GQAL8mzZ1on_yccmy6PJqnMvPB5fE9/preview'
+      ];
+
+      // Background mapping untuk desktop dan mobile
+      function getBackgroundImage(desktopImg, mobileImg) {
+        if (window.innerWidth <= 1024) {
+          return `url('${mobileImg}')`;
+        }
+        return `url('${desktopImg}')`;
+      }
+
+      // Data ruangan dengan background responsive
       const roomsData = [
         { 
           btnId: 'room-meeting-btn', 
-          image: 'MeetingRoom2.jpg', 
+          imageDesktop: 'MeetingRoom2.jpg',
+          imageMobile: 'MeetingRoom2.jpg',
           displayName: 'MEETING Room',
-          friendlyName: 'Meeting Room'
+          friendlyName: 'Meeting Room',
+          hasPdf: false
         },
         { 
           btnId: 'room-conference-btn', 
-          image: 'ConferenceRoom.png', 
+          imageDesktop: 'Conference1.png',
+          imageMobile: 'Conference2.png',
           displayName: 'CONFERENCE HALL',
-          friendlyName: 'Conference Hall'
+          friendlyName: 'Conference Hall',
+          hasPdf: false
         },
         { 
           btnId: 'room-lounge-btn', 
-          image: 'Lounge.png', 
+          imageDesktop: 'Lounge1.jpg',
+          imageMobile: 'Lounge2.jpg',
           displayName: 'EXECUTIVE LOUNGE',
-          friendlyName: 'Lounge'
+          friendlyName: 'Lounge',
+          hasPdf: false
         },
         { 
           btnId: 'room-reading-btn', 
-          image: 'ReadingCorner.png', 
+          imageDesktop: 'Readingcorner1.jpg',
+          imageMobile: 'Readingcorner2.jpg',
           displayName: 'READING CORNER',
-          friendlyName: 'Reading Corner'
+          friendlyName: 'Reading Corner',
+          hasPdf: true,
+          pdfSlides: readingPdfs
         },
         { 
           btnId: 'room-restroom-btn', 
-          image: 'Restroom2.png', 
+          imageDesktop: 'Restroom2.png',
+          imageMobile: 'Restroom2.png',
           displayName: 'RESTROOM',
-          friendlyName: 'Restroom'
+          friendlyName: 'Restroom',
+          hasPdf: false
         },
         { 
           btnId: 'room-emergency-btn', 
-          image: 'EmergencyExit2.png', 
+          imageDesktop: 'EmergencyExit1.png',
+          imageMobile: 'EmergencyExit2.png',
           displayName: 'EMERGENCY EXIT',
-          friendlyName: 'Emergency Exit'
+          friendlyName: 'Emergency Exit',
+          hasPdf: false
         }
       ];
 
-      // Fungsi show notifikasi opsional (bisa dipakai untuk feedback)
       function showNotification(message) {
         notification.textContent = message;
         notification.style.display = 'block';
@@ -474,47 +610,107 @@
         }, 2000);
       }
 
-      // Fungsi ganti ke scene ruangan dengan animasi yang smooth
+      // Fungsi ganti ke scene ruangan
       function switchToRoom(roomItem) {
-        // Animasi shake pada lobby sebelum pindah
         l1LobbyScene.classList.add('shake-animation');
         setTimeout(() => {
           l1LobbyScene.classList.remove('shake-animation');
-          // sembunyikan lobby scene
           l1LobbyScene.classList.add('hidden');
           
-          // Buat scene ruangan baru (dinamis) - hapus jika sudah ada
           const existingRoomScene = document.getElementById('dynamic-room-scene');
           if (existingRoomScene) existingRoomScene.remove();
           
-          // Buat div scene untuk ruangan
           const roomScene = document.createElement('div');
           roomScene.id = 'dynamic-room-scene';
           roomScene.className = 'scene room-scene';
-          // background image dari file yang sesuai
-          roomScene.style.backgroundImage = `url('${roomItem.image}')`;
+          
+          // Set background responsive
+          const bgImage = getBackgroundImage(roomItem.imageDesktop, roomItem.imageMobile);
+          roomScene.style.backgroundImage = bgImage;
           roomScene.style.backgroundSize = 'cover';
           roomScene.style.backgroundPosition = 'center';
           roomScene.style.backgroundRepeat = 'no-repeat';
           
-          // konten dalam ruangan
+          // Buat konten ruangan
+          let additionalContent = '';
+          if (roomItem.hasPdf && roomItem.pdfSlides) {
+            additionalContent = `
+              <div class="pdf-container" id="reading-pdf-container">
+                <div class="pdf-header">
+                  <h3>📖 Digital Collection</h3>
+                  <div class="slide-controls">
+                    <button class="slide-btn" id="prev-slide-btn">◀ Previous</button>
+                    <span class="slide-indicator" id="slide-indicator">1 / 3</span>
+                    <button class="slide-btn" id="next-slide-btn">Next ▶</button>
+                  </div>
+                </div>
+                <div class="pdf-iframe-container">
+                  <iframe id="pdf-viewer" src="${roomItem.pdfSlides[0]}" title="PDF Viewer"></iframe>
+                </div>
+              </div>
+            `;
+          }
+          
           roomScene.innerHTML = `
             <div class="content">
               <div style="flex:1"></div>
               <div class="room-message">${roomItem.displayName}</div>
-              <button class="back-button" id="back-to-l1-lobby-btn">← Back to L1 Lobby</button>
+              ${additionalContent}
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem;">
+                <button class="back-button" id="back-to-l1-lobby-btn">← Back to L1 Lobby</button>
+                <a href="https://thekachoo.github.io/Home/kafkapages.html" target="_blank" class="visit-button">📚 Visit Kafkapages</a>
+              </div>
               <div style="height:1rem"></div>
             </div>
           `;
           
           roomContainer.appendChild(roomScene);
           
-          // Event listener tombol back (versi langsung dari DOM)
+          // Setup PDF slider jika ada
+          if (roomItem.hasPdf && roomItem.pdfSlides) {
+            let currentSlide = 0;
+            const pdfViewer = document.getElementById('pdf-viewer');
+            const slideIndicator = document.getElementById('slide-indicator');
+            const prevBtn = document.getElementById('prev-slide-btn');
+            const nextBtn = document.getElementById('next-slide-btn');
+            
+            function updateSlide() {
+              if (pdfViewer) {
+                pdfViewer.src = roomItem.pdfSlides[currentSlide];
+              }
+              if (slideIndicator) {
+                slideIndicator.textContent = `${currentSlide + 1} / ${roomItem.pdfSlides.length}`;
+              }
+            }
+            
+            if (prevBtn) {
+              prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                  currentSlide--;
+                  updateSlide();
+                } else {
+                  showNotification('This is the first document');
+                }
+              });
+            }
+            
+            if (nextBtn) {
+              nextBtn.addEventListener('click', () => {
+                if (currentSlide < roomItem.pdfSlides.length - 1) {
+                  currentSlide++;
+                  updateSlide();
+                } else {
+                  showNotification('This is the last document');
+                }
+              });
+            }
+          }
+          
+          // Event listener tombol back
           const backBtn = document.getElementById('back-to-l1-lobby-btn');
           if (backBtn) {
             backBtn.addEventListener('click', (e) => {
               e.stopPropagation();
-              // animasi balik ke lobby L1 dengan efek
               const currentRoom = document.getElementById('dynamic-room-scene');
               if (currentRoom) {
                 currentRoom.classList.add('shake-animation');
@@ -522,7 +718,6 @@
                   currentRoom.classList.remove('shake-animation');
                   currentRoom.remove();
                   l1LobbyScene.classList.remove('hidden');
-                  // optional: notifikasi ringan
                   showNotification('Returned to L1 Lobby');
                 }, 280);
               } else {
@@ -533,7 +728,6 @@
         }, 400);
       }
 
-      // Fungsi untuk pindah ke Elevator.html
       function goToElevator() {
         l1LobbyScene.classList.add('shake-animation');
         setTimeout(() => {
@@ -542,16 +736,12 @@
         }, 400);
       }
 
-      // Setup event listeners untuk semua tombol berdasarkan mapping yang benar
       function setupRoomButtons() {
-        // Loop melalui roomsData dan attach event listener ke masing-masing tombol
         roomsData.forEach(room => {
           const btn = document.getElementById(room.btnId);
           if (btn) {
             btn.addEventListener('click', (e) => {
               e.preventDefault();
-              // Optional: menampilkan notifikasi ringan (bisa dihilangkan)
-              // showNotification(`Opening ${room.friendlyName}...`);
               switchToRoom(room);
             });
           } else {
@@ -559,24 +749,19 @@
           }
         });
 
-        // Tombol elevator
         const elevatorBtn = document.getElementById('elevator-exit-btn');
         if (elevatorBtn) {
           elevatorBtn.addEventListener('click', goToElevator);
         }
       }
 
-      // Inisialisasi
       function init() {
-        // bersihkan container ruangan
         roomContainer.innerHTML = '';
-        // pastikan lobby scene terlihat
         l1LobbyScene.classList.remove('hidden');
-        // setup tombol dengan mapping yang sudah diperbaiki
         setupRoomButtons();
       }
 
-      // Global fallback untuk tombol back (jika terjadi duplikasi, tetap aman)
+      // Global fallback untuk tombol back
       document.body.addEventListener('click', (e) => {
         if (e.target && e.target.id === 'back-to-l1-lobby-btn') {
           const roomScene = document.getElementById('dynamic-room-scene');
@@ -592,26 +777,40 @@
         }
       });
 
-      // Inisialisasi saat window load
       window.addEventListener('load', () => {
         init();
       });
       
-      // Preload semua gambar ruangan untuk performa lebih baik
       function preloadRoomImages() {
         roomsData.forEach(room => {
-          const img = new Image();
-          img.src = room.image;
+          const imgDesktop = new Image();
+          imgDesktop.src = room.imageDesktop;
+          const imgMobile = new Image();
+          imgMobile.src = room.imageMobile;
         });
-        // tambahkan juga preload untuk gambar lobby jika perlu
         const lobbyImg = new Image();
         lobbyImg.src = 'L1-lobby.png';
       }
       preloadRoomImages();
       
-      // Tambahan kecil: validasi bahwa semua tombol terhubung dengan benar
-      // dan tidak ada lagi konflik restroom vs emergency exit
-      console.log('✅ L1 Floor fixed: Room buttons mapped correctly: Meeting, Conference, Lounge, Reading, Restroom, Emergency Exit');
+      // Resize handler untuk update background jika layar berubah orientasi
+      window.addEventListener('resize', () => {
+        const currentRoom = document.getElementById('dynamic-room-scene');
+        if (currentRoom && !currentRoom.classList.contains('hidden')) {
+          // Cari room data yang sedang aktif berdasarkan isi room-message
+          const roomMessage = currentRoom.querySelector('.room-message');
+          if (roomMessage) {
+            const displayName = roomMessage.innerText;
+            const activeRoom = roomsData.find(r => r.displayName === displayName);
+            if (activeRoom) {
+              const newBg = getBackgroundImage(activeRoom.imageDesktop, activeRoom.imageMobile);
+              currentRoom.style.backgroundImage = newBg;
+            }
+          }
+        }
+      });
+      
+      console.log('✅ L1 Floor updated: Conference1/Conference2, Lounge1/Lounge2, Readingcorner1/Readingcorner2 with PDF slider and Kafkapages button');
     })();
   </script>
 </body>
