@@ -218,10 +218,10 @@
     /* tombol back khusus ruangan */
     .back-button {
       display: inline-block;
-      margin: 2rem auto 0 auto;
+      margin: 0 auto;
       padding: 0.8rem 2rem;
-      background: white;
-      color: black;
+      background: #FFFFFF;
+      color: #000000;
       font-weight: 700;
       border-radius: 50px;
       border: none;
@@ -234,16 +234,16 @@
       font-family: 'Inter', sans-serif;
     }
     .back-button:hover {
-      background: #ddd;
+      background: #DDDDDD;
       transform: scale(0.98);
     }
 
-    /* tombol visit kafkapages */
+    /* tombol visit kafkapages - HANYA PUTIH HITAM */
     .visit-button {
       display: inline-block;
-      margin: 1rem auto 0 auto;
+      margin: 0 auto;
       padding: 0.8rem 2rem;
-      background: #ffd966;
+      background: #FFFFFF;
       color: #000000;
       font-weight: 700;
       border-radius: 50px;
@@ -258,7 +258,7 @@
       text-decoration: none;
     }
     .visit-button:hover {
-      background: #ffc107;
+      background: #DDDDDD;
       transform: scale(0.98);
     }
 
@@ -291,7 +291,7 @@
       border-radius: 40px;
       font-weight: 600;
       font-size: 0.9rem;
-      border: 1px solid rgba(255, 215, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       z-index: 1000;
       animation: fadeInOut 2s ease;
     }
@@ -357,7 +357,7 @@
     .pdf-header h3 {
       font-size: 1.2rem;
       font-weight: 600;
-      color: #fff;
+      color: #FFFFFF;
     }
 
     .slide-controls {
@@ -367,9 +367,9 @@
     }
 
     .slide-btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      color: white;
+      background: #FFFFFF;
+      border: 1px solid #000000;
+      color: #000000;
       padding: 0.5rem 1rem;
       border-radius: 40px;
       cursor: pointer;
@@ -379,12 +379,12 @@
     }
 
     .slide-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
+      background: #DDDDDD;
       transform: scale(1.02);
     }
 
     .slide-indicator {
-      color: white;
+      color: #FFFFFF;
       font-size: 0.9rem;
       background: rgba(0, 0, 0, 0.5);
       padding: 0.3rem 0.8rem;
@@ -396,7 +396,7 @@
       height: 500px;
       border-radius: 16px;
       overflow: hidden;
-      background: #1a1a2e;
+      background: #000000;
     }
 
     .pdf-iframe-container iframe {
@@ -427,6 +427,14 @@
       }
     }
 
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
     /* Responsive breakpoints */
     @media (max-width: 700px) {
       .button-container {
@@ -443,7 +451,13 @@
       }
       
       .back-button {
-        margin-top: 1.5rem;
+        margin-top: 0;
+        padding: 0.7rem 1.5rem;
+        min-width: 140px;
+        font-size: 0.9rem;
+      }
+      
+      .visit-button {
         padding: 0.7rem 1.5rem;
         min-width: 140px;
         font-size: 0.9rem;
@@ -482,6 +496,12 @@
         font-size: 0.85rem;
       }
       
+      .visit-button {
+        padding: 0.6rem 1.2rem;
+        min-width: 120px;
+        font-size: 0.85rem;
+      }
+      
       .room-message {
         padding: 0.6rem 1.2rem;
       }
@@ -497,10 +517,10 @@
   <div id="scene-l1-lobby" class="scene">
     <div class="content">
       <div class="welcome-message">
-        <h1>L 1</h1>
+        <h1>L1</h1>
         <p>Meeting Room & Conference</p>
       </div>
-      <!-- Button container untuk room - SESUAI PERMINTAAN: Meeting, Conference, Lounge, Reading Corner, Restroom, Emergency Exit -->
+      <!-- Button container untuk room -->
       <div class="button-container" id="l1-button-container">
         <button class="floor-btn" id="room-meeting-btn">Meeting Room</button>
         <button class="floor-btn" id="room-conference-btn">Conference Hall</button>
@@ -557,7 +577,8 @@
           imageMobile: 'MeetingRoom2.jpg',
           displayName: 'MEETING Room',
           friendlyName: 'Meeting Room',
-          hasPdf: false
+          hasPdf: false,
+          hasVisitButton: false
         },
         { 
           btnId: 'room-conference-btn', 
@@ -565,7 +586,8 @@
           imageMobile: 'Conference2.png',
           displayName: 'CONFERENCE HALL',
           friendlyName: 'Conference Hall',
-          hasPdf: false
+          hasPdf: false,
+          hasVisitButton: false
         },
         { 
           btnId: 'room-lounge-btn', 
@@ -573,7 +595,8 @@
           imageMobile: 'Lounge2.jpg',
           displayName: 'EXECUTIVE LOUNGE',
           friendlyName: 'Lounge',
-          hasPdf: false
+          hasPdf: false,
+          hasVisitButton: false
         },
         { 
           btnId: 'room-reading-btn', 
@@ -582,6 +605,7 @@
           displayName: 'READING CORNER',
           friendlyName: 'Reading Corner',
           hasPdf: true,
+          hasVisitButton: true,
           pdfSlides: readingPdfs
         },
         { 
@@ -590,15 +614,17 @@
           imageMobile: 'Restroom2.png',
           displayName: 'RESTROOM',
           friendlyName: 'Restroom',
-          hasPdf: false
+          hasPdf: false,
+          hasVisitButton: false
         },
         { 
           btnId: 'room-emergency-btn', 
-          imageDesktop: 'EmergencyExit1.png',
+          imageDesktop: 'EmergencyExit2.png',
           imageMobile: 'EmergencyExit2.png',
           displayName: 'EMERGENCY EXIT',
           friendlyName: 'Emergency Exit',
-          hasPdf: false
+          hasPdf: false,
+          hasVisitButton: false
         }
       ];
 
@@ -637,11 +663,11 @@
             additionalContent = `
               <div class="pdf-container" id="reading-pdf-container">
                 <div class="pdf-header">
-                  <h3>📖 Digital Collection</h3>
+                  <h3>Digital Collection</h3>
                   <div class="slide-controls">
-                    <button class="slide-btn" id="prev-slide-btn">◀ Previous</button>
+                    <button class="slide-btn" id="prev-slide-btn">Previous</button>
                     <span class="slide-indicator" id="slide-indicator">1 / 3</span>
-                    <button class="slide-btn" id="next-slide-btn">Next ▶</button>
+                    <button class="slide-btn" id="next-slide-btn">Next</button>
                   </div>
                 </div>
                 <div class="pdf-iframe-container">
@@ -651,15 +677,29 @@
             `;
           }
           
+          // Buat button group - untuk Reading Corner ada Visit Kafkapages di atas Back button
+          let buttonGroupHtml = '';
+          if (roomItem.hasVisitButton) {
+            buttonGroupHtml = `
+              <div class="button-group">
+                <a href="https://thekachoo.github.io/Home/kafkapages.html" target="_blank" class="visit-button">Visit Kafkapages</a>
+                <button class="back-button" id="back-to-l1-lobby-btn">Back to L1 Lobby</button>
+              </div>
+            `;
+          } else {
+            buttonGroupHtml = `
+              <div class="button-group">
+                <button class="back-button" id="back-to-l1-lobby-btn">Back to L1 Lobby</button>
+              </div>
+            `;
+          }
+          
           roomScene.innerHTML = `
             <div class="content">
               <div style="flex:1"></div>
               <div class="room-message">${roomItem.displayName}</div>
               ${additionalContent}
-              <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem;">
-                <button class="back-button" id="back-to-l1-lobby-btn">← Back to L1 Lobby</button>
-                <a href="https://thekachoo.github.io/Home/kafkapages.html" target="_blank" class="visit-button">📚 Visit Kafkapages</a>
-              </div>
+              ${buttonGroupHtml}
               <div style="height:1rem"></div>
             </div>
           `;
@@ -797,7 +837,6 @@
       window.addEventListener('resize', () => {
         const currentRoom = document.getElementById('dynamic-room-scene');
         if (currentRoom && !currentRoom.classList.contains('hidden')) {
-          // Cari room data yang sedang aktif berdasarkan isi room-message
           const roomMessage = currentRoom.querySelector('.room-message');
           if (roomMessage) {
             const displayName = roomMessage.innerText;
@@ -810,7 +849,7 @@
         }
       });
       
-      console.log('✅ L1 Floor updated: Conference1/Conference2, Lounge1/Lounge2, Readingcorner1/Readingcorner2 with PDF slider and Kafkapages button');
+      console.log('L1 Floor: Conference1/Conference2, Lounge1/Lounge2, Readingcorner1/Readingcorner2 with PDF slider. Visit Kafkapages only in Reading Corner, above Back button.');
     })();
   </script>
 </body>
