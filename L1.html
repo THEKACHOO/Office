@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>L1 Meeting & Lounge | Premium Spaces</title>
+  <title>L1</title>
   <!-- Inter font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <style>
@@ -379,8 +379,8 @@
   <div id="scene-l1-lobby" class="scene">
     <div class="content">
       <div class="welcome-message">
-        <h1>LEVEL 1</h1>
-        <p>Meeting Room & Lounge</p>
+        <h1>L 1</h1>
+        <p>Meeting Room & Conference</p>
       </div>
       <!-- Button container untuk room - SESUAI PERMINTAAN: Meeting, Conference, Lounge, Reading Corner, Restroom, Emergency Exit -->
       <div class="button-container" id="l1-button-container">
@@ -395,7 +395,7 @@
       <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
         <button class="elevator-btn" id="elevator-exit-btn">Elevator</button>
       </div>
-      <div class="floor-label">L1 • Meeting & Lounge District</div>
+      <div class="floor-label">L1 • Meeting & Conference</div>
     </div>
   </div>
 
@@ -423,14 +423,14 @@
       // 2. Conference Hall -> ConferenceRoom.png
       // 3. Lounge          -> Lounge.png
       // 4. Reading Corner  -> ReadingCorner.png
-      // 5. Restroom        -> Restroom1.png
+      // 5. Restroom        -> Restroom2.png
       // 6. Emergency Exit  -> EmergencyExit2.png
       
       const roomsData = [
         { 
           btnId: 'room-meeting-btn', 
           image: 'MeetingRoom.png', 
-          displayName: 'MEETING SUITE',
+          displayName: 'MEETING Room',
           friendlyName: 'Meeting Room'
         },
         { 
@@ -453,8 +453,8 @@
         },
         { 
           btnId: 'room-restroom-btn', 
-          image: 'Restroom1.png', 
-          displayName: 'PREMIUM RESTROOM',
+          image: 'Restroom2.png', 
+          displayName: 'RESTROOM',
           friendlyName: 'Restroom'
         },
         { 
