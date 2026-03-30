@@ -389,7 +389,7 @@
     <div class="content">
       <div class="welcome-message">
         <h1>THE KACHOO</h1>
-        <p>Welcome to Kachoo Tower</p>
+        <p>Welcome to Kachoo Office</p>
       </div>
       <div class="button-container" id="lobby-button-container">
         <button class="floor-btn" id="lift-btn">Elevator</button>
@@ -452,12 +452,16 @@
         
         // Kosongkan konten special, nanti hanya akan berisi tombol back
         lobbySpecialContent.style.display = 'flex';
-        // Hanya menampilkan tombol back di dalam content (tanpa container gambar, tanpa tulisan apapun)
-        lobbySpecialContent.innerHTML = `
-          <div class="restroom-back-wrapper">
-            <button class="back-button" id="back-from-restroom">← Back to Lobby</button>
-          </div>
-        `;
+lobbySpecialContent.style.flexDirection = 'column';
+lobbySpecialContent.style.justifyContent = 'flex-end'; // Mendorong konten ke bawah
+// Atau bisa juga menggunakan:
+// lobbySpecialContent.style.alignItems = 'center';
+
+lobbySpecialContent.innerHTML = `
+  <div class="restroom-back-wrapper">
+    <button class="back-button" id="back-from-restroom">Back to Lobby</button>
+  </div>
+`;
         
         // Set background image scene sesuai device (Restroom1.png untuk desktop, Restroom2.png untuk mobile)
         const isMobile = window.matchMedia('(max-width: 1024px)').matches;
