@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
@@ -38,11 +38,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    #scene-lobby .content {
-      align-items: center;
-      justify-content: center;
+      transition: background-image 0.2s ease;
     }
 
     .scene::after {
@@ -64,7 +60,7 @@
       flex-direction: column;
     }
 
-    /* BACKGROUND UNTUK DESKTOP */
+    /* BACKGROUND LOBBY: desktop & mobile */
     #scene-lobby {
       background-image: url('lobby1.png');
     }
@@ -75,7 +71,7 @@
       }
     }
 
-    /* Fallback SVG */
+    /* fallback minimal */
     @media (min-width: 1025px) {
       #scene-lobby {
         background-image: url('lobby1.png'), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%23354b42%22/><rect x=%2230%22 y=%2250%22 width=%22340%22 height=%22200%22 fill=%22%236a7c70%22 rx=%2216%22/><rect x=%2280%22 y=%22100%22 width=%2260%22 height=%2260%22 fill=%22%23aac3b3%22 rx=%228%22/><rect x=%22260%22 y=%22100%22 width=%2260%22 height=%2260%22 fill=%22%23aac3b3%22 rx=%228%22/><circle cx=%22200%22 cy=%22150%22 r=%2230%22 fill=%22%23cadfd1%22 opacity=%220.6%22 /></svg>');
@@ -195,8 +191,63 @@
       100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
     }
 
-    .foodcourt-message {
+    /* RESTROOM PANEL (gambar responsif) */
+    .restroom-panel {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(8px);
+      border-radius: 48px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.6);
+    }
+
+    .restroom-image {
+      width: 100%;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
+      background: #1a1a1a;
+      line-height: 0;
+    }
+
+    .restroom-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+    }
+
+    /* picture + source untuk responsive image (Restroom1.png desktop, Restroom2.png mobile) */
+    .responsive-restroom {
+      width: 100%;
+      border-radius: 28px;
+    }
+
+    .restroom-caption {
+      font-size: 1rem;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      padding: 0.6rem 1.5rem;
+      border-radius: 60px;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: inline-block;
+    }
+
+    .foodcourt-message, .info-content {
       text-align: center;
+    }
+
+    .foodcourt-message {
       font-size: clamp(2rem, 10vw, 4rem);
       font-weight: 800;
       letter-spacing: 4px;
@@ -225,6 +276,7 @@
       border: 1px solid rgba(255,255,255,0.25);
       color: #f0f0f0;
       box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+      text-align: left;
     }
 
     .info-content p {
@@ -232,7 +284,6 @@
       margin-bottom: 1.5rem;
       line-height: 1.6;
       font-weight: 400;
-      word-wrap: break-word;
     }
 
     .info-content .address {
@@ -241,7 +292,6 @@
       padding-top: 1rem;
       border-top: 1px solid rgba(255,255,255,0.2);
       line-height: 1.5;
-      word-break: break-word;
     }
 
     .info-content .contact-line {
@@ -264,8 +314,7 @@
       text-decoration: none;
       font-weight: 600;
       border-bottom: 1px dotted #ffdb8e;
-      transition: color 0.2s, border-color 0.2s;
-      word-break: break-all;
+      transition: color 0.2s;
     }
 
     .info-content a:hover {
@@ -283,7 +332,7 @@
 
     .back-button {
       display: inline-block;
-      margin: 2rem auto 0 auto;
+      margin: 1rem auto 0 auto;
       padding: 0.8rem 2rem;
       background: white;
       color: black;
@@ -297,6 +346,7 @@
       min-width: 160px;
       text-align: center;
     }
+
     .back-button:hover {
       background: #ddd;
       transform: scale(0.98);
@@ -313,7 +363,7 @@
       align-items: center;
       justify-content: center;
       padding: 0.5rem;
-      max-height: 80vh;
+      max-height: 85vh;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
@@ -336,7 +386,7 @@
         border-radius: 40px;
       }
       .back-button {
-        margin-top: 1.5rem;
+        margin-top: 1.2rem;
         padding: 0.7rem 1.5rem;
         min-width: 140px;
       }
@@ -351,8 +401,9 @@
         font-size: 1rem;
         min-width: 140px;
       }
-      .welcome-message h1 {
-        font-size: clamp(2rem, 8vw, 3rem);
+      .restroom-panel {
+        padding: 1rem;
+        border-radius: 36px;
       }
     }
 
@@ -361,16 +412,9 @@
         padding: 1.2rem;
         border-radius: 24px;
       }
-      .info-content p {
-        margin-bottom: 1rem;
-      }
-      .info-content .address {
-        margin: 1.2rem 0 1rem 0;
-      }
       .foodcourt-message {
         padding: 1rem 1.5rem;
         font-size: clamp(1.5rem, 8vw, 2.5rem);
-        border-radius: 30px;
       }
       .back-button {
         padding: 0.6rem 1.2rem;
@@ -380,18 +424,25 @@
       .floor-btn {
         min-width: 100%;
         max-width: 100%;
-        padding: 1rem 1.2rem;
+        padding: 0.9rem 1.2rem;
+      }
+      .restroom-panel {
+        padding: 0.8rem;
+      }
+      .restroom-caption {
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- LOBBY SCENE (hanya lobby, elevator system sudah dihapus total) -->
+  <!-- LOBBY SCENE (semua navigasi berbasis konten inline) -->
   <div id="scene-lobby" class="scene">
     <div class="content">
       <div class="welcome-message">
         <h1>THE KACHOO</h1>
-        <p>Welcome to Kachoo Tower</p>
+        <p>Welcome to Kachoo Office</p>
       </div>
       <div class="button-container" id="lobby-button-container">
         <button class="floor-btn" id="lift-btn">Elevator</button>
@@ -399,7 +450,8 @@
         <a href="Guestbook.html" class="floor-btn" target="_blank">Grand Hall</a>
         <a href="Exhibition.html" class="floor-btn" target="_blank">Exhibition Center</a>
         <a href="Chobank.html" class="floor-btn" target="_blank">Chobank</a>
-        <a href="Restroom.html" class="floor-btn" target="_blank">Restroom</a>
+        <!-- Restroom sekarang menggunakan fungsi internal dengan gambar Restroom1.png / Restroom2.png (bukan html terpisah) -->
+        <button class="floor-btn" id="restroom-btn">Restroom</button>
         <button class="floor-btn" id="food-court-btn">Food Court</button>
       </div>
       <div id="lobby-special-content"></div>
@@ -425,14 +477,59 @@
         }, 2000);
       }
 
+      // reset ke tampilan lobby utama (tombol & label muncul, background kembali normal)
       function resetLobbyToDefault() {
         lobbyButtonContainer.classList.remove('hidden-content');
         lobbySpecialContent.style.display = 'none';
         lobbySpecialContent.innerHTML = '';
         lobbyFloorLabel.style.display = 'block';
-        lobbyScene.style.backgroundImage = null;
+        // restore background lobby sesuai desktop/mobile (tanpa override)
+        const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+        lobbyScene.style.backgroundImage = isMobile ? "url('lobby2.png')" : "url('lobby1.png')";
+        // fallback jika gambar tidak ada tapi tetap menggunakan properti class
+        if (!isMobile && lobbyScene.style.backgroundImage === "url('lobby1.png')") {
+          // sudah set
+        }
       }
 
+      // ---- RESTROOM (menggunakan gambar Restroom1.png untuk desktop, Restroom2.png untuk mobile) ----
+      function showRestroom() {
+        lobbyButtonContainer.classList.add('hidden-content');
+        lobbyFloorLabel.style.display = 'none';
+        // background lobby dihilangkan agar fokus ke konten restroom (tapi biarkan transparan)
+        lobbyScene.style.backgroundImage = "none";
+        lobbyScene.style.backgroundColor = "#0a0a0a"; // dark fallback
+        lobbySpecialContent.style.display = 'flex';
+        
+        // Menggunakan <picture> untuk mengganti gambar secara responsif
+        // Restroom1.png → desktop (min-width: 1025px), Restroom2.png → mobile (max-width: 1024px)
+        const restroomHTML = `
+          <div class="restroom-panel">
+            <div class="restroom-image">
+              <picture>
+                <source media="(min-width: 1025px)" srcset="Restroom1.png">
+                <source media="(max-width: 1024px)" srcset="Restroom2.png">
+                <img src="Restroom1.png" alt="Restroom Facilities at Kachoo Tower" loading="eager">
+              </picture>
+            </div>
+            <div class="restroom-caption">
+              🚻 Premium Restroom · Clean & Modern
+            </div>
+            <button class="back-button" id="back-from-restroom">← Back to Lobby</button>
+          </div>
+        `;
+        lobbySpecialContent.innerHTML = restroomHTML;
+        
+        const backBtn = document.getElementById('back-from-restroom');
+        if (backBtn) {
+          backBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetLobbyToDefault();
+          });
+        }
+      }
+
+      // ---- FOOD COURT (coming soon) ----
       function showFoodCourt() {
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
@@ -442,16 +539,21 @@
           <div class="foodcourt-message">COMING SOON</div>
           <button class="back-button" id="back-from-foodcourt">Back to Lobby</button>
         `;
-        document.getElementById('back-from-foodcourt').addEventListener('click', (e) => {
-          e.stopPropagation();
-          resetLobbyToDefault();
-        });
+        const backBtn = document.getElementById('back-from-foodcourt');
+        if (backBtn) {
+          backBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetLobbyToDefault();
+          });
+        }
       }
 
+      // ---- INFORMATION DESK (detail kontak) ----
       function showInformationDesk() {
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
-        lobbyScene.style.backgroundImage = null;
+        lobbyScene.style.backgroundImage = "none";
+        lobbyScene.style.backgroundColor = "#030303";
         lobbySpecialContent.style.display = 'flex';
         lobbySpecialContent.innerHTML = `
           <div class="info-content">
@@ -485,7 +587,8 @@
         }
       }
 
-      // Tombol Elevator LANGSUNG ke Elevator.html
+      // ---- Event Listeners utama ----
+      // Elevator langsung menuju Elevator.html (tetap menggunakan link)
       document.getElementById('lift-btn').addEventListener('click', () => {
         window.location.href = 'Elevator.html';
       });
@@ -498,8 +601,26 @@
         showFoodCourt();
       });
 
+      // Restroom tombol baru — tidak mengarah ke Restroom.html, menampilkan gambar responsif
+      const restroomBtn = document.getElementById('restroom-btn');
+      if (restroomBtn) {
+        restroomBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          showRestroom();
+        });
+      }
+
+      // Saat load, pastikan state awal bersih
       window.addEventListener('load', () => {
         resetLobbyToDefault();
+        // optional: jika ada resize, kita perlu memastikan background lobby tetap sesuai?
+        window.addEventListener('resize', () => {
+          // hanya jika dalam keadaan default (tombol tidak disembunyikan) kita sync background
+          if (!lobbyButtonContainer.classList.contains('hidden-content')) {
+            const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+            lobbyScene.style.backgroundImage = isMobile ? "url('lobby2.png')" : "url('lobby1.png')";
+          }
+        });
       });
     })();
   </script>
