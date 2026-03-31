@@ -502,7 +502,7 @@
         if (isDoorOpen) return;
         isDoorOpen = true;
         updateDoorVisual();
-        if (!silent) showNotification('Pintu terbuka');
+        if (!silent) showNotification('Doors open');
       }
 
       // Tutup pintu
@@ -510,13 +510,13 @@
         if (!isDoorOpen) return;
         isDoorOpen = false;
         updateDoorVisual();
-        if (!silent) showNotification('Pintu tertutup');
+        if (!silent) showNotification('Doors closed');
       }
 
       // Fungsi untuk B1, G, L1: tutup 2 detik -> pindah scene/navigasi -> buka pintu
       function travelWithDoorSequence(targetType, targetUrl, targetScene = null) {
         if (isProcessing) {
-          showNotification('Lift sedang beroperasi, tunggu sebentar');
+          showNotification('Elevator is operating, please wait');
           return false;
         }
         
@@ -575,7 +575,7 @@
       // Fungsi untuk lantai terbatas (L2 - Rooftop): hanya notifikasi, pintu TIDAK ditutup
       function showRestrictedAccess() {
         if (isProcessing) {
-          showNotification('Lift sedang beroperasi, tunggu sebentar');
+          showNotification('Elevator is operating, please wait');
           return;
         }
         
@@ -604,10 +604,19 @@
         });
       }
 
-      // Fungsi buat tombol basement (tombol kembali ke elevator)
+      // Fungsi buat tombol basement (tombol kembali ke elevator + tombol go outside)
       function createBasementButtons() {
         basementPanel.innerHTML = '';
         
+        // Tombol Go Outside (baru)
+        const btnGoOutside = document.createElement('button');
+        btnGoOutside.className = 'lift-btn';
+        btnGoOutside.textContent = 'Go Outside';
+        btnGoOutside.addEventListener('click', () => {
+          window.open('https://thekachoo.github.io/Office/', '_blank');
+        });
+        
+        // Tombol Back to Elevator
         const btnBack = document.createElement('button');
         btnBack.className = 'lift-btn';
         btnBack.textContent = '← Back to Elevator';
@@ -616,6 +625,7 @@
           travelWithDoorSequence('elevator', null, liftScene);
         });
         
+        basementPanel.appendChild(btnGoOutside);
         basementPanel.appendChild(btnBack);
       }
 
@@ -633,7 +643,7 @@
           
           btn.addEventListener('click', function() {
             if (isProcessing) {
-              showNotification('Lift sedang beroperasi, tunggu sebentar');
+              showNotification('Elevator is operating, please wait');
               return;
             }
             
@@ -673,10 +683,10 @@
         showSceneDirect(liftScene);
         initDoors();
         setTimeout(() => {
-          showNotification('Pintu terbuka, silakan pilih lantai');
+          showNotification('Doors open, please select floor');
         }, 500);
       });
     })();
   </script>
 </body>
-        </html>
+</html>
