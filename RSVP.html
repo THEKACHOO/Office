@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>RSVP · The Kachoo Gathering</title>
+  <title>RSVP · The Kachoo New Building</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -368,13 +368,13 @@
     </div>
 
     <div class="invitation-message">
-      <h3>You Are Cordially Invited</h3>
-      <p>The Kachoo cordially invites you to attend The Kachoo Gathering, an evening of connection, celebration, and community. Your presence would be a great honor. Please confirm your attendance below.</p>
+      <h3>You Are Invited</h3>
+      <p>The Kachoo invites you to attend The Kachoo New Building. Your presence would be a great honor. Please confirm your attendance below.</p>
     </div>
 
     <div class="event-details">
-      THE KACHOO GATHERING<br>
-      The Grand Hall · Jakarta | 7:00 PM onwards
+      OH! KACHOO NEW BUILDING!<br>
+      The Grand Hall of Kachoo Office, South Jakarta | 4:00 PM onwards
     </div>
 
     <div class="dashboard">
@@ -410,17 +410,8 @@
             <button type="button" class="counter-btn" id="decrementGuest">-</button>
             <button type="button" class="counter-btn" id="incrementGuest">+</button>
           </div>
-          <small style="font-size: 0.7rem; color: #666; display: block; margin-top: 6px;">Maximum 4 guests total</small>
+          <small style="font-size: 0.7rem; color: #666; display: block; margin-top: 6px;">Maximum 10 guests total</small>
         </div>
-
-        <div class="field">
-          <label>Dietary preferences / notes (optional)</label>
-          <input type="text" id="dietary" placeholder="e.g. Vegetarian, allergies, or special requests">
-        </div>
-
-        <button class="rsvp-btn" id="submitRsvpBtn">Submit RSVP</button>
-        <div id="rsvpFeedback" class="feedback-message"></div>
-      </div>
 
       <div class="guestlist-section">
         <h2>Invited Guests</h2>
@@ -444,11 +435,8 @@
       ];
 
       const undangan = [
-        "Rachel Theodora Hearst", "Hein Dewantara", "Violita Rosela Lee", "Nararya Wiyasa", "Atale Noira, "Rosella Jane Tanuwijaya", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner",
-        "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H.P",
-        "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga", "Benjamin Park", "Marcus Tjoa and Partner", "Dulsea Andromeda Hauteville", "Freya Calista Tanjung",
-        "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma", "Elang Segara", "Ethan Matthijs Eedenrijk", "Viera Lucienne Tan", "Sharga Simbolon",
-        "Sheila Kanna", "Elijah Gilead", "Rosalio Luce", "Erni Maulina", "Gianna Avariella Perwira", "Gavina Jane", "Arestian Arkham Malik", "Arabella", "Aladrick D. Dhananjaya", "Andreas Darius", "Brian Averill", "Luna Amaris Kim", "Samahita Arunima T. Amara", "Damau Satya Jenggala" 
+        "Rachel Theodora Hearst", "Hein Dewantara", "Violita Rosela Lee", "Nararya Wiyasa", "Atale Noira, "Rosella Jane Tanuwijaya", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner", "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H. P", "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga", "Benjamin Park", "Marcus Tjoa and Partner", "Dulsea Andromeda Hauteville", "Freya Calista Tanjung",
+        "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma", "Elang Segara", "Ethan Matthijs Eedenrijk", "Viera Lucienne Tan", "Sharga Simbolon", "Sheila Kanna", "Elijah Gilead", "Rosalio Luce", "Erni Maulina", "Gianna Avariella Perwira", "Gavina Jane", "Arestian Arkham Malik", "Arabella", "Aladrick D. Dhananjaya", "Andreas Darius", "Brian Averill", "Luna Amaris Kim", "Samahita Arunima T. Amara", "Damar Satya Jenggala" 
       ];
       
       const allInvitedGuests = [...komunitas, ...undangan];
