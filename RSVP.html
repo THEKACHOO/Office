@@ -174,7 +174,7 @@
       color: #c00;
     }
 
-    .field input {
+    .field input, .field select {
       width: 100%;
       background: white;
       border: 1px solid rgba(0,0,0,0.15);
@@ -184,7 +184,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    .field input:focus {
+    .field input:focus, .field select:focus {
       outline: none;
       border-color: #000;
       transform: scale(1.01);
@@ -364,7 +364,8 @@
   <div class="glass-card">
     <div class="rsvp-header">
       <h1>RSVP</h1>
-      <p>Kindly respond by April 20, 2026</p>
+      <!-- TANGGAL DIUBAH MENJADI 12 APRIL 2026 -->
+      <p>Kindly respond by April 12, 2026</p>
     </div>
 
     <div class="invitation-message">
@@ -413,6 +414,15 @@
           <small style="font-size: 0.7rem; color: #666; display: block; margin-top: 6px;">Maximum 10 guests total</small>
         </div>
 
+        <div class="field">
+          <label>Dietary restrictions (optional)</label>
+          <input type="text" id="dietary" placeholder="Any allergies or preferences">
+        </div>
+
+        <button class="rsvp-btn" id="submitRsvpBtn">Confirm RSVP</button>
+        <div class="feedback-message" id="rsvpFeedback"></div>
+      </div>
+
       <div class="guestlist-section">
         <h2>Invited Guests</h2>
         <div class="guest-grid" id="guestGrid"></div>
@@ -434,8 +444,9 @@
         "Studio 35°", "Pancarona Studio", "Ruang Rasa"
       ];
 
+      // Perbaiki: kutip yang hilang pada "Atale Noira"
       const undangan = [
-        "Rachel Theodora Hearst", "Hein Dewantara", "Violita Rosela Lee", "Nararya Wiyasa", "Atale Noira, "Rosella Jane Tanuwijaya", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner", "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H. P", "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga", "Benjamin Park", "Marcus Tjoa and Partner", "Dulsea Andromeda Hauteville", "Freya Calista Tanjung",
+        "Rachel Theodora Hearst", "Hein Dewantara", "Violita Rosela Lee", "Nararya Wiyasa", "Atale Noira", "Rosella Jane Tanuwijaya", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner", "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H. P", "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga", "Benjamin Park", "Marcus Tjoa and Partner", "Dulsea Andromeda Hauteville", "Freya Calista Tanjung",
         "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma", "Elang Segara", "Ethan Matthijs Eedenrijk", "Viera Lucienne Tan", "Sharga Simbolon", "Sheila Kanna", "Elijah Gilead", "Rosalio Luce", "Erni Maulina", "Gianna Avariella Perwira", "Gavina Jane", "Arestian Arkham Malik", "Arabella", "Aladrick D. Dhananjaya", "Andreas Darius", "Brian Averill", "Luna Amaris Kim", "Samahita Arunima T. Amara", "Damar Satya Jenggala" 
       ];
       
@@ -479,7 +490,7 @@
       function updateGuestDisplay() {
         guestCountSpan.textContent = guestCount;
         if (decrementBtn) decrementBtn.disabled = (guestCount <= 1);
-        if (incrementBtn) incrementBtn.disabled = (guestCount >= 4);
+        if (incrementBtn) incrementBtn.disabled = (guestCount >= 10);
       }
 
       attendingRadios.forEach(radio => {
@@ -491,19 +502,23 @@
         });
       });
 
-      incrementBtn.addEventListener('click', () => {
-        if (guestCount < 4) {
-          guestCount++;
-          updateGuestDisplay();
-        }
-      });
+      if (incrementBtn) {
+        incrementBtn.addEventListener('click', () => {
+          if (guestCount < 10) {
+            guestCount++;
+            updateGuestDisplay();
+          }
+        });
+      }
 
-      decrementBtn.addEventListener('click', () => {
-        if (guestCount > 1) {
-          guestCount--;
-          updateGuestDisplay();
-        }
-      });
+      if (decrementBtn) {
+        decrementBtn.addEventListener('click', () => {
+          if (guestCount > 1) {
+            guestCount--;
+            updateGuestDisplay();
+          }
+        });
+      }
 
       function showNotification(message, isError = false) {
         const notif = document.createElement('div');
@@ -624,7 +639,7 @@
         }
       }
       
-      submitBtn.addEventListener('click', handleSubmit);
+      if (submitBtn) submitBtn.addEventListener('click', handleSubmit);
       
       const handleEnter = (e) => {
         if (e.key === 'Enter') {
@@ -634,11 +649,11 @@
       };
       fullNameInput.addEventListener('keypress', handleEnter);
       affiliationInput.addEventListener('keypress', handleEnter);
-      dietaryInput.addEventListener('keypress', handleEnter);
+      if (dietaryInput) dietaryInput.addEventListener('keypress', handleEnter);
       
       renderGuestList();
       updateGuestDisplay();
     })();
   </script>
 </body>
-</html>
+  </html>
