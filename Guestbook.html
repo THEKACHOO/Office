@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Guestbook Kachoo</title>
+  <title>Kachoo Guestbook</title>
   <!-- Inter font + Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,7 +59,7 @@
     /* HEADER GUESTBOOK */
     .guestbook-header {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       animation: slideDown 0.7s ease-out;
     }
 
@@ -95,21 +95,10 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
-      margin: 2rem 0 2.5rem;
+      margin: 1.8rem 0 2rem;
     }
 
-    /* INVITATION SECTION */
-    .invitation-section {
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 40px;
-      padding: 1.8rem 1.5rem;
-      border: 1px solid rgba(255,255,255,0.8);
-      backdrop-filter: blur(5px);
-      transition: 0.3s;
-      animation: fadeIn 0.8s ease;
-      box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1);
-    }
-
+    /* FORM SECTION */
     .form-section {
       background: rgba(255, 255, 255, 0.7);
       border-radius: 40px;
@@ -121,18 +110,29 @@
       box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1);
     }
 
+    .invitation-section {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 40px;
+      padding: 1.8rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.8);
+      backdrop-filter: blur(5px);
+      transition: 0.3s;
+      animation: fadeIn 0.8s ease;
+      box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1);
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .invitation-section:hover, .form-section:hover {
+    .form-section:hover, .invitation-section:hover {
       background: rgba(255, 255, 255, 0.8);
       border-color: white;
       box-shadow: 0 15px 30px -12px rgba(0,0,0,0.15);
     }
 
-    .invitation-section h2, .form-section h2 {
+    .form-section h2, .invitation-section h2 {
       font-size: 1.6rem;
       font-weight: 600;
       color: #000;
@@ -196,6 +196,12 @@
       color: #444;
       margin-bottom: 0.4rem;
       transition: 0.2s;
+    }
+
+    .required-star {
+      color: #c00;
+      font-size: 1rem;
+      margin-left: 2px;
     }
 
     .field input {
@@ -288,7 +294,7 @@
 
     /* ROLEPLAY BANNER */
     .roleplay-footer {
-      margin-top: 2.2rem;
+      margin-top: 2rem;
       padding: 1.2rem 0 0.2rem;
       border-top: 1px solid rgba(0,0,0,0.1);
       text-align: center;
@@ -328,7 +334,7 @@
       transform: scaleX(1);
     }
 
-    /* back to lobby - default kanan */
+    /* back to lobby */
     .back-lobby {
       text-align: right;
       margin-top: 1.5rem;
@@ -402,12 +408,12 @@
         margin: 1.2rem 0;
       }
 
-      .invitation-section, .form-section {
+      .form-section, .invitation-section {
         padding: 1.5rem 1.2rem;
         border-radius: 32px;
       }
 
-      .invitation-section h2, .form-section h2 {
+      .form-section h2, .invitation-section h2 {
         font-size: 1.4rem;
         margin-bottom: 1rem;
       }
@@ -440,7 +446,6 @@
         font-size: 1.8rem;
       }
 
-      /* BACK TO LOBBY DI MOBILE: TENGAH, TANPA SIMBOL */
       .back-lobby {
         text-align: center;
         margin-top: 1.5rem;
@@ -449,7 +454,6 @@
       .back-lobby a {
         padding: 0.5rem 2rem;
         font-size: 0.9rem;
-        /* tidak ada ::before atau konten tambahan */
       }
 
       .notif-thanks {
@@ -484,24 +488,24 @@
       <p>Sign the attendance</p>
     </div>
 
-    <!-- GRID: SIGN HERE dulu, baru VIP GUEST -->
+    <!-- GRID: SIGN HERE + VIP GUEST -->
     <div class="dashboard">
-      <!-- FORM SECTION (Sign here - pertama) -->
+      <!-- FORM SECTION (Sign here) with Name (required) & Part of (optional) -->
       <div class="form-section">
         <h2>Sign here</h2>
         <div class="field">
-          <label>Full name</label>
-          <input type="text" id="fullNameInput" placeholder="e.g. John Doe" autocomplete="off">
+          <label>Name <span class="required-star">*</span></label>
+          <input type="text" id="fullNameInput" placeholder="Enter your full name" autocomplete="off">
         </div>
         <div class="field">
-          <label>Username</label>
-          <input type="text" id="usernameInput" placeholder="@username" autocomplete="off">
+          <label>Part of</label>
+          <input type="text" id="affiliationInput" placeholder="e.g. Community / Agency / Company (optional)" autocomplete="off">
         </div>
         <button class="sign-btn" id="signGuestbookBtn">Sign guestbook</button>
         <div id="formFeedback" class="feedback-message"></div>
       </div>
 
-      <!-- INVITATION SECTION (VIP Guest - kedua) -->
+      <!-- INVITATION SECTION (VIP Guest) -->
       <div class="invitation-section">
         <h2>VIP Guest</h2>
         <div class="invitation-grid" id="invitationGrid"></div>
@@ -514,7 +518,7 @@
       <div class="kachoo-brand">by The Kachoo</div>
     </div>
 
-    <!-- BACK TO LOBBY - tanpa simbol, di mobile tengah -->
+    <!-- BACK TO LOBBY -->
     <div class="back-lobby">
       <a href="Lobby.html" id="backToLobby">Back to Lobby</a>
     </div>
@@ -522,7 +526,7 @@
 
   <script>
     (function() {
-      // Data invitation
+      // Guest list data for VIP Guest section
       const komunitas = [
         "Kachoo Teams", "Urbanc Studio", "Cadence", "Modex", "Kriya Nusaca",
         "Amére", "Altday Project", "Our Dream", "TROY Bakery & Cafe", "Taskit",
@@ -541,12 +545,12 @@
 
       // DOM elements
       const grid = document.getElementById('invitationGrid');
-      const fullName = document.getElementById('fullNameInput');
-      const userName = document.getElementById('usernameInput');
+      const fullNameInput = document.getElementById('fullNameInput');
+      const affiliationInput = document.getElementById('affiliationInput');
       const signBtn = document.getElementById('signGuestbookBtn');
       const feedback = document.getElementById('formFeedback');
 
-      // render nama
+      // Render VIP guest list
       function renderNames() {
         grid.innerHTML = '';
         semuaNama.forEach((nama) => {
@@ -557,51 +561,90 @@
         });
       }
 
-      // notifikasi
-      function showThankYou() {
+      // Show thank you notification and redirect to GH.html
+      function showThankYouAndRedirect() {
         const notif = document.createElement('div');
         notif.className = 'notif-thanks';
-        notif.textContent = 'Thank you!';
+        notif.textContent = 'Thank you! ✨';
         document.body.appendChild(notif);
         setTimeout(() => {
           window.location.href = 'GH.html';
         }, 1400);
       }
 
-      // submit ke spreadsheet
-      async function submitToSheet(full, user) {
-        const url = 'https://script.google.com/macros/s/AKfycbzH2V7J1U_8p0jX5sL3xK9mW6nR4tY7uI2oP3cE/exec';
-        const payload = new URLSearchParams({ fullname: full, username: user });
+      // Send data to Google Sheets
+      // Maps: fullname → Name (required), username → Part of (optional)
+      async function submitToSheet(name, partOf) {
+        // IMPORTANT: Replace this URL with your own Google Apps Script Web App URL
+        const url = 'https://script.google.com/macros/s/AKfycbx7wCCX6vDbg_d_3_97fSB-k1lFiOeUwYJvvxToDGUQnJzawGSqxMK-ex-P3aVlqo93/exec';
+        // If part of is empty, send "-" as default value
+        const affiliationValue = partOf.trim() === "" ? "-" : partOf.trim();
+        const payload = new URLSearchParams({ 
+          fullname: name, 
+          username: affiliationValue 
+        });
         try {
+          // Using no-cors mode to avoid cross-origin errors, but response won't be readable
           await fetch(url, { method: 'POST', mode: 'no-cors', body: payload });
-        } catch (e) { console.log(e); }
+        } catch (e) {
+          console.warn("Fetch error (maybe network):", e);
+          // Continue anyway, doesn't block UX
+        }
       }
 
+      // Handle sign button click
       async function handleSign() {
-        const full = fullName.value.trim();
-        const user = userName.value.trim();
-        if (!full || !user) {
+        const name = fullNameInput.value.trim();
+        const partOf = affiliationInput.value.trim(); // optional
+        
+        // Validation: Name is required
+        if (!name) {
           feedback.style.display = 'block';
-          feedback.textContent = 'Full name and username required';
+          feedback.textContent = '❌ Name is required. Please enter your name.';
           feedback.style.background = '#fee';
           feedback.style.color = '#c00';
-          setTimeout(() => feedback.style.display = 'none', 2000);
+          setTimeout(() => {
+            feedback.style.display = 'none';
+          }, 2500);
           return;
         }
-
+        
+        // Disable button temporarily
         signBtn.disabled = true;
+        const originalText = signBtn.textContent;
         signBtn.textContent = 'Sending...';
-        await submitToSheet(full, user);
-        showThankYou();
-        fullName.value = ''; userName.value = '';
-        signBtn.disabled = false; signBtn.textContent = 'Sign guestbook';
+        
+        // Send to spreadsheet (name required, part of optional)
+        await submitToSheet(name, partOf);
+        
+        // Show thank you notification and redirect
+        showThankYouAndRedirect();
+        
+        // Reset form (redirect happens anyway)
+        fullNameInput.value = '';
+        affiliationInput.value = '';
+        
+        // Re-enable button (though redirect is fast)
+        signBtn.disabled = false;
+        signBtn.textContent = originalText;
       }
-
+      
+      // Event listener for button
       signBtn.addEventListener('click', handleSign);
-      userName.addEventListener('keypress', e => { if (e.key === 'Enter') handleSign(); });
-
+      
+      // Allow Enter key to submit on both inputs
+      const handleEnter = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleSign();
+        }
+      };
+      fullNameInput.addEventListener('keypress', handleEnter);
+      affiliationInput.addEventListener('keypress', handleEnter);
+      
+      // Render VIP guest list on page load
       renderNames();
     })();
   </script>
 </body>
-  </html>
+</html>
