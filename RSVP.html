@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>RSVP · The Kachoo Gathering</title>
+  <!-- Inter font + Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #d9d9d9 0%, #f0f0f0 100%);
+      font-family: 'Inter', 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      position: relative;
+      color: #000;
+    }
+
+    .glass-card {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 60px;
+      padding: 2.5rem 2.5rem;
+      box-shadow: 0 25px 50px -15px rgba(0,0,0,0.2), inset 0 1px 3px rgba(255,255,255,0.9);
+      transition: box-shadow 0.3s, border-color 0.3s;
+      animation: cardAppear 0.8s ease-out;
+      color: #000;
+    }
+
+    @keyframes cardAppear {
+      0% { opacity: 0; transform: scale(0.97) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .glass-card:hover {
+      border-color: rgba(255,255,255,0.9);
+      box-shadow: 0 35px 70px -15px rgba(0,0,0,0.25), inset 0 1px 4px white;
+    }
+
+    .rsvp-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      animation: slideDown 0.7s ease-out;
+    }
+
+    @keyframes slideDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .rsvp-header h1 {
+      font-size: clamp(2.8rem, 7vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      color: #000;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .rsvp-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #444;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      display: inline-block;
+      padding-bottom: 0.4rem;
+    }
+
+    .invitation-message {
+      text-align: center;
+      margin: 1.2rem 0 1.5rem 0;
+      padding: 1rem 1.5rem;
+      background: rgba(0,0,0,0.03);
+      border-radius: 40px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #222;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+    }
+
+    .invitation-message h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #000;
+      letter-spacing: -0.2px;
+    }
+
+    .event-details {
+      text-align: center;
+      margin: 0 0 1.8rem 0;
+      font-size: 0.9rem;
+      color: #555;
+      background: rgba(0,0,0,0.03);
+      padding: 0.8rem;
+      border-radius: 80px;
+      backdrop-filter: blur(4px);
+      letter-spacing: 0.3px;
+    }
+
+    .event-details span {
+      font-weight: 600;
+      color: #000;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .form-section {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 40px;
+      padding: 1.8rem 1.8rem;
+      border: 1px solid rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      transition: 0.3s;
+      animation: fadeIn 0.8s ease;
+      box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1);
+    }
+
+    .guestlist-section {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 40px;
+      padding: 1.8rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.8);
+      backdrop-filter: blur(5px);
+      transition: 0.3s;
+      animation: fadeIn 0.8s ease;
+      box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-section:hover, .guestlist-section:hover {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: white;
+      box-shadow: 0 15px 30px -12px rgba(0,0,0,0.15);
+    }
+
+    .form-section h2, .guestlist-section h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.3px;
+      border-left: 4px solid #000;
+      padding-left: 1rem;
+    }
+
+    .guest-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem 1rem;
+      max-height: 350px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .guest-grid::-webkit-scrollbar {
+      width: 4px;
+    }
+    .guest-grid::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.05);
+      border-radius: 10px;
+    }
+    .guest-grid::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+
+    .guest-item {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #222;
+      padding: 0.45rem 0;
+      border-bottom: 1px dotted rgba(0,0,0,0.15);
+      transition: 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .guest-item:hover {
+      color: #000;
+      border-bottom-color: #000;
+      padding-left: 4px;
+    }
+
+    .field {
+      margin-bottom: 1.5rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #444;
+      margin-bottom: 0.4rem;
+      transition: 0.2s;
+    }
+
+    .required-star {
+      color: #c00;
+      font-size: 1rem;
+      margin-left: 2px;
+    }
+
+    .field input, 
+    .field select {
+      width: 100%;
+      background: white;
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 50px;
+      padding: 0.9rem 1.4rem;
+      font-size: 1rem;
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      transition: 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      appearance: none;
+    }
+
+    .field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+      background-repeat: no-repeat;
+      background-position: right 1.2rem center;
+      background-size: 1rem;
+    }
+
+    .field input:focus, 
+    .field select:focus {
+      outline: none;
+      border-color: #000;
+      background: #ffffff;
+      transform: scale(1.01);
+      box-shadow: 0 8px 20px -12px rgba(0,0,0,0.2);
+    }
+
+    .field input::placeholder, 
+    .field select::placeholder {
+      color: #aaa;
+      font-weight: 300;
+    }
+
+    .field:hover label {
+      color: #000;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #222;
+    }
+
+    .radio-option input {
+      width: 1.1rem;
+      height: 1.1rem;
+      accent-color: #000;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .guest-counter {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: white;
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 60px;
+      padding: 0.3rem 0.3rem 0.3rem 1.2rem;
+      width: fit-content;
+      min-width: 160px;
+    }
+
+    .guest-counter span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #000;
+      flex: 1;
+    }
+
+    .counter-btn {
+      background: #f0f0f0;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 40px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .counter-btn:hover {
+      background: #000;
+      color: white;
+      transform: scale(0.96);
+    }
+
+    .counter-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .rsvp-btn {
+      background: #000;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 1rem 1.5rem;
+      border-radius: 60px;
+      font-size: 1rem;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid #000;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+      box-shadow: 0 8px 20px -8px rgba(0,0,0,0.3);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .rsvp-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+
+    .rsvp-btn:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    .rsvp-btn:hover {
+      background: #222;
+      transform: scale(0.98);
+      box-shadow: 0 12px 30px -8px rgba(0,0,0,0.4);
+    }
+
+    .rsvp-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
+    }
+
+    .feedback-message {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      padding: 0.6rem 1rem;
+      border-radius: 60px;
+      text-align: center;
+      background: white;
+      border: 1px solid rgba(0,0,0,0.1);
+      color: #000;
+      display: none;
+    }
+
+    .roleplay-footer {
+      margin-top: 2rem;
+      padding: 1.2rem 0 0.2rem;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .roleplay-text {
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      color: #444;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .kachoo-brand {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.3px;
+      display: inline-block;
+      position: relative;
+    }
+
+    .kachoo-brand::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: #000;
+      bottom: -4px;
+      left: 0;
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .roleplay-footer:hover .kachoo-brand::after {
+      transform: scaleX(1);
+    }
+
+    .notif-success {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      font-weight: 800;
+      font-size: 1.8rem;
+      padding: 1.2rem 2.5rem;
+      border-radius: 70px;
+      border: 1px solid rgba(0,0,0,0.1);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+      z-index: 9999;
+      animation: notifPop 1.8s ease forwards;
+      white-space: nowrap;
+      letter-spacing: -0.3px;
+      text-align: center;
+    }
+
+    @keyframes notifPop {
+      0% { opacity: 0; transform: translate(-50%, -30%) scale(0.8); }
+      20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -70%) scale(0.9); visibility: hidden; }
+    }
+
+    @media (max-width: 800px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 1rem;
+        align-items: flex-start;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+      }
+
+      .glass-card {
+        padding: 1.5rem 1.2rem;
+        border-radius: 40px;
+      }
+
+      .form-section, .guestlist-section {
+        padding: 1.5rem 1.2rem;
+        border-radius: 32px;
+      }
+
+      .form-section h2, .guestlist-section h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+      }
+
+      .guest-grid {
+        grid-template-columns: 1fr;
+        max-height: 250px;
+      }
+
+      .guest-item {
+        font-size: 0.85rem;
+        white-space: normal;
+        overflow: visible;
+      }
+
+      .radio-group {
+        gap: 1rem;
+      }
+
+      .guest-counter {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .field input, .field select {
+        padding: 0.8rem 1.2rem;
+      }
+
+      .rsvp-btn {
+        padding: 0.9rem 1rem;
+      }
+
+      .notif-success {
+        font-size: 1.3rem;
+        padding: 1rem 1.5rem;
+        white-space: normal;
+        width: 85%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .invitation-message {
+        font-size: 0.85rem;
+        padding: 0.8rem 1rem;
+      }
+      .event-details {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-card">
+    <!-- RSVP HEADER -->
+    <div class="rsvp-header">
+      <h1>RSVP</h1>
+      <p>Kindly respond by April 20, 2026</p>
+    </div>
+
+    <!-- INVITATION MESSAGE -->
+    <div class="invitation-message">
+      <h3>You Are Cordially Invited</h3>
+      <p>The Kachoo cordially invites you to attend The Kachoo Gathering, an evening of connection, celebration, and community. Your presence would be a great honor. Please confirm your attendance below.</p>
+    </div>
+
+    <!-- EVENT DETAILS -->
+    <div class="event-details">
+      THE KACHOO GATHERING<br>
+      The Grand Hall · Jakarta | 7:00 PM onwards
+    </div>
+
+    <!-- TWO COLUMN LAYOUT: FORM + GUEST LIST -->
+    <div class="dashboard">
+      <!-- RSVP FORM SECTION -->
+      <div class="form-section">
+        <h2>RSVP Form</h2>
+        
+        <div class="field">
+          <label>Full name <span class="required-star">*</span></label>
+          <input type="text" id="fullName" placeholder="Enter your full name" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label>Part of (optional)</label>
+          <input type="text" id="affiliation" placeholder="Community / Brand / Studio" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label>Attendance <span class="required-star">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="attending" value="yes"> <span>Yes, I will attend</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="attending" value="no"> <span>No, I cannot attend</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field" id="guestsField" style="display: none;">
+          <label>Total guests (including yourself)</label>
+          <div class="guest-counter">
+            <span id="guestCountValue">1</span>
+            <button type="button" class="counter-btn" id="decrementGuest">-</button>
+            <button type="button" class="counter-btn" id="incrementGuest">+</button>
+          </div>
+          <small style="font-size: 0.7rem; color: #666; display: block; margin-top: 6px;">Maximum 4 guests total</small>
+        </div>
+
+        <div class="field">
+          <label>Dietary preferences / notes (optional)</label>
+          <input type="text" id="dietary" placeholder="e.g. Vegetarian, allergies, or special requests">
+        </div>
+
+        <button class="rsvp-btn" id="submitRsvpBtn">Submit RSVP</button>
+        <div id="rsvpFeedback" class="feedback-message"></div>
+      </div>
+
+      <!-- GUEST LIST SECTION (Invited Guests) -->
+      <div class="guestlist-section">
+        <h2>Invited Guests</h2>
+        <div class="guest-grid" id="guestGrid"></div>
+      </div>
+    </div>
+
+    <!-- ROLEPLAY BANNER -->
+    <div class="roleplay-footer">
+      <div class="roleplay-text">For Roleplay Purpose Only</div>
+      <div class="kachoo-brand">by The Kachoo</div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // GUEST LIST DATA
+      const komunitas = [
+        "Kachoo Teams", "Urbanc Studio", "Cadence", "Modex", "Kriya Nusaca",
+        "Amere", "Altday Project", "Our Dream", "TROY Bakery & Cafe", "Taskit",
+        "Thesera", "A+Clothes", "Makarya", "Ayu Merona", "RAIA Group",
+        "Studio 35°", "Pancarona Studio", "Ruang Rasa"
+      ];
+
+      const undangan = [
+        "Rachel Theodora Hearst", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner",
+        "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H.P",
+        "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga",
+        "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma",
+        "Sheila Kanna", "Elijah Gilead"
+      ];
+      
+      const allInvitedGuests = [...komunitas, ...undangan];
+
+      // DOM elements
+      const guestGrid = document.getElementById('guestGrid');
+      const fullNameInput = document.getElementById('fullName');
+      const affiliationInput = document.getElementById('affiliation');
+      const attendingRadios = document.querySelectorAll('input[name="attending"]');
+      const guestsFieldDiv = document.getElementById('guestsField');
+      const guestCountSpan = document.getElementById('guestCountValue');
+      const decrementBtn = document.getElementById('decrementGuest');
+      const incrementBtn = document.getElementById('incrementGuest');
+      const dietaryInput = document.getElementById('dietary');
+      const submitBtn = document.getElementById('submitRsvpBtn');
+      const feedbackDiv = document.getElementById('rsvpFeedback');
+
+      let guestCount = 1;
+      let currentAttendance = null;
+
+      // Render guest list
+      function renderGuestList() {
+        guestGrid.innerHTML = '';
+        allInvitedGuests.forEach(guest => {
+          const div = document.createElement('div');
+          div.className = 'guest-item';
+          div.textContent = guest;
+          guestGrid.appendChild(div);
+        });
+      }
+
+      function toggleGuestsField() {
+        if (currentAttendance === 'yes') {
+          guestsFieldDiv.style.display = 'block';
+          guestCount = 1;
+          updateGuestDisplay();
+        } else {
+          guestsFieldDiv.style.display = 'none';
+          guestCount = 1;
+        }
+      }
+
+      function updateGuestDisplay() {
+        guestCountSpan.textContent = guestCount;
+        if (decrementBtn) decrementBtn.disabled = (guestCount <= 1);
+        if (incrementBtn) incrementBtn.disabled = (guestCount >= 4);
+      }
+
+      attendingRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          if (e.target.checked) {
+            currentAttendance = e.target.value;
+            toggleGuestsField();
+          }
+        });
+      });
+
+      function incrementGuestCount() {
+        if (guestCount < 4) {
+          guestCount++;
+          updateGuestDisplay();
+        }
+      }
+
+      function decrementGuestCount() {
+        if (guestCount > 1) {
+          guestCount--;
+          updateGuestDisplay();
+        }
+      }
+
+      if (incrementBtn) incrementBtn.addEventListener('click', incrementGuestCount);
+      if (decrementBtn) decrementBtn.addEventListener('click', decrementGuestCount);
+
+      function showSuccessNotification() {
+        const notif = document.createElement('div');
+        notif.className = 'notif-success';
+        notif.textContent = 'RSVP received. Thank you.';
+        document.body.appendChild(notif);
+        setTimeout(() => {
+          if (notif && notif.remove) notif.remove();
+        }, 2000);
+      }
+
+      async function submitToSheet(formData) {
+        // IMPORTANT: Replace this URL with your own Google Apps Script Web App URL
+        const url = 'https://script.google.com/macros/s/AKfycbwrYG7VBr52V1uhIfxR52vAnFfHGcB81Now1vipDZLT2mAgPKLc58PtFY-hFiAgLRUE/exec';
+        
+        const payload = new URLSearchParams({
+          fullname: formData.fullName,
+          username: formData.affiliation,
+          attendance: formData.attendance,
+          guests: formData.guests,
+          dietary: formData.dietary
+        });
+        
+        try {
+          await fetch(url, { method: 'POST', mode: 'no-cors', body: payload });
+          return true;
+        } catch (e) {
+          console.warn("Fetch error:", e);
+          return false;
+        }
+      }
+
+      async function handleSubmit() {
+        feedbackDiv.style.display = 'none';
+        
+        const fullName = fullNameInput.value.trim();
+        const affiliation = affiliationInput.value.trim();
+        const dietary = dietaryInput.value.trim();
+        
+        if (!fullName) {
+          feedbackDiv.style.display = 'block';
+          feedbackDiv.textContent = 'Name is required. Please enter your full name.';
+          feedbackDiv.style.background = '#fee';
+          feedbackDiv.style.color = '#c00';
+          setTimeout(() => {
+            feedbackDiv.style.display = 'none';
+          }, 3000);
+          return;
+        }
+        
+        let attendanceValue = null;
+        for (let radio of attendingRadios) {
+          if (radio.checked) {
+            attendanceValue = radio.value;
+            break;
+          }
+        }
+        
+        if (!attendanceValue) {
+          feedbackDiv.style.display = 'block';
+          feedbackDiv.textContent = 'Please let us know if you will attend.';
+          feedbackDiv.style.background = '#fee';
+          feedbackDiv.style.color = '#c00';
+          setTimeout(() => {
+            feedbackDiv.style.display = 'none';
+          }, 3000);
+          return;
+        }
+        
+        let totalGuests = 0;
+        if (attendanceValue === 'yes') {
+          totalGuests = guestCount;
+        }
+        
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Submitting...';
+        
+        const formData = {
+          fullName: fullName,
+          affiliation: affiliation || '-',
+          attendance: attendanceValue,
+          guests: totalGuests.toString(),
+          dietary: dietary || '-'
+        };
+        
+        await submitToSheet(formData);
+        showSuccessNotification();
+        
+        // Reset form
+        fullNameInput.value = '';
+        affiliationInput.value = '';
+        dietaryInput.value = '';
+        attendingRadios.forEach(radio => radio.checked = false);
+        currentAttendance = null;
+        guestsFieldDiv.style.display = 'none';
+        guestCount = 1;
+        updateGuestDisplay();
+        
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        
+        feedbackDiv.style.display = 'block';
+        feedbackDiv.textContent = 'RSVP submitted successfully.';
+        feedbackDiv.style.background = '#e6ffe6';
+        feedbackDiv.style.color = '#006400';
+        setTimeout(() => {
+          if (feedbackDiv) feedbackDiv.style.display = 'none';
+        }, 2500);
+      }
+      
+      submitBtn.addEventListener('click', handleSubmit);
+      
+      const handleEnter = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleSubmit();
+        }
+      };
+      fullNameInput.addEventListener('keypress', handleEnter);
+      affiliationInput.addEventListener('keypress', handleEnter);
+      dietaryInput.addEventListener('keypress', handleEnter);
+      
+      renderGuestList();
+      updateGuestDisplay();
+    })();
+  </script>
+</body>
+</html>
