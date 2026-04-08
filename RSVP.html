@@ -364,7 +364,6 @@
   <div class="glass-card">
     <div class="rsvp-header">
       <h1>RSVP</h1>
-      <!-- TANGGAL DIUBAH MENJADI 12 APRIL 2026 -->
       <p>Kindly respond by April 12, 2026</p>
     </div>
 
@@ -414,6 +413,11 @@
           <small style="font-size: 0.7rem; color: #666; display: block; margin-top: 6px;">Maximum 10 guests total</small>
         </div>
 
+        <div class="field">
+          <label>Dietary restrictions (optional)</label>
+          <input type="text" id="dietary" placeholder="Any allergies or preferences">
+        </div>
+
         <button class="rsvp-btn" id="submitRsvpBtn">Confirm RSVP</button>
         <div class="feedback-message" id="rsvpFeedback"></div>
       </div>
@@ -439,7 +443,6 @@
         "Studio 35°", "Pancarona Studio", "Ruang Rasa"
       ];
 
-      // Perbaiki: kutip yang hilang pada "Atale Noira"
       const undangan = [
         "Rachel Theodora Hearst", "Hein Dewantara", "Violita Rosela Lee", "Nararya Wiyasa", "Atale Noira", "Rosella Jane Tanuwijaya", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner", "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H. P", "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga", "Benjamin Park", "Marcus Tjoa and Partner", "Dulsea Andromeda Hauteville", "Freya Calista Tanjung",
         "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma", "Elang Segara", "Ethan Matthijs Eedenrijk", "Viera Lucienne Tan", "Sharga Simbolon", "Sheila Kanna", "Elijah Gilead", "Rosalio Luce", "Erni Maulina", "Gianna Avariella Perwira", "Gavina Jane", "Arestian Arkham Malik", "Arabella", "Aladrick D. Dhananjaya", "Andreas Darius", "Brian Averill", "Luna Amaris Kim", "Samahita Arunima T. Amara", "Damar Satya Jenggala",
@@ -531,7 +534,6 @@
       }
 
       async function submitToSheet(formData) {
-        // GANTI URL INI DENGAN URL DEPLOY APPS SCRIPT ANDA
         const url = 'https://script.google.com/macros/s/AKfycbyZ8zVMsV-4lecJLcfucWgoxvpwdbg7npXOmUnrjJNXr5_Kq25CWmYMtwc4ApVOiMR9/exec';
         
         const payload = new URLSearchParams({
@@ -559,7 +561,7 @@
         
         const fullName = fullNameInput.value.trim();
         const affiliation = affiliationInput.value.trim();
-        const dietary = dietaryInput.value.trim();
+        const dietary = dietaryInput ? dietaryInput.value.trim() : '-';
         
         if (!fullName) {
           feedbackDiv.style.display = 'block';
@@ -607,7 +609,7 @@
             
             fullNameInput.value = '';
             affiliationInput.value = '';
-            dietaryInput.value = '';
+            if (dietaryInput) dietaryInput.value = '';
             attendingRadios.forEach(radio => radio.checked = false);
             currentAttendance = null;
             guestsFieldDiv.style.display = 'none';
