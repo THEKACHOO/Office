@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>L1</title>
+  <title>L1 - Kachoo Building</title>
   <!-- Inter font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <style>
@@ -258,6 +258,30 @@
       text-decoration: none;
     }
     .visit-button:hover {
+      background: #DDDDDD;
+      transform: scale(0.98);
+    }
+    
+    /* tombol go outside (emergency exit khusus) */
+    .go-outside-btn {
+      display: inline-block;
+      margin: 0 auto;
+      padding: 0.8rem 2rem;
+      background: #FFFFFF;
+      color: #000000;
+      font-weight: 700;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      min-width: 160px;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+    }
+    .go-outside-btn:hover {
       background: #DDDDDD;
       transform: scale(0.98);
     }
@@ -578,7 +602,8 @@
           displayName: 'MEETING Room',
           friendlyName: 'Meeting Room',
           hasPdf: false,
-          hasVisitButton: false
+          hasVisitButton: false,
+          isEmergency: false
         },
         { 
           btnId: 'room-conference-btn', 
@@ -587,7 +612,8 @@
           displayName: 'CONFERENCE HALL',
           friendlyName: 'Conference Hall',
           hasPdf: false,
-          hasVisitButton: false
+          hasVisitButton: false,
+          isEmergency: false
         },
         { 
           btnId: 'room-lounge-btn', 
@@ -596,7 +622,8 @@
           displayName: 'EXECUTIVE LOUNGE',
           friendlyName: 'Lounge',
           hasPdf: false,
-          hasVisitButton: false
+          hasVisitButton: false,
+          isEmergency: false
         },
         { 
           btnId: 'room-reading-btn', 
@@ -606,7 +633,8 @@
           friendlyName: 'Reading Corner',
           hasPdf: true,
           hasVisitButton: true,
-          pdfSlides: readingPdfs
+          pdfSlides: readingPdfs,
+          isEmergency: false
         },
         { 
           btnId: 'room-restroom-btn', 
@@ -615,7 +643,8 @@
           displayName: 'RESTROOM',
           friendlyName: 'Restroom',
           hasPdf: false,
-          hasVisitButton: false
+          hasVisitButton: false,
+          isEmergency: false
         },
         { 
           btnId: 'room-emergency-btn', 
@@ -624,7 +653,8 @@
           displayName: 'EMERGENCY EXIT',
           friendlyName: 'Emergency Exit',
           hasPdf: false,
-          hasVisitButton: false
+          hasVisitButton: false,
+          isEmergency: true   // penanda khusus emergency exit
         }
       ];
 
@@ -677,9 +707,17 @@
             `;
           }
           
-          // Buat button group - untuk Reading Corner ada Visit Kafkapages di atas Back button
+          // Buat button group berdasarkan tipe ruangan
           let buttonGroupHtml = '';
-          if (roomItem.hasVisitButton) {
+          if (roomItem.isEmergency) {
+            // Emergency Exit: dua tombol: Back to Lobby dan Go Outside
+            buttonGroupHtml = `
+              <div class="button-group">
+                <button class="back-button" id="back-to-l1-lobby-btn">Back to Lobby</button>
+                <button class="go-outside-btn" id="go-outside-btn">Go Outside</button>
+              </div>
+            `;
+          } else if (roomItem.hasVisitButton) {
             buttonGroupHtml = `
               <div class="button-group">
                 <a href="https://thekachoo.github.io/Home/kafkapages.html" target="_blank" class="visit-button">Visit Kafkapages</a>
@@ -746,7 +784,7 @@
             }
           }
           
-          // Event listener tombol back
+          // Event listener tombol back (umum)
           const backBtn = document.getElementById('back-to-l1-lobby-btn');
           if (backBtn) {
             backBtn.addEventListener('click', (e) => {
@@ -762,6 +800,24 @@
                 }, 280);
               } else {
                 l1LobbyScene.classList.remove('hidden');
+              }
+            });
+          }
+          
+          // Event khusus untuk tombol Go Outside (Emergency Exit)
+          const goOutsideBtn = document.getElementById('go-outside-btn');
+          if (goOutsideBtn) {
+            goOutsideBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              // Animasi goyang sebelum redirect
+              const roomSceneEl = document.getElementById('dynamic-room-scene');
+              if (roomSceneEl) {
+                roomSceneEl.classList.add('shake-animation');
+                setTimeout(() => {
+                  window.location.href = 'https://thekachoo.github.io/Office';
+                }, 280);
+              } else {
+                window.location.href = 'https://thekachoo.github.io/Office';
               }
             });
           }
@@ -849,8 +905,8 @@
         }
       });
       
-      console.log('L1 Floor: Conference1/Conference2, Lounge1/Lounge2, Readingcorner1/Readingcorner2 with PDF slider. Visit Kafkapages only in Reading Corner, above Back button.');
+      console.log('L1 Floor: Emergency Exit sekarang memiliki dua tombol: Back to Lobby (kembali) dan Go Outside (link ke thekachoo.github.io/Office)');
     })();
   </script>
 </body>
-  </html>
+</html>
