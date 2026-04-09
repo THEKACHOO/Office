@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Kachoo Grandhall</title>
@@ -58,14 +58,14 @@
         .dim-layer {
             position: relative;
             z-index: 2;
-            background-color: rgba(0, 0, 0, 0.2);  /* lebih transparan */
+            background-color: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(0px);
             min-height: 100vh;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;   /* SEMUA KONTEN VERTIKAL TENGAH */
+            justify-content: center;
             padding: 2rem 1.5rem;
         }
 
@@ -75,10 +75,10 @@
             align-items: center;
             width: 100%;
             max-width: 1200px;
-            margin: auto;              /* bantu pemusatan */
+            margin: auto;
         }
 
-        /* ===== TOMBOL GLASS BEAM (baru) ===== */
+        /* ===== TOMBOL GLASS BEAM ===== */
         .button-row {
             display: flex;
             flex-wrap: wrap;
@@ -90,7 +90,7 @@
         }
 
         .nav-btn {
-            background: rgba(255, 255, 255, 0.08);        /* transparan seperti kaca */
+            background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
             font-weight: 500;
@@ -135,7 +135,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 0.5rem 0 1rem;    /* jarak kecil, tapi parent sudah center */
+            margin: 0.5rem 0 1rem;
             transition: all 0.2s;
         }
 
@@ -162,7 +162,7 @@
             display: block;
         }
 
-        /* slider container */
+        /* slider container - sekarang hanya untuk 2 card (Choosic & Chozy) yang ditengah */
         .slider-container {
             display: flex;
             gap: 1.2rem;
@@ -172,6 +172,7 @@
             scrollbar-width: thin;
             scrollbar-color: #ffffff #1e1e1e;
             -webkit-overflow-scrolling: touch;
+            justify-content: center; /* MEMBUAT 2 CARD DI TENGAH */
         }
 
         .slider-container::-webkit-scrollbar {
@@ -221,7 +222,7 @@
         /* buy now — tengah, glass juga */
         .buy-now-wrapper {
             display: flex;
-            justify-content: center;   /* BUY NOW DI TENGAH */
+            justify-content: center;
             margin-top: 1.8rem;
             width: 100%;
         }
@@ -289,7 +290,7 @@
                 border-radius: 36px;
             }
             .card {
-                flex: 0 0 240px;  /* card sedikit lebih kecil tapi tetap proporsional */
+                flex: 0 0 240px;
             }
             .card video {
                 height: 150px;
@@ -341,27 +342,24 @@
     <div class="dim-layer">
         <div class="central">
 
-            <!-- area konten (sekarang di tengah vertikal karena parent justify-content: center) -->
-<div class="content-stage" id="contentStage">
-    <!-- stage section -->
-    <div id="stageSection" class="page-section">
-        <div class="content-panel" style="text-align: center;">
-            <div class="single-video" style="position: relative; width: 100%; padding-bottom: 56.25%; /* 16:9 aspect ratio */ overflow: hidden;">
-                <iframe src="https://drive.google.com/file/d/1Dt7IClGKEq_-DzC9MpeKrB5hA6U3Vo-S/preview" 
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-                        frameborder="0" 
-                        allow="autoplay" 
-                        allowfullscreen>
-                </iframe>
-            </div>
-            <!-- tanpa teks apapun -->
-        </div>
-    </div>
-</div>
-                <!-- display section (hanya ini yang tersisa selain stage) -->
+            <div class="content-stage" id="contentStage">
+                <!-- stage section -->
+                <div id="stageSection" class="page-section">
+                    <div class="content-panel" style="text-align: center;">
+                        <div class="single-video" style="position: relative; width: 100%; padding-bottom: 56.25%; overflow: hidden;">
+                            <iframe src="https://drive.google.com/file/d/1Dt7IClGKEq_-DzC9MpeKrB5hA6U3Vo-S/preview" 
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                                    frameborder="0" 
+                                    allow="autoplay" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- display section (hanya Choosic & Chozy) -->
                 <div id="displaySection" class="page-section">
                     <div class="content-panel">
-                        <!-- konten display (slider video) -->
                         <div class="slider-container">
                             <div class="card">
                                 <video controls playsinline autoplay muted loop><source src="Choosic.mp4"></video>
@@ -371,30 +369,24 @@
                                 <video controls playsinline autoplay muted loop><source src="Chozy.mp4"></video>
                                 <div class="info"><h4>Chozy</h4></div>
                             </div>
-                            <div class="card">
-                                <video controls playsinline autoplay muted loop><source src="New.mp4"></video>
-                                <div class="info"><h4>New</h4></div>
-                            </div>
+                            <!-- Card "New" sudah dihapus sesuai permintaan -->
                         </div>
-                        <!-- BUY NOW di tengah (bukan kanan) -->
                         <div class="buy-now-wrapper">
                             <button class="buy-btn" id="buyNowLink">BUY NOW</button>
                         </div>
                     </div>
                 </div>
-
-                <!-- FOOD & BEVERAGE SECTION DIHAPUS sesuai permintaan -->
-                <!-- tidak ada lagi foodSection -->
             </div>
 
-            <!-- TOMBOL BARIS (hanya Stage, Display, Back to Lobby) -->
+            <!-- TOMBOL BARIS (Photobooth baru, Stage, Display, Refreshment, Back to Lobby) -->
             <div class="button-row">
+                <button class="nav-btn" id="btnPhotobooth">Photobooth</button>
                 <button class="nav-btn" id="btnStage">Stage</button>
                 <button class="nav-btn" id="btnDisplay">Display</button>
+                <button class="nav-btn" id="btnRefreshment">Refreshment</button>
                 <button class="nav-btn" id="backToLobby">Back to Lobby</button>
             </div>
 
-            <!-- titik sunyi -->
             <div class="foot-note">•</div>
         </div>
     </div>
@@ -404,11 +396,13 @@
             const bgMusic = document.getElementById('bg-music');
             const stageSec = document.getElementById('stageSection');
             const displaySec = document.getElementById('displaySection');
-            // foodSec dihapus
+            
+            // Tombol-tombol baru
+            const btnPhotobooth = document.getElementById('btnPhotobooth');
             const btnStage = document.getElementById('btnStage');
             const btnDisplay = document.getElementById('btnDisplay');
+            const btnRefreshment = document.getElementById('btnRefreshment');
             const backBtn = document.getElementById('backToLobby');
-            const stageVideo = document.getElementById('stageVideo');
             const buyNowBtn = document.getElementById('buyNowLink'); 
 
             // Nonaktifkan semua section
@@ -428,6 +422,20 @@
                 window.location.href = 'Lobby.html';
             });
 
+            // PHOTOBOOTH → arah ke link Games/Fotoduluyuk.html
+            if (btnPhotobooth) {
+                btnPhotobooth.addEventListener('click', () => {
+                    window.location.href = 'https://thekachoo.github.io/Games/Fotoduluyuk.html';
+                });
+            }
+
+            // REFRESHMENT (Food, Drinks, and Snacks) → arah ke x.com/ (sementara, nanti diisi)
+            if (btnRefreshment) {
+                btnRefreshment.addEventListener('click', () => {
+                    window.location.href = 'https://x.com/';
+                });
+            }
+
             // BUY NOW → pindah ke collection
             if (buyNowBtn) {
                 buyNowBtn.addEventListener('click', () => {
@@ -441,7 +449,6 @@
                 stageSec.classList.add('active-section');
                 bgMusic.pause();
                 bgMusic.currentTime = 0;
-                stageVideo.play().catch(e => console.log('stage play butuh interaksi'));
             });
 
             // DISPLAY
@@ -453,13 +460,6 @@
                 setTimeout(() => {
                     playDisplayVideos();
                 }, 50);
-            });
-
-            // Tidak ada tombol food, tidak ada kode untuk food
-
-            stageVideo.addEventListener('play', () => {
-                bgMusic.pause();
-                bgMusic.currentTime = 0;
             });
 
             // Autoplay audio setelah ada gesture sekali saja
