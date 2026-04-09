@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Elevator</title>
+  <title>Elevator - Kachoo Building</title>
   <!-- Inter font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <style>
@@ -163,18 +163,18 @@
       box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.8);
     }
 
-    /* floor indicator */
+    /* floor indicator - WARNA PUTIH (dari kuning ke putih) */
     .floor-label {
       margin-top: 2rem;
       font-size: 0.9rem;
       font-weight: 500;
       letter-spacing: 0.5px;
       color: #FFFFFF;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(4px);
       padding: 0.5rem 1.8rem;
       border-radius: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       text-transform: uppercase;
       text-align: center;
     }
@@ -185,7 +185,7 @@
       display: inline-block;
     }
 
-    /* NOTIFICATION - DIPINDAHKAN KE ATAS (TOP) */
+    /* NOTIFICATION - DI ATAS DENGAN WARNA PUTIH */
     .notification {
       position: fixed;
       top: 30px;
@@ -193,13 +193,13 @@
       transform: translateX(-50%);
       background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(12px);
-      color: #FFD966;
+      color: #FFFFFF;
       padding: 0.75rem 1.8rem;
       border-radius: 50px;
       font-weight: 600;
       font-size: 0.95rem;
       letter-spacing: 0.3px;
-      border: 1px solid rgba(255, 215, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.5);
       z-index: 1000;
       animation: fadeInOut 2s ease;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -228,7 +228,7 @@
       animation: microShake 0.4s ease-in-out;
     }
 
-    /* ELEVATOR DOORS OVERLAY - pintu lift hitam */
+    /* ELEVATOR DOORS OVERLAY - pintu lift hitam pekat menutupi SEMUA tanpa rongga */
     .elevator-doors-overlay {
       position: fixed;
       top: 0;
@@ -236,19 +236,20 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 50;
+      z-index: 100;
       display: flex;
       justify-content: center;
       align-items: center;
+      background: transparent;
     }
 
     .door-container {
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      max-width: 900px;
-      max-height: 90vh;
-      margin: auto;
+      overflow: hidden;
     }
 
     .door-left, .door-right {
@@ -256,67 +257,69 @@
       top: 0;
       width: 50%;
       height: 100%;
-      background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
-      box-shadow: inset -3px 0 10px rgba(0,0,0,0.8), 2px 0 5px rgba(0,0,0,0.3);
-      transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.05);
-      z-index: 60;
-      backdrop-filter: blur(2px);
-      border-right: 1px solid #3a3a3a;
-      border-left: 1px solid #2a2a2a;
+      background: #0a0a0a;
+      background: linear-gradient(135deg, #0f0f0f 0%, #050505 100%);
+      box-shadow: inset -3px 0 10px rgba(0,0,0,0.9), 3px 0 8px rgba(0,0,0,0.5);
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: 110;
+      backdrop-filter: blur(1px);
     }
 
+    /* Tidak ada border-radius agar benar-benar rapat */
     .door-left {
       left: 0;
-      border-radius: 0 8px 8px 0;
+      border-right: 1px solid #2a2a2a;
     }
 
     .door-right {
       right: 0;
-      border-radius: 8px 0 0 8px;
+      border-left: 1px solid #2a2a2a;
     }
 
+    /* Pegangan pintu vertikal yang lebih realistis */
     .door-left::after, .door-right::after {
       content: "";
       position: absolute;
       top: 50%;
-      width: 8px;
-      height: 45px;
-      background: #5a5a5a;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+      width: 10px;
+      height: 70px;
+      background: #3a3a3a;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
       transform: translateY(-50%);
     }
 
     .door-left::after {
-      right: 35px;
+      right: 40px;
     }
 
     .door-right::after {
-      left: 35px;
+      left: 40px;
     }
 
+    /* Garis panel pintu */
     .door-left::before, .door-right::before {
       content: "";
       position: absolute;
-      top: 20%;
+      top: 15%;
       width: 3px;
-      height: 60%;
-      background: rgba(100,100,100,0.5);
-      left: 40%;
+      height: 70%;
+      background: rgba(80,80,80,0.4);
+      left: 35%;
       border-radius: 2px;
     }
 
     .door-right::before {
       left: auto;
-      right: 40%;
+      right: 35%;
     }
 
     .door-open .door-left {
-      transform: translateX(-101%);
+      transform: translateX(-100%);
     }
 
     .door-open .door-right {
-      transform: translateX(101%);
+      transform: translateX(100%);
     }
 
     .door-closed .door-left {
@@ -330,33 +333,33 @@
     /* indikator lampu pintu - hijau saat terbuka, putih saat proses */
     .door-indicator {
       position: fixed;
-      top: 30px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      width: 50px;
+      width: 60px;
       height: 12px;
-      background: #2a2a2a;
+      background: #1a1a1a;
       border-radius: 20px;
-      z-index: 70;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.8);
+      z-index: 120;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.9);
       transition: all 0.2s;
       pointer-events: none;
     }
 
     .door-open .door-indicator {
       background: #2ecc71;
-      box-shadow: 0 0 12px #2ecc71;
+      box-shadow: 0 0 16px #2ecc71;
     }
 
     .processing .door-indicator {
       background: #ffffff;
-      box-shadow: 0 0 15px #ffffff;
+      box-shadow: 0 0 20px #ffffff;
       animation: pulseWhite 0.6s ease-in-out infinite alternate;
     }
 
     @keyframes pulseWhite {
-      0% { opacity: 0.6; box-shadow: 0 0 5px #ffffff; }
-      100% { opacity: 1; box-shadow: 0 0 20px #ffffff; }
+      0% { opacity: 0.6; box-shadow: 0 0 6px #ffffff; }
+      100% { opacity: 1; box-shadow: 0 0 24px #ffffff; }
     }
 
     @media (max-width: 700px) {
@@ -373,12 +376,12 @@
         padding-bottom: 2rem;
       }
       .door-left::after, .door-right::after {
-        width: 6px;
-        height: 35px;
-        right: 20px;
+        width: 8px;
+        height: 50px;
+        right: 25px;
       }
       .door-right::after {
-        left: 20px;
+        left: 25px;
         right: auto;
       }
       .notification {
@@ -386,6 +389,11 @@
         padding: 0.6rem 1.2rem;
         font-size: 0.85rem;
         white-space: nowrap;
+      }
+      .door-indicator {
+        bottom: 20px;
+        width: 50px;
+        height: 10px;
       }
     }
 
@@ -401,12 +409,12 @@
         padding-bottom: 1.5rem;
       }
       .door-left::after, .door-right::after {
-        width: 5px;
-        height: 28px;
-        right: 12px;
+        width: 7px;
+        height: 40px;
+        right: 15px;
       }
       .door-right::after {
-        left: 12px;
+        left: 15px;
       }
       .notification {
         top: 15px;
@@ -442,7 +450,7 @@
     </div>
   </div>
 
-  <!-- ELEVATOR DOORS VISUAL -->
+  <!-- ELEVATOR DOORS VISUAL - Menutupi semuanya tanpa rongga -->
   <div class="elevator-doors-overlay" id="elevatorDoorsOverlay">
     <div class="door-container">
       <div class="door-left" id="elevatorDoorLeft"></div>
@@ -451,8 +459,22 @@
     <div class="door-indicator" id="doorIndicator"></div>
   </div>
 
-  <!-- NOTIFICATION AREA - SEKARANG DI ATAS -->
+  <!-- NOTIFICATION AREA -->
   <div id="notification" class="notification" style="display: none;"></div>
+
+  <!-- Audio elements -->
+  <audio id="doorCloseSound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/door-closing-01.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="doorOpenSound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/door-open-01.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="buttonPressSound" preload="auto">
+    <source src="https://www.soundjay.com/button/beep-07.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="declineSound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/error-01.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     (function() {
@@ -464,20 +486,39 @@
       const basementPanel = document.getElementById('basement-panel');
       const notification = document.getElementById('notification');
       
+      // Audio elements
+      const doorCloseAudio = document.getElementById('doorCloseSound');
+      const doorOpenAudio = document.getElementById('doorOpenSound');
+      const buttonPressAudio = document.getElementById('buttonPressSound');
+      const declineAudio = document.getElementById('declineSound');
+      
       // ELEMEN PINTU
       const doorsOverlay = document.getElementById('elevatorDoorsOverlay');
       let isDoorOpen = false;
       let isProcessing = false;
 
-      function showNotification(message) {
+      // Fungsi play audio dengan fallback (jika gagal tetap jalan)
+      function playSound(audioElement, volume = 0.6) {
+        if (audioElement) {
+          audioElement.volume = volume;
+          audioElement.currentTime = 0;
+          audioElement.play().catch(e => console.log("Audio play failed:", e));
+        }
+      }
+
+      function showNotification(message, isError = false) {
         notification.textContent = message;
+        notification.style.color = isError ? '#FFB347' : '#FFFFFF';
+        notification.style.borderColor = isError ? '#FFB347' : 'rgba(255, 255, 255, 0.5)';
         notification.style.display = 'block';
         setTimeout(() => {
           notification.style.display = 'none';
+          notification.style.color = '#FFFFFF';
+          notification.style.borderColor = 'rgba(255, 255, 255, 0.5)';
         }, 2000);
       }
 
-      // Fungsi update visual pintu
+      // Fungsi update visual pintu + SOUND ketika pintu berubah status
       function updateDoorVisual() {
         if (isDoorOpen) {
           doorsOverlay.classList.add('door-open');
@@ -497,38 +538,44 @@
         }
       }
 
-      // Buka pintu
+      // Buka pintu dengan suara
       function openDoors(silent = false) {
         if (isDoorOpen) return;
         isDoorOpen = true;
         updateDoorVisual();
-        if (!silent) showNotification('Doors open');
+        if (!silent) {
+          playSound(doorOpenAudio, 0.5);
+          showNotification('Doors open');
+        }
       }
 
-      // Tutup pintu
+      // Tutup pintu dengan suara
       function closeDoors(silent = false) {
         if (!isDoorOpen) return;
         isDoorOpen = false;
         updateDoorVisual();
-        if (!silent) showNotification('Doors closed');
+        if (!silent) {
+          playSound(doorCloseAudio, 0.5);
+          showNotification('Doors closed');
+        }
       }
 
       // Fungsi untuk B1, G, L1: tutup 2 detik -> pindah scene/navigasi -> buka pintu
       function travelWithDoorSequence(targetType, targetUrl, targetScene = null) {
         if (isProcessing) {
-          showNotification('Elevator is operating, please wait');
+          showNotification('Elevator is operating, please wait', true);
           return false;
         }
         
         isProcessing = true;
         setProcessingIndicator(true);
         
-        // Step 1: Tutup pintu terlebih dahulu
+        // Step 1: Tutup pintu terlebih dahulu dengan suara
         const executeSequence = () => {
           // Pintu tertutup selama 2 detik
           setTimeout(() => {
             // Efek getar (simulasi bergerak)
-            const currentScene = liftScene;
+            const currentScene = liftScene.classList.contains('hidden') ? basementScene : liftScene;
             currentScene.classList.add('shake-animation');
             
             setTimeout(() => {
@@ -548,22 +595,22 @@
                 showSceneDirect(liftScene);
               }
               
-              // Step 3: Setelah pindah, buka pintu kembali
+              // Step 3: Setelah pindah, buka pintu kembali dengan suara
               setTimeout(() => {
                 openDoors(false);
                 isProcessing = false;
                 setProcessingIndicator(false);
-              }, 300);
+              }, 350);
             }, 400);
           }, 2000); // Pintu tertutup selama 2 detik
         };
         
-        // Jika pintu terbuka, tutup dulu
+        // Jika pintu terbuka, tutup dulu dengan suara
         if (isDoorOpen) {
-          closeDoors(true);
+          closeDoors(false);
           setTimeout(() => {
             executeSequence();
-          }, 100);
+          }, 250);
         } else {
           // Jika sudah tertutup, langsung jalankan
           executeSequence();
@@ -572,28 +619,31 @@
         return true;
       }
 
-      // Fungsi untuk lantai terbatas (L2 - Rooftop): hanya notifikasi, pintu TIDAK ditutup
+      // Fungsi untuk lantai terbatas (L2 - Rooftop): notifikasi + suara decline, pintu TIDAK ditutup
       function showRestrictedAccess() {
         if (isProcessing) {
-          showNotification('Elevator is operating, please wait');
+          showNotification('Elevator is operating, please wait', true);
           return;
         }
         
         isProcessing = true;
         setProcessingIndicator(true);
         
-        const currentScene = liftScene;
+        // Mainkan suara decline (error)
+        playSound(declineAudio, 0.7);
+        
+        const currentScene = liftScene.classList.contains('hidden') ? basementScene : liftScene;
         currentScene.classList.add('shake-animation');
         
         setTimeout(() => {
           currentScene.classList.remove('shake-animation');
-          showNotification('This floor is only accessible by employees');
+          showNotification('Access denied: Employee-only floor', true);
           isProcessing = false;
           setProcessingIndicator(false);
-        }, 400);
+        }, 500);
       }
 
-      // Fungsi ganti scene langsung
+      // Fungsi ganti scene langsung (tanpa suara pintu, hanya visual)
       function showSceneDirect(sceneToShow) {
         [liftScene, basementScene].forEach(scene => {
           if (scene === sceneToShow) {
@@ -608,20 +658,29 @@
       function createBasementButtons() {
         basementPanel.innerHTML = '';
         
-        // Tombol Go Outside (baru)
+        // Tombol Go Outside (buka link baru)
         const btnGoOutside = document.createElement('button');
         btnGoOutside.className = 'lift-btn';
-        btnGoOutside.textContent = 'Go Outside';
+        btnGoOutside.textContent = '🚪 Go Outside';
         btnGoOutside.addEventListener('click', () => {
+          if (isProcessing) {
+            showNotification('Please wait, elevator is operating', true);
+            return;
+          }
+          playSound(buttonPressSound, 0.4);
           window.open('https://thekachoo.github.io/Office/', '_blank');
         });
         
         // Tombol Back to Elevator
         const btnBack = document.createElement('button');
         btnBack.className = 'lift-btn';
-        btnBack.textContent = '← Back to Elevator';
+        btnBack.textContent = '⬆ Back to Elevator';
         btnBack.addEventListener('click', () => {
-          // Kembali ke elevator dengan urutan: tutup 2 detik -> pindah scene -> buka
+          if (isProcessing) {
+            showNotification('Elevator is busy', true);
+            return;
+          }
+          playSound(buttonPressSound, 0.4);
           travelWithDoorSequence('elevator', null, liftScene);
         });
         
@@ -629,7 +688,7 @@
         basementPanel.appendChild(btnBack);
       }
 
-      // Fungsi buat tombol lift
+      // Fungsi buat tombol lift utama
       function createFloorButtons() {
         liftPanel.innerHTML = '';
         
@@ -643,24 +702,26 @@
           
           btn.addEventListener('click', function() {
             if (isProcessing) {
-              showNotification('Elevator is operating, please wait');
+              showNotification('Elevator is operating, please wait', true);
               return;
             }
             
+            // Suara tombol ditekan (selalu diputar kecuali restricted nanti override)
+            playSound(buttonPressSound, 0.35);
+            
             if (floor === 'B1') {
-              // B1: tutup 2 detik -> pindah basement scene -> buka pintu
               travelWithDoorSequence('basement', null, basementScene);
             }
             else if (floor === 'G') {
-              // G: tutup 2 detik -> pindah Lobby.html -> buka pintu
               travelWithDoorSequence('lobby', 'Lobby.html', null);
             }
             else if (floor === 'L1') {
-              // L1: tutup 2 detik -> pindah L1.html -> buka pintu
               travelWithDoorSequence('l1', 'L1.html', null);
             }
             else if (restrictedFloors.includes(floor)) {
-              // Lantai terbatas: hanya notifikasi, pintu TIDAK ditutup
+              // Lantai terbatas: mainkan suara decline (error) + notifikasi, pintu tidak bergerak
+              // override suara tombol dengan decline
+              playSound(declineAudio, 0.6);
               showRestrictedAccess();
             }
           });
@@ -669,22 +730,26 @@
         });
       }
 
-      // Inisialisasi pintu: di awal terbuka dengan lampu hijau
+      // Inisialisasi pintu: di awal terbuka dengan lampu hijau, dan mainkan suara terbuka
       function initDoors() {
         isDoorOpen = true;
         isProcessing = false;
         updateDoorVisual();
         setProcessingIndicator(false);
+        // Mainkan suara pintu terbuka saat pertama kali load
+        setTimeout(() => {
+          playSound(doorOpenAudio, 0.4);
+        }, 300);
       }
 
-      // Inisialisasi
+      // Inisialisasi semua
       window.addEventListener('load', () => {
         createFloorButtons();
         showSceneDirect(liftScene);
         initDoors();
         setTimeout(() => {
-          showNotification('Doors open, please select floor');
-        }, 500);
+          showNotification('Doors open · Select floor');
+        }, 800);
       });
     })();
   </script>
