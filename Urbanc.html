@@ -230,7 +230,7 @@
             text-align: justify;
         }
 
-        /* Profile Modal (tanpa avatar, hanya tulisan) untuk URBANC */
+        /* Profile Modal (tanpa avatar, hanya tulisan simpel) */
         .profile-modal {
             display: none;
             position: fixed;
@@ -238,7 +238,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.92);
+            background: rgba(0, 0, 0, 0.94);
             backdrop-filter: blur(6px);
             z-index: 2100;
             align-items: center;
@@ -249,29 +249,29 @@
         }
         .profile-card-pop {
             background: #000000;
-            max-width: 380px;
+            max-width: 340px;
             width: 85%;
             border-radius: 40px;
-            padding: 40px 28px;
+            padding: 36px 28px;
             text-align: center;
             border: 1px solid #ffffff;
             box-shadow: 0 30px 40px rgba(0,0,0,0.8);
         }
         .profile-name {
-            font-size: 2rem;
+            font-size: 1.9rem;
             font-weight: 800;
             color: #ffffff;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         .profile-badge {
             background: #1a1a1a;
-            padding: 8px 18px;
+            padding: 6px 16px;
             border-radius: 60px;
             display: inline-block;
             font-weight: 500;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #ddd;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         .close-profile {
             background: #222;
@@ -280,7 +280,7 @@
             border-radius: 40px;
             color: white;
             font-weight: 600;
-            margin-top: 20px;
+            margin-top: 16px;
             cursor: pointer;
             width: 100%;
             transition: 0.2s;
@@ -289,7 +289,7 @@
             background: #333;
         }
 
-        /* ========== FOOTER (HITAM, KEMBALI KE KACHOO seperti CHOBANK) ========== */
+        /* ========== FOOTER (HITAM, KEMBALI KE KACHOO - tanpa tulisan Chobank) ========== */
         footer {
             background: #000000;
             border-top: 1px solid #222;
@@ -339,7 +339,7 @@
         }
         .social-link:hover { background: white; color: black; }
         .x-logo { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 18px; }
-        .copyright { text-align: center; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 14px; }
+        .copyright { text-align: center; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); font-size: 14px; }
         
         @media (max-width: 768px) {
             .footer-content { grid-template-columns: 1fr; gap: 32px; }
@@ -372,7 +372,7 @@
                 <div class="studio-description">
                     URBANC Studio is an architecture and interior design firm established in 2007 founded by Aelius Bhanuwasa. Built upon a family legacy in the property sector, the studio has maintained strong industry affiliations to this day. Based in Central Jakarta, the firm was officially incorporated in 2011, later expanding its scope in 2015 to include professional consultancy and urban development. Throughout its journey URBANC Studio has delivered various large-scale projects in collaboration with both government institutions and the private sector.
                     <br><br>
-                    The studio specializes in Design & Build services across commercial, residential, and urban planning sectors, adopting an integrative approach tailored to meet diverse client needs.
+                    The studio specializes in Design & Build services across commercial, residential, and urban planning sectors, adopting an integrative approach tailored to meet diverse client needs. <strong>Founded by Aelius Bhanuwasa · Since 2007</strong>, the practice continues to push architectural excellence.
                 </div>
                 
                 <div class="quote">
@@ -416,18 +416,17 @@
         </div>
     </main>
 
-    <!-- Modal Profil URBANC (tulisan, tanpa avatar) untuk muncul saat klik logo urbanc (opsional) namun juga akan memunculkan konten -->
+    <!-- Modal Profil URBANC (hanya tulisan simpel, tanpa Founded by ...) -->
     <div id="profileModal" class="profile-modal">
         <div class="profile-card-pop">
             <div class="profile-name">URBANC STUDIO</div>
             <div class="profile-badge">Architecture & Interior Design</div>
-            <p style="margin: 12px 0; color:#ccc;">Founded by Aelius Bhanuwasa · Since 2007</p>
-            <p style="font-size: 0.85rem; color:#aaa;">Design & Build | Urban Planning | Consultancy</p>
+            <p style="margin: 8px 0; color:#ccc; font-size:0.85rem;">Design & Build | Urban Planning</p>
             <button id="closeProfileBtn" class="close-profile"><i class="fas fa-times-circle"></i> Tutup</button>
         </div>
     </div>
 
-    <!-- FOOTER KEMBALI KE KACHOO (sama seperti Chobank.html, dengan informasi Kachoo) -->
+    <!-- FOOTER KEMBALI KE KACHOO (tanpa tulisan Chobank, sesuai revisi) -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -453,7 +452,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="copyright">&copy; 2026 KACHOO | CHOBANK. All rights reserved.</div>
+            <div class="copyright">© 2026 KACHOO & URBANC STUDIO. All rights reserved.</div>
         </div>
     </footer>
 
@@ -464,29 +463,29 @@
         const profileModal = document.getElementById('profileModal');
         const closeProfileBtn = document.getElementById('closeProfileBtn');
         
-        // State: konten tersembunyi awalnya
-        let isContentVisible = false;
-        
         // Fungsi untuk menampilkan konten URBANC (profil lengkap + design overview + kontak)
         function showUrbancContent() {
             if (!urbancHiddenDiv.classList.contains('visible')) {
                 urbancHiddenDiv.classList.add('visible');
-                isContentVisible = true;
             }
-            // Tampilkan juga modal popup singkat (tulisan) sesuai keinginan "muncul profil"
+            // Tampilkan juga modal popup singkat (tulisan simpel, tanpa detail tambahan)
             profileModal.classList.add('active');
         }
         
         // Saat klik logo URBANC, tampilkan konten (jika masih hidden) dan modal
-        urbancLogoBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            showUrbancContent();
-        });
+        if (urbancLogoBtn) {
+            urbancLogoBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showUrbancContent();
+            });
+        }
         
         // Tutup modal profil
-        closeProfileBtn.addEventListener('click', () => {
-            profileModal.classList.remove('active');
-        });
+        if (closeProfileBtn) {
+            closeProfileBtn.addEventListener('click', () => {
+                profileModal.classList.remove('active');
+            });
+        }
         
         // Klik di luar modal menutup modal
         profileModal.addEventListener('click', (e) => {
@@ -499,13 +498,6 @@
         }
         const xTrigger = document.getElementById('xUsernameTrigger');
         if(xTrigger) xTrigger.addEventListener('click', redirectToX);
-        
-        // Juga jika ada elemen dengan class x-clickable di masa depan
-        document.querySelectorAll('.x-clickable').forEach(el => {
-            if(el.id !== 'xUsernameTrigger') {
-                el.addEventListener('click', redirectToX);
-            }
-        });
         
         // ========== HEADER KACHOO LOGO: muncul profil thekachoo (tulisan, tanpa avatar) ==========
         // Buat modal untuk Kachoo (profil sederhana)
@@ -549,10 +541,10 @@
         window.dispatchEvent(new Event('scroll'));
         
         // Pastikan tidak ada warna selain hitam/putih: semua border, background, teks sudah sesuai.
-        // Footer sudah kembali ke info Kachoo seperti Chobank.
+        // Footer sudah kembali ke info Kachoo tanpa tulisan Chobank.
         // Semua konten Urbanc (termasuk design overview) awalnya tersembunyi total, baru muncul setelah klik logo urbanc.
-        // Jika pengguna menginginkan setelah muncul tidak bisa disembunyikan lagi (biarkan tetap terlihat sampai refresh) — sesuai ekspektasi umum.
+        // Info pendiri sudah diselipkan di dalam deskripsi studio.
         console.log('KACHOO | URBANC Studio — mode hitam putih, konten Urbanc tersembunyi hingga klik logo.');
     </script>
 </body>
-                    </html>
+                                                    </html>
