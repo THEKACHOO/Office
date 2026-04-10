@@ -23,7 +23,6 @@
             flex-direction: column;
         }
 
-        /* Hanya hitam & putih — tidak ada warna lain */
         .container {
             max-width: 1280px;
             margin: 0 auto;
@@ -80,7 +79,6 @@
             .main-studio { padding: 120px 0 80px; }
         }
 
-        /* Card dengan latar hitam + border putih tipis */
         .studio-card {
             max-width: 980px;
             width: 100%;
@@ -94,7 +92,7 @@
             .studio-card { padding: 32px 24px; margin: 0 20px; }
         }
 
-        /* Logo URBANC (klik untuk tampilkan profil) */
+        /* Logo URBANC (klik untuk menampilkan seluruh konten) */
         .urbanc-logo-wrapper {
             text-align: center;
             margin-bottom: 40px;
@@ -111,11 +109,11 @@
             filter: brightness(0) invert(1);
         }
 
-        /* SEMUA KONTEN PROFIL URBANC AWALNYA DISEMBUNYIKAN (HIDE) */
-        .hidden-profile-content {
+        /* SEMUA KONTEN AWALNYA DISEMBUNYIKAN */
+        .hidden-content {
             display: none;
         }
-        .hidden-profile-content.visible {
+        .hidden-content.visible {
             display: block;
         }
 
@@ -147,149 +145,69 @@
             color: #e0e0e0;
             font-size: 1rem;
             line-height: 1.6;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             text-align: justify;
         }
 
         .quote {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid #FFFFFF;
-            padding: 20px 24px;
+            color: #f0f0f0;
             font-style: italic;
             font-weight: 500;
-            color: #f0f0f0;
             margin: 28px 0 32px;
             text-align: center;
             font-size: 0.95rem;
+            border: none;
+            background: transparent;
+            padding: 0;
         }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-top: 16px;
-            margin-bottom: 20px;
-        }
-        .info-item {
-            background: #111111;
-            border-radius: 28px;
-            padding: 16px 20px;
-            border: 1px solid #2a2a2a;
-        }
-        .info-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-            color: #aaa;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .info-value {
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #ffffff;
-            word-break: break-word;
-        }
-        .x-clickable {
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            border-bottom: 1px dotted #777;
-        }
-        .x-clickable:hover {
-            color: #cccccc;
-        }
-
-        /* DESIGN OVERVIEW SECTION (sebelum kontak mereka) */
+        /* DESIGN OVERVIEW — SAMA SEPERTI TEKS BIASA, BUKAN KUTIPAN */
         .design-overview {
-            margin: 48px 0 32px;
-            padding: 32px 28px;
-            background: #0a0a0a;
-            border-radius: 32px;
-            border: 1px solid #222;
+            margin: 32px 0 32px;
         }
         .design-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
             color: #ffffff;
-            border-left: 4px solid #fff;
-            padding-left: 20px;
+            letter-spacing: -0.2px;
         }
         .design-text {
-            color: #cfcfcf;
-            line-height: 1.7;
-            font-size: 0.95rem;
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 1rem;
             text-align: justify;
         }
 
-        /* Profile Modal (tanpa avatar, hanya tulisan simpel) */
-        .profile-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.94);
-            backdrop-filter: blur(6px);
-            z-index: 2100;
-            align-items: center;
-            justify-content: center;
+        /* Kontak info - simple list */
+        .contact-list {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.15);
         }
-        .profile-modal.active {
+        .contact-item {
             display: flex;
-        }
-        .profile-card-pop {
-            background: #000000;
-            max-width: 340px;
-            width: 85%;
-            border-radius: 40px;
-            padding: 36px 28px;
-            text-align: center;
-            border: 1px solid #ffffff;
-            box-shadow: 0 30px 40px rgba(0,0,0,0.8);
-        }
-        .profile-name {
-            font-size: 1.9rem;
-            font-weight: 800;
-            color: #ffffff;
+            align-items: center;
+            gap: 12px;
+            color: #cccccc;
+            font-size: 0.95rem;
             margin-bottom: 12px;
         }
-        .profile-badge {
-            background: #1a1a1a;
-            padding: 6px 16px;
-            border-radius: 60px;
-            display: inline-block;
-            font-weight: 500;
-            font-size: 0.8rem;
-            color: #ddd;
-            margin-bottom: 20px;
+        .contact-item i {
+            width: 24px;
+            color: #ffffff;
         }
-        .close-profile {
-            background: #222;
-            border: 1px solid #444;
-            padding: 12px 24px;
-            border-radius: 40px;
-            color: white;
-            font-weight: 600;
-            margin-top: 16px;
+        .x-clickable {
             cursor: pointer;
-            width: 100%;
+            font-weight: 500;
             transition: 0.2s;
+            border-bottom: 1px dotted #777;
         }
-        .close-profile:hover {
-            background: #333;
+        .x-clickable:hover {
+            color: #ffffff;
         }
 
-        /* ========== FOOTER (HITAM, KEMBALI KE KACHOO - tanpa tulisan Chobank) ========== */
+        /* ========== FOOTER (HITAM) ========== */
         footer {
             background: #000000;
             border-top: 1px solid #222;
@@ -344,6 +262,7 @@
         @media (max-width: 768px) {
             .footer-content { grid-template-columns: 1fr; gap: 32px; }
             .container { padding: 0 20px; }
+            .studio-card { padding: 32px 20px; }
         }
     </style>
 </head>
@@ -351,7 +270,6 @@
     <header>
         <div class="container header-content">
             <div class="logo-container" id="kachooLogoTrigger">
-                <!-- logo thekachoo.png -->
                 <img src="logo-thekachoo.png" alt="THE KACHOO" class="logo-img">
             </div>
         </div>
@@ -359,74 +277,64 @@
 
     <main class="main-studio">
         <div class="studio-card">
-            <!-- Logo URBANC (klik untuk menampilkan seluruh profil & design overview) -->
+            <!-- Logo URBANC (klik untuk menampilkan semua konten) -->
             <div class="urbanc-logo-wrapper" id="urbancLogoTrigger">
                 <img src="logo-urbanc.png" alt="URBANC Studio" class="urbanc-logo-img">
             </div>
             
-            <!-- SEMUA KONTEN YANG SEMULA DISEMBUNYIKAN (HIDDEN) - hanya tampil setelah klik logo urbanc -->
-            <div id="urbancHiddenContent" class="hidden-profile-content">
+            <!-- SEMUA KONTEN YANG HANYA MUNCUL SAAT LOGO URBANC DIKLIK -->
+            <div id="urbancContent" class="hidden-content">
                 <div class="studio-tagline">FROM HUMAN SCALE TO URBAN IMPACT</div>
                 <div class="headline">URBANC STUDIO</div>
                 
                 <div class="studio-description">
                     URBANC Studio is an architecture and interior design firm established in 2007 founded by Aelius Bhanuwasa. Built upon a family legacy in the property sector, the studio has maintained strong industry affiliations to this day. Based in Central Jakarta, the firm was officially incorporated in 2011, later expanding its scope in 2015 to include professional consultancy and urban development. Throughout its journey URBANC Studio has delivered various large-scale projects in collaboration with both government institutions and the private sector.
-                    <br><br>
-                    The studio specializes in Design & Build services across commercial, residential, and urban planning sectors, adopting an integrative approach tailored to meet diverse client needs. <strong>Founded by Aelius Bhanuwasa · Since 2007</strong>, the practice continues to push architectural excellence.
+                </div>
+                
+                <div class="studio-description">
+                    The studio specializes in Design & Build services across commercial, residential, and urban planning sectors, adopting an integrative approach tailored to meet diverse client needs.
                 </div>
                 
                 <div class="quote">
                     "WE REMAIN COMMITTED TO PRESENTING INNOVATIVE FUNCTIONAL AND SUSTAINABLE DESIGN SOLUTIONS"
                 </div>
 
-                <!-- DESIGN OVERVIEW (sebelum kontak mereka) -->
+                <!-- DESIGN OVERVIEW - sama seperti teks biasa, tanpa border aneh -->
                 <div class="design-overview">
                     <div class="design-title">DESIGN OVERVIEW</div>
                     <div class="design-text">
-                        The Kachoo Office serves as a strategic typological response to Jakarta’s Sudirman corridor, utilizing a vertical stacking logic that seamlessly integrates Grade-A commercial functions with urban mobility. The design addresses the macro-urban context by activating the ground level as an inclusive Transit Oriented Development hub, while employing a tropical performance facade to mitigate solar heat gain on the East-West axes. By combining an adaptive workplace with a "humanized CBD" approach, the project evolves from a traditional office building into a high-performance vertical infrastructure that strengthens social and economic connectivity within Jakarta’s center of business.
+                        The Kachoo Office serves as a strategic typological response to Jakarta's Sudirman corridor, utilizing a vertical stacking logic that seamlessly integrates Grade-A commercial functions with urban mobility. The design addresses the macro-urban context by activating the ground level as an inclusive Transit Oriented Development hub, while employing a tropical performance facade to mitigate solar heat gain on the East-West axes. By combining an adaptive workplace with a "humanized CBD" approach, the project evolves from a traditional office building into a high-performance vertical infrastructure that strengthens social and economic connectivity within Jakarta's center of business.
                     </div>
                 </div>
                 
-                <!-- Informasi kontak (semua teks biasa, username x.com tetap klik ke x) -->
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label"><i class="fab fa-twitter"></i> X (Twitter)</div>
-                        <div class="info-value">
-                            <span class="x-clickable" id="xUsernameTrigger">@urbancstudio</span>
-                        </div>
+                <!-- Kontak (email, address, telp, IG) -->
+                <div class="contact-list">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email: urbancstudio@office.co</span>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label"><i class="fas fa-envelope"></i> Email</div>
-                        <div class="info-value">urbancstudio@office.co</div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Address: RP. Soeroso 40BC, Gondangdia, Menteng, Jakarta Pusat.</span>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label"><i class="fas fa-map-pin"></i> Address</div>
-                        <div class="info-value">RP. Soeroso 40BC, Gondangdia, Menteng, Jakarta Pusat.</div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Telp: +62 858 9998 0283</span>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label"><i class="fas fa-phone-alt"></i> Telephone</div>
-                        <div class="info-value">+62 858 9998 0283</div>
+                    <div class="contact-item">
+                        <i class="fab fa-instagram"></i>
+                        <span>IG: @urbancstudio</span>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label"><i class="fab fa-instagram"></i> Instagram</div>
-                        <div class="info-value">@urbancstudio</div>
+                    <div class="contact-item">
+                        <i class="fab fa-twitter"></i>
+                        <span class="x-clickable" id="xUsernameTrigger">X: @urbancstudio</span>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Modal Profil URBANC (hanya tulisan simpel, tanpa Founded by ...) -->
-    <div id="profileModal" class="profile-modal">
-        <div class="profile-card-pop">
-            <div class="profile-name">URBANC STUDIO</div>
-            <div class="profile-badge">Architecture & Interior Design</div>
-            <p style="margin: 8px 0; color:#ccc; font-size:0.85rem;">Design & Build | Urban Planning</p>
-            <button id="closeProfileBtn" class="close-profile"><i class="fas fa-times-circle"></i> Tutup</button>
-        </div>
-    </div>
-
-    <!-- FOOTER KEMBALI KE KACHOO (tanpa tulisan Chobank, sesuai revisi) -->
+    <!-- FOOTER KACHOO (tanpa tulisan Chobank) -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -457,39 +365,18 @@
     </footer>
 
     <script>
-        // ========== SEMUA FUNGSI: HIDE/SHOW KONTEN URBANC SAAT LOGO DIKLIK ==========
-        const urbancHiddenDiv = document.getElementById('urbancHiddenContent');
-        const urbancLogoBtn = document.getElementById('urbancLogoTrigger');
-        const profileModal = document.getElementById('profileModal');
-        const closeProfileBtn = document.getElementById('closeProfileBtn');
+        // ========== LOGO URBANC: KLIK MUNCULKAN SEMUA KONTEN ==========
+        const urbancContent = document.getElementById('urbancContent');
+        const urbancLogo = document.getElementById('urbancLogoTrigger');
         
-        // Fungsi untuk menampilkan konten URBANC (profil lengkap + design overview + kontak)
-        function showUrbancContent() {
-            if (!urbancHiddenDiv.classList.contains('visible')) {
-                urbancHiddenDiv.classList.add('visible');
+        let contentShown = false;
+        
+        urbancLogo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!contentShown) {
+                urbancContent.classList.add('visible');
+                contentShown = true;
             }
-            // Tampilkan juga modal popup singkat (tulisan simpel, tanpa detail tambahan)
-            profileModal.classList.add('active');
-        }
-        
-        // Saat klik logo URBANC, tampilkan konten (jika masih hidden) dan modal
-        if (urbancLogoBtn) {
-            urbancLogoBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                showUrbancContent();
-            });
-        }
-        
-        // Tutup modal profil
-        if (closeProfileBtn) {
-            closeProfileBtn.addEventListener('click', () => {
-                profileModal.classList.remove('active');
-            });
-        }
-        
-        // Klik di luar modal menutup modal
-        profileModal.addEventListener('click', (e) => {
-            if(e.target === profileModal) profileModal.classList.remove('active');
         });
         
         // ========== X.COM REDIRECT (username @urbancstudio) ==========
@@ -499,52 +386,50 @@
         const xTrigger = document.getElementById('xUsernameTrigger');
         if(xTrigger) xTrigger.addEventListener('click', redirectToX);
         
-        // ========== HEADER KACHOO LOGO: muncul profil thekachoo (tulisan, tanpa avatar) ==========
-        // Buat modal untuk Kachoo (profil sederhana)
-        const kachooModal = document.createElement('div');
-        kachooModal.id = 'kachooProfileModal';
-        kachooModal.className = 'profile-modal';
-        kachooModal.innerHTML = `
-            <div class="profile-card-pop">
-                <div class="profile-name" style="font-size:1.8rem;">THE KACHOO</div>
-                <div class="profile-badge">Creative Direction & Innovation</div>
-                <p style="margin: 16px 0; color:#ccc;">Architecture + Digital Ecosystem</p>
-                <p style="font-size:0.85rem; color:#aaa;">"Human scale to digital impact"</p>
-                <button id="closeKachooModalBtn" class="close-profile"><i class="fas fa-times-circle"></i> Tutup</button>
-            </div>
-        `;
-        document.body.appendChild(kachooModal);
+        // ========== HEADER KACHOO LOGO: muncul teks profil sederhana ==========
+        // Buat toast sederhana untuk logo thekachoo (teks, bukan modal)
+        const kachooToast = document.createElement('div');
+        kachooToast.style.position = 'fixed';
+        kachooToast.style.bottom = '30px';
+        kachooToast.style.left = '50%';
+        kachooToast.style.transform = 'translateX(-50%)';
+        kachooToast.style.backgroundColor = '#111';
+        kachooToast.style.color = 'white';
+        kachooToast.style.padding = '14px 28px';
+        kachooToast.style.borderRadius = '50px';
+        kachooToast.style.zIndex = '3000';
+        kachooToast.style.fontWeight = '500';
+        kachooToast.style.fontSize = '0.9rem';
+        kachooToast.style.border = '1px solid #333';
+        kachooToast.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
+        kachooToast.style.opacity = '0';
+        kachooToast.style.transition = 'opacity 0.2s ease';
+        kachooToast.style.pointerEvents = 'none';
+        kachooToast.innerHTML = 'THE KACHOO · Creative Direction & Innovation';
+        document.body.appendChild(kachooToast);
         
-        const showKachooProfile = () => kachooModal.classList.add('active');
-        const hideKachooProfile = () => kachooModal.classList.remove('active');
+        function showKachooText() {
+            kachooToast.style.opacity = '1';
+            setTimeout(() => {
+                kachooToast.style.opacity = '0';
+            }, 2000);
+        }
         
         const kachooLogoTrigger = document.getElementById('kachooLogoTrigger');
         if(kachooLogoTrigger) {
             kachooLogoTrigger.addEventListener('click', (e) => {
                 e.stopPropagation();
-                showKachooProfile();
+                showKachooText();
             });
         }
         
-        kachooModal.addEventListener('click', (e) => {
-            if(e.target === kachooModal) hideKachooProfile();
-        });
-        const closeKachooBtn = document.getElementById('closeKachooModalBtn');
-        if(closeKachooBtn) closeKachooBtn.addEventListener('click', hideKachooProfile);
-        
-        // ========== HEADER SHADOW EFFECT (putih) ==========
+        // Header shadow
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if(window.scrollY > 60) header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.05)';
             else header.style.boxShadow = 'none';
         });
         window.dispatchEvent(new Event('scroll'));
-        
-        // Pastikan tidak ada warna selain hitam/putih: semua border, background, teks sudah sesuai.
-        // Footer sudah kembali ke info Kachoo tanpa tulisan Chobank.
-        // Semua konten Urbanc (termasuk design overview) awalnya tersembunyi total, baru muncul setelah klik logo urbanc.
-        // Info pendiri sudah diselipkan di dalam deskripsi studio.
-        console.log('KACHOO | URBANC Studio — mode hitam putih, konten Urbanc tersembunyi hingga klik logo.');
     </script>
 </body>
-                                                    </html>
+                                                                                                                                                                               </html>
