@@ -58,6 +58,23 @@
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Custom scrollbar */
+    .content::-webkit-scrollbar {
+      width: 4px;
+    }
+    .content::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+    .content::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.4);
+      border-radius: 4px;
     }
 
     /* BACKGROUND LOBBY: desktop & mobile */
@@ -165,6 +182,7 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       text-transform: uppercase;
       text-align: center;
+      align-self: center;
     }
 
     .notification {
@@ -213,15 +231,26 @@
       width: 100%;
       max-width: 900px;
       margin: 0 auto;
-      background: rgba(10, 10, 10, 0.8);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-radius: 40px;
       padding: 2.5rem;
       border: 1px solid rgba(255,255,255,0.25);
       color: #f0f0f0;
       box-shadow: 0 30px 60px rgba(0,0,0,0.8);
       text-align: left;
+    }
+
+    /* Logo Kachoo di Information Desk */
+    .info-logo {
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+    .info-logo img {
+      max-width: 140px;
+      height: auto;
+      display: inline-block;
     }
 
     .info-content p {
@@ -237,6 +266,25 @@
       padding-top: 1rem;
       border-top: 1px solid rgba(255,255,255,0.2);
       line-height: 1.5;
+    }
+
+    /* Architecture by Urbanc Studio */
+    .architecture-credit {
+      margin: 1.5rem 0 1rem 0;
+      text-align: center;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+    .architecture-credit a {
+      color: #ffdb8e;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+      border-bottom: 1px solid rgba(255,219,142,0.3);
+    }
+    .architecture-credit a:hover {
+      color: #ffffff;
+      border-bottom-color: #ffffff;
     }
 
     .info-content .contact-line {
@@ -323,10 +371,18 @@
       margin-bottom: 2rem;
     }
 
+    /* Perbaikan mobile untuk info-content */
     @media (max-width: 700px) {
+      .content {
+        padding: 1rem;
+      }
       .info-content {
         padding: 1.5rem;
         border-radius: 32px;
+        margin: 0.5rem;
+      }
+      .info-logo img {
+        max-width: 100px;
       }
       .info-content .contact-line {
         flex-direction: column;
@@ -359,12 +415,21 @@
       .restroom-back-wrapper {
         margin-bottom: 1.5rem;
       }
+      .architecture-credit {
+        font-size: 0.8rem;
+      }
     }
 
     @media (max-width: 480px) {
+      .content {
+        padding: 0.75rem;
+      }
       .info-content {
         padding: 1.2rem;
         border-radius: 24px;
+      }
+      .info-logo img {
+        max-width: 80px;
       }
       .foodcourt-message {
         padding: 1rem 1.5rem;
@@ -379,6 +444,9 @@
         min-width: 100%;
         max-width: 100%;
         padding: 0.9rem 1.2rem;
+      }
+      .button-container {
+        padding: 1.2rem 1rem;
       }
     }
   </style>
@@ -397,7 +465,6 @@
         <a href="Guestbook.html" class="floor-btn" target="_blank">Grand Hall</a>
         <a href="Exhibition.html" class="floor-btn" target="_blank">Exhibition Center</a>
         <a href="Chobank.html" class="floor-btn" target="_blank">Chobank</a>
-        <!-- Restroom menggunakan background image, bukan container -->
         <button class="floor-btn" id="restroom-btn">Restroom</button>
         <button class="floor-btn" id="food-court-btn">Food Court</button>
       </div>
@@ -431,51 +498,43 @@
         lobbySpecialContent.style.display = 'none';
         lobbySpecialContent.innerHTML = '';
         lobbyFloorLabel.style.display = 'block';
-        // Tampilkan kembali welcome message
         if (welcomeMessage) {
           welcomeMessage.style.display = 'block';
         }
-        // restore background lobby sesuai desktop/mobile
         const isMobile = window.matchMedia('(max-width: 1024px)').matches;
         lobbyScene.style.backgroundImage = isMobile ? "url('lobby2.png')" : "url('lobby1.png')";
         lobbyScene.style.backgroundColor = "transparent";
+        lobbyScene.style.backgroundSize = "cover";
+        lobbyScene.style.backgroundPosition = "center";
       }
 
-      // ---- RESTROOM: background image langsung di scene (Restroom1.png desktop, Restroom2.png mobile) ----
+      // ---- RESTROOM: background image langsung di scene ----
       function showRestroom() {
-        // Sembunyikan tombol container, label lantai, dan welcome message
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
         if (welcomeMessage) {
           welcomeMessage.style.display = 'none';
         }
         
-        // Kosongkan konten special, nanti hanya akan berisi tombol back
         lobbySpecialContent.style.display = 'flex';
-lobbySpecialContent.style.flexDirection = 'column';
-lobbySpecialContent.style.justifyContent = 'flex-end'; // Mendorong konten ke bawah
-// Atau bisa juga menggunakan:
-// lobbySpecialContent.style.alignItems = 'center';
-
-lobbySpecialContent.innerHTML = `
-  <div class="restroom-back-wrapper">
-    <button class="back-button" id="back-from-restroom">Back to Lobby</button>
-  </div>
-`;
+        lobbySpecialContent.style.flexDirection = 'column';
+        lobbySpecialContent.style.justifyContent = 'flex-end';
+        lobbySpecialContent.innerHTML = `
+          <div class="restroom-back-wrapper">
+            <button class="back-button" id="back-from-restroom">Back to Lobby</button>
+          </div>
+        `;
         
-        // Set background image scene sesuai device (Restroom1.png untuk desktop, Restroom2.png untuk mobile)
         const isMobile = window.matchMedia('(max-width: 1024px)').matches;
         if (isMobile) {
           lobbyScene.style.backgroundImage = "url('Restroom2.png')";
         } else {
           lobbyScene.style.backgroundImage = "url('Restroom1.png')";
         }
-        // pastikan background cover dan posisi center
         lobbyScene.style.backgroundSize = "cover";
         lobbyScene.style.backgroundPosition = "center";
         lobbyScene.style.backgroundColor = "#000000";
         
-        // event listener tombol back
         const backBtn = document.getElementById('back-from-restroom');
         if (backBtn) {
           const newBackBtn = backBtn.cloneNode(true);
@@ -487,39 +546,36 @@ lobbySpecialContent.innerHTML = `
         }
       }
 
-      // ---- FOOD COURT (coming soon) ----
-function showFoodCourt() {
-  lobbyButtonContainer.classList.add('hidden-content');
-  lobbyFloorLabel.style.display = 'none';
-  if (welcomeMessage) {
-    welcomeMessage.style.display = 'none';
-  }
-  
-  // Deteksi perangkat mobile berdasarkan lebar layar atau user agent
-  const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
-  // Pilih gambar berdasarkan perangkat
-  const backgroundImage = isMobile ? "url('Foodcourt2.png')" : "url('Foodcourt1.png')";
-  
-  lobbyScene.style.backgroundImage = backgroundImage;
-  lobbyScene.style.backgroundColor = "transparent";
-  lobbySpecialContent.style.display = 'flex';
-  lobbySpecialContent.innerHTML = `
-    <div class="foodcourt-message">COMING SOON</div>
-    <button class="back-button" id="back-from-foodcourt">Back to Lobby</button>
-  `;
-  const backBtn = document.getElementById('back-from-foodcourt');
-  if (backBtn) {
-    const newBackBtn = backBtn.cloneNode(true);
-    backBtn.parentNode.replaceChild(newBackBtn, backBtn);
-    newBackBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      resetLobbyToDefault();
-    });
-  }
+      // ---- FOOD COURT ----
+      function showFoodCourt() {
+        lobbyButtonContainer.classList.add('hidden-content');
+        lobbyFloorLabel.style.display = 'none';
+        if (welcomeMessage) {
+          welcomeMessage.style.display = 'none';
+        }
+        
+        const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const backgroundImage = isMobile ? "url('Foodcourt2.png')" : "url('Foodcourt1.png')";
+        
+        lobbyScene.style.backgroundImage = backgroundImage;
+        lobbyScene.style.backgroundColor = "transparent";
+        lobbySpecialContent.style.display = 'flex';
+        lobbySpecialContent.innerHTML = `
+          <div class="foodcourt-message">COMING SOON</div>
+          <button class="back-button" id="back-from-foodcourt">Back to Lobby</button>
+        `;
+        const backBtn = document.getElementById('back-from-foodcourt');
+        if (backBtn) {
+          const newBackBtn = backBtn.cloneNode(true);
+          backBtn.parentNode.replaceChild(newBackBtn, backBtn);
+          newBackBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetLobbyToDefault();
+          });
+        }
       }
 
-      // ---- INFORMATION DESK (detail kontak) ----
+      // ---- INFORMATION DESK dengan Logo Kachoo & Architecture by Urbanc Studio ----
       function showInformationDesk() {
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
@@ -531,10 +587,16 @@ function showFoodCourt() {
         lobbySpecialContent.style.display = 'flex';
         lobbySpecialContent.innerHTML = `
           <div class="info-content">
+            <div class="info-logo">
+              <img src="logo-thekachoo.png" alt="Kachoo Logo" onerror="this.style.display='none'">
+            </div>
             <p>The Kachoo is a media and news publishing company. The Kachoo has three projects: Kafkapages, Kazine, and Kaboom. The Kachoo is also developing a digital banking feature called Chobank and a directory system called Chonnect.</p>
             <div class="address">
               <strong>Address:</strong><br>
               Jenderal Sudirman Avenue, Lots 61–62, South Jakarta 12930, Indonesia
+            </div>
+            <div class="architecture-credit">
+              Architecture by <a href="Urbanc.html" target="_blank">Urbanc Studio</a>
             </div>
             <div class="contact-line">
               <span class="contact-label">Contact:</span>
@@ -548,7 +610,6 @@ function showFoodCourt() {
               <span class="contact-label">Kazine's Public Relation:</span>
               <a href="https://x.com/Chaarmente" target="_blank">@Chaarmente</a>
             </div>
-            <div class="closing-note">Click below to return</div>
             <button class="back-button" id="back-from-info">Back to Lobby</button>
           </div>
         `;
@@ -563,8 +624,7 @@ function showFoodCourt() {
         }
       }
 
-      // ---- Event Listeners utama ----
-      // Elevator langsung menuju Elevator.html
+      // Event Listeners
       document.getElementById('lift-btn').addEventListener('click', () => {
         window.location.href = 'Elevator.html';
       });
@@ -577,7 +637,6 @@ function showFoodCourt() {
         showFoodCourt();
       });
 
-      // Restroom tombol — menampilkan background Restroom1.png / Restroom2.png tanpa container dan tanpa welcome message
       const restroomBtn = document.getElementById('restroom-btn');
       if (restroomBtn) {
         restroomBtn.addEventListener('click', (e) => {
@@ -586,29 +645,23 @@ function showFoodCourt() {
         });
       }
 
-      // Saat load, pastikan state awal bersih
+      // Initial load & resize handler
       window.addEventListener('load', () => {
         resetLobbyToDefault();
-        // resize handler untuk menjaga background lobby ketika dalam keadaan default
         window.addEventListener('resize', () => {
-          // hanya jika dalam keadaan default (tombol tidak disembunyikan) kita sync background lobby
           if (!lobbyButtonContainer.classList.contains('hidden-content')) {
             const isMobile = window.matchMedia('(max-width: 1024px)').matches;
             lobbyScene.style.backgroundImage = isMobile ? "url('lobby2.png')" : "url('lobby1.png')";
           } else {
-            // jika sedang dalam mode restroom, pastikan background restroom tetap sesuai ukuran layar
             const specialContentHTML = lobbySpecialContent.innerHTML;
             if (specialContentHTML.includes('back-from-restroom')) {
               const isMobile = window.matchMedia('(max-width: 1024px)').matches;
-              if (isMobile) {
-                lobbyScene.style.backgroundImage = "url('Restroom2.png')";
-              } else {
-                lobbyScene.style.backgroundImage = "url('Restroom1.png')";
-              }
+              lobbyScene.style.backgroundImage = isMobile ? "url('Restroom2.png')" : "url('Restroom1.png')";
               lobbyScene.style.backgroundSize = "cover";
               lobbyScene.style.backgroundPosition = "center";
             } else if (specialContentHTML.includes('foodcourt-message')) {
-              lobbyScene.style.backgroundImage = "url('foodcourt.png')";
+              const isMobile = window.innerWidth <= 768;
+              lobbyScene.style.backgroundImage = isMobile ? "url('Foodcourt2.png')" : "url('Foodcourt1.png')";
             } else if (specialContentHTML.includes('info-content')) {
               lobbyScene.style.backgroundImage = "none";
               lobbyScene.style.backgroundColor = "#030303";
@@ -619,4 +672,4 @@ function showFoodCourt() {
     })();
   </script>
 </body>
-</html>
+  </html>
