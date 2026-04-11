@@ -62,9 +62,15 @@
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
     }
 
-    /* Custom scrollbar */
+    /* Smooth scroll untuk mobile */
+    .content {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.4) rgba(255,255,255,0.1);
+    }
+    
     .content::-webkit-scrollbar {
       width: 4px;
     }
@@ -242,17 +248,6 @@
       text-align: left;
     }
 
-    /* Logo Kachoo di Information Desk */
-    .info-logo {
-      text-align: center;
-      margin-bottom: 1.8rem;
-    }
-    .info-logo img {
-      max-width: 140px;
-      height: auto;
-      display: inline-block;
-    }
-
     .info-content p {
       font-size: clamp(1rem, 2.5vw, 1.2rem);
       margin-bottom: 1.5rem;
@@ -268,23 +263,30 @@
       line-height: 1.5;
     }
 
-    /* Architecture by Urbanc Studio */
-    .architecture-credit {
-      margin: 1.5rem 0 1rem 0;
-      text-align: center;
-      font-size: 0.9rem;
-      letter-spacing: 0.5px;
+    /* Architecture by Urbanc Studio - style disamakan dengan contact-line */
+    .architecture-line {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      margin: 0.8rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.5rem;
     }
-    .architecture-credit a {
+    .architecture-label {
+      font-weight: 500;
+      opacity: 0.8;
+      white-space: nowrap;
+    }
+    .architecture-line a {
       color: #ffdb8e;
       text-decoration: none;
       font-weight: 600;
+      border-bottom: 1px dotted #ffdb8e;
       transition: color 0.2s;
-      border-bottom: 1px solid rgba(255,219,142,0.3);
     }
-    .architecture-credit a:hover {
+    .architecture-line a:hover {
       color: #ffffff;
-      border-bottom-color: #ffffff;
+      border-bottom: 1px solid #ffffff;
     }
 
     .info-content .contact-line {
@@ -354,11 +356,29 @@
       display: none;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       padding: 0.5rem;
       max-height: 85vh;
       overflow-y: auto;
+      overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    
+    /* Scroll halus untuk konten khusus mobile */
+    #lobby-special-content {
+      scrollbar-width: thin;
+    }
+    #lobby-special-content::-webkit-scrollbar {
+      width: 4px;
+    }
+    #lobby-special-content::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+    #lobby-special-content::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.4);
+      border-radius: 4px;
     }
 
     /* Style khusus untuk restroom: hanya tombol back yang ditampilkan di content, background di scene */
@@ -381,15 +401,20 @@
         border-radius: 32px;
         margin: 0.5rem;
       }
-      .info-logo img {
-        max-width: 100px;
-      }
       .info-content .contact-line {
         flex-direction: column;
         gap: 0.2rem;
         margin: 1rem 0;
       }
       .info-content .contact-label {
+        white-space: normal;
+      }
+      .architecture-line {
+        flex-direction: column;
+        gap: 0.2rem;
+        margin: 1rem 0;
+      }
+      .architecture-label {
         white-space: normal;
       }
       .foodcourt-message {
@@ -415,9 +440,6 @@
       .restroom-back-wrapper {
         margin-bottom: 1.5rem;
       }
-      .architecture-credit {
-        font-size: 0.8rem;
-      }
     }
 
     @media (max-width: 480px) {
@@ -427,9 +449,6 @@
       .info-content {
         padding: 1.2rem;
         border-radius: 24px;
-      }
-      .info-logo img {
-        max-width: 80px;
       }
       .foodcourt-message {
         padding: 1rem 1.5rem;
@@ -575,7 +594,7 @@
         }
       }
 
-      // ---- INFORMATION DESK dengan Logo Kachoo & Architecture by Urbanc Studio ----
+      // ---- INFORMATION DESK tanpa logo, dengan Architecture by Urbanc Studio (style samaan dengan contact) ----
       function showInformationDesk() {
         lobbyButtonContainer.classList.add('hidden-content');
         lobbyFloorLabel.style.display = 'none';
@@ -587,16 +606,14 @@
         lobbySpecialContent.style.display = 'flex';
         lobbySpecialContent.innerHTML = `
           <div class="info-content">
-            <div class="info-logo">
-              <img src="logo-thekachoo.png" alt="Kachoo Logo" onerror="this.style.display='none'">
-            </div>
             <p>The Kachoo is a media and news publishing company. The Kachoo has three projects: Kafkapages, Kazine, and Kaboom. The Kachoo is also developing a digital banking feature called Chobank and a directory system called Chonnect.</p>
             <div class="address">
               <strong>Address:</strong><br>
               Jenderal Sudirman Avenue, Lots 61–62, South Jakarta 12930, Indonesia
             </div>
-            <div class="architecture-credit">
-              Architecture by <a href="Urbanc.html" target="_blank">Urbanc Studio</a>
+            <div class="architecture-line">
+              <span class="architecture-label">Architecture by</span>
+              <a href="Urbanc.html" target="_blank">Urbanc Studio</a>
             </div>
             <div class="contact-line">
               <span class="contact-label">Contact:</span>
@@ -613,6 +630,11 @@
             <button class="back-button" id="back-from-info">Back to Lobby</button>
           </div>
         `;
+        
+        // Pastikan scroll di mobile berjalan halus
+        lobbySpecialContent.style.overflowY = "auto";
+        lobbySpecialContent.style.webkitOverflowScrolling = "touch";
+        
         const backBtn = document.getElementById('back-from-info');
         if (backBtn) {
           const newBackBtn = backBtn.cloneNode(true);
