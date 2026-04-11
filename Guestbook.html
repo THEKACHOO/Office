@@ -142,7 +142,51 @@
       padding-left: 1rem;
     }
 
-    /* ===== 3 BAGIAN TAMU: VVIP, VIP, KACHOO TEAMS (dipisah rapi) ===== */
+    /* TIGA TOMBOL PILIHAN */
+    .tombol-pilihan {
+      margin-bottom: 1.8rem;
+    }
+    .tombol-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #444;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .btn-group-tiga {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .option-btn {
+      flex: 1;
+      min-width: 105px;
+      background: white;
+      border: 1px solid rgba(0,0,0,0.2);
+      padding: 0.75rem 0.5rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 60px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: 0.2s;
+      color: #000;
+      text-align: center;
+    }
+    .option-btn.active {
+      background: #000000;
+      border-color: #000000;
+      color: white;
+      box-shadow: 0 6px 12px -6px rgba(0,0,0,0.2);
+    }
+    .option-btn:not(.active):hover {
+      background: #e6e6e6;
+      border-color: #000;
+    }
+
+    /* ===== DAFTAR NAMA TAMU VIP (Container List) ===== */
     .guest-category {
       margin-bottom: 1.6rem;
     }
@@ -312,7 +356,22 @@
       display: none;
     }
 
-    /* ROLEPLAY BANNER */
+    /* KETERANGAN BAHASA INGGRIS: VIP juga harus mengisi formulir */
+    .vip-form-notice {
+      background: rgba(0,0,0,0.04);
+      border-left: 3px solid #000;
+      padding: 0.9rem 1rem;
+      border-radius: 20px;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #2b2b2b;
+    }
+    .vip-form-notice strong {
+      color: #000;
+    }
+
+    /* ROLEPLAY BANNER - tanpa icon/simbol */
     .roleplay-footer {
       margin-top: 2rem;
       padding: 1.2rem 0 0.2rem;
@@ -381,7 +440,7 @@
       transform: translateX(-3px);
     }
 
-    /* notifikasi thank you */
+    /* notifikasi thank you - tanpa simbol */
     .notif-thanks {
       position: fixed;
       top: 50%;
@@ -390,7 +449,7 @@
       background: white;
       color: black;
       font-weight: 800;
-      font-size: 2.2rem;
+      font-size: 2rem;
       padding: 1.5rem 3rem;
       border-radius: 70px;
       border: 1px solid rgba(0,0,0,0.1);
@@ -399,6 +458,7 @@
       animation: notifPop 1.4s ease forwards;
       white-space: nowrap;
       letter-spacing: -0.5px;
+      text-align: center;
     }
 
     @keyframes notifPop {
@@ -416,6 +476,10 @@
       }
       .guestlist-scroll {
         max-height: 380px;
+      }
+      .btn-group-tiga .option-btn {
+        min-width: 90px;
+        font-size: 0.8rem;
       }
     }
 
@@ -499,19 +563,19 @@
         text-align: center;
         width: 80%;
       }
+      .btn-group-tiga {
+        flex-direction: row;
+        gap: 0.6rem;
+      }
     }
 
-    @media (max-width: 400px) {
-      .glass-card {
-        padding: 1.2rem 1rem;
+    @media (max-width: 480px) {
+      .btn-group-tiga {
+        flex-direction: column;
+        gap: 0.5rem;
       }
-
-      .guestbook-header h1 {
-        font-size: 2.2rem;
-      }
-
-      .guestbook-header p {
-        font-size: 0.9rem;
+      .option-btn {
+        text-align: center;
       }
     }
   </style>
@@ -524,11 +588,22 @@
       <p>Sign the attendance</p>
     </div>
 
-    <!-- GRID: FORM SIGN + GUEST LIST TERPISAH (VVIP, VIP, TEAMS) -->
+    <!-- GRID: FORM SIGN + GUEST LIST -->
     <div class="dashboard">
-      <!-- FORM SECTION (Sign here) -->
+      <!-- FORM SECTION dengan 3 tombol pilihan -->
       <div class="form-section">
         <h2>Sign here</h2>
+        
+        <!-- Tiga tombol pilihan: Kachoo Team, VIP Guest, Guest -->
+        <div class="tombol-pilihan">
+          <span class="tombol-label">SELECT YOUR TYPE</span>
+          <div class="btn-group-tiga">
+            <button type="button" class="option-btn" data-tipe="kachoo">Kachoo Team</button>
+            <button type="button" class="option-btn" data-tipe="vip">VIP Guest</button>
+            <button type="button" class="option-btn" data-tipe="guest">Guest</button>
+          </div>
+        </div>
+
         <div class="field">
           <label>Name <span class="required-star">*</span></label>
           <input type="text" id="fullNameInput" placeholder="Enter your full name" autocomplete="off">
@@ -541,14 +616,18 @@
         <div id="formFeedback" class="feedback-message"></div>
       </div>
 
-      <!-- GUEST LIST SECTION: VVIP + VIP + KACHOO TEAMS (dipisah rapi) -->
+      <!-- GUEST LIST SECTION: Daftar nama VIP Guest (Container List) + keterangan dalam bahasa Inggris -->
       <div class="guestlist-section">
         <h2>Guest List</h2>
         <div class="guestlist-scroll" id="guestlistContainer"></div>
+        <!-- Keterangan dalam bahasa Inggris: tamu VIP juga harus mengisi formulir -->
+        <div class="vip-form-notice">
+          <strong>VIP GUEST NOTICE</strong> · VIP guests listed above are also required to fill out the form. Please select "VIP Guest" and complete your details.
+        </div>
       </div>
     </div>
 
-    <!-- ROLEPLAY BANNER -->
+    <!-- ROLEPLAY BANNER tanpa simbol -->
     <div class="roleplay-footer">
       <div class="roleplay-text">For Roleplay Purpose Only</div>
       <div class="kachoo-brand">by The Kachoo</div>
@@ -562,8 +641,9 @@
 
   <script>
     (function() {
-      // ======================== DATA TAMU TERPISAH (VVIP, VIP, KACHOO TEAMS) ========================
-      const vvipList = [
+      // ======================== DATA TAMU VIP (Container List nama) ========================
+      // VVIP GUEST dan VIP GUEST digabung sesuai permintaan "nama tamu VIP bisa cek dibawah"
+      const vipNamesList = [
         "URBANC STUDIO",
         "CADENCE",
         "MODEX",
@@ -576,10 +656,7 @@
         "L'Héritier",
         "TROY Cafe & Bakery",
         "RU Beauty",
-        "REVÉLLE"
-      ];
-
-      const vipList = [
+        "REVÉLLE",
         "Aelius Bhanuwasa",
         "Rachel Theodora Hearst",
         "Adiratna Danudihardja",
@@ -615,6 +692,7 @@
         "Prudence Evangeline"
       ];
 
+      // Data tambahan untuk Kachoo Teams (hanya untuk referensi visual, tidak mengganggu)
       const kachooTeamsList = [
         "Gathur Delano Kafka",
         "Ningrum Anindita Kafka",
@@ -633,24 +711,38 @@
       const affiliationInput = document.getElementById('affiliationInput');
       const signBtn = document.getElementById('signGuestbookBtn');
       const feedback = document.getElementById('formFeedback');
-
-      // Helper: render satu kategori dengan grid 2 kolom
-      function renderCategory(title, items) {
-        if (!items.length) return '';
-        let html = `
-          <div class="guest-category">
-            <div class="category-title">✦ ${title}</div>
-            <div class="guest-grid" id="grid-${title.replace(/\s/g, '')}">
-        `;
-        items.forEach(item => {
-          html += `<div class="invitee-item">${escapeHtml(item)}</div>`;
+      
+      // State untuk tombol pilihan
+      let selectedRole = 'guest'; // default: Guest
+      const roleBtns = document.querySelectorAll('.option-btn');
+      
+      // Fungsi update active class pada tombol
+      function updateActiveRole(role) {
+        roleBtns.forEach(btn => {
+          const btnRole = btn.getAttribute('data-tipe');
+          if (btnRole === role) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
         });
-        html += `</div></div>`;
-        return html;
+        selectedRole = role;
       }
-
-      // simple escape untuk mencegah XSS (meskipun data statis, safe)
+      
+      // Event listener untuk tombol pilihan
+      roleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const role = btn.getAttribute('data-tipe');
+          updateActiveRole(role);
+        });
+      });
+      
+      // Set default active (Guest)
+      updateActiveRole('guest');
+      
+      // Helper escape html
       function escapeHtml(str) {
+        if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
           if (m === '&') return '&amp;';
           if (m === '<') return '&lt;';
@@ -658,51 +750,70 @@
           return m;
         });
       }
-
-      // Render seluruh guest list dengan 3 kategori terpisah
-      function renderFullGuestlist() {
-        let finalHtml = '';
-        finalHtml += renderCategory('VVIP GUEST', vvipList);
-        finalHtml += renderCategory('VIP GUEST', vipList);
-        finalHtml += renderCategory('KACHOO TEAMS', kachooTeamsList);
-        guestContainer.innerHTML = finalHtml;
+      
+      // Render daftar nama VIP (Container List) dan tambahan Kachoo Team jika ingin (tetap tampilkan sesuai kebutuhan)
+      // sesuai permintaan: "Container List nama" untuk tamu VIP.
+      function renderGuestList() {
+        let html = `
+          <div class="guest-category">
+            <div class="category-title">VIP GUEST LIST</div>
+            <div class="guest-grid" id="vipGrid">
+        `;
+        vipNamesList.forEach(name => {
+          html += `<div class="invitee-item">${escapeHtml(name)}</div>`;
+        });
+        html += `</div></div>`;
+        
+        // Opsional: tambahkan Kachoo Team sebagai informasi pelengkap (tidak mengganggu)
+        html += `
+          <div class="guest-category">
+            <div class="category-title">KACHOO TEAMS</div>
+            <div class="guest-grid" id="teamGrid">
+        `;
+        kachooTeamsList.forEach(team => {
+          html += `<div class="invitee-item">${escapeHtml(team)}</div>`;
+        });
+        html += `</div></div>`;
+        
+        guestContainer.innerHTML = html;
       }
-
-      // Show thank you notification and redirect to GH.html
+      
+      // Fungsi submit ke Google Sheets (tidak diubah, sistem tetap sama)
+      async function submitToSheet(name, partOf, roleCategory) {
+        const url = 'https://script.google.com/macros/s/AKfycbx7wCCX6vDbg_d_3_97fSB-k1lFiOeUwYJvvxToDGUQnJzawGSqxMK-ex-P3aVlqo93/exec';
+        const affiliationValue = partOf.trim() === "" ? "-" : partOf.trim();
+        // tambahkan roleCategory ke payload (opsional untuk log, namun tidak mengganggu)
+        const payload = new URLSearchParams({ 
+          fullname: name, 
+          username: affiliationValue,
+          role: roleCategory
+        });
+        try {
+          await fetch(url, { method: 'POST', mode: 'no-cors', body: payload });
+        } catch (e) {
+          console.warn("Fetch error (network):", e);
+        }
+      }
+      
+      // Notifikasi Thank you + redirect ke GH.html
       function showThankYouAndRedirect() {
         const notif = document.createElement('div');
         notif.className = 'notif-thanks';
-        notif.textContent = 'Thank you! ✨';
+        notif.textContent = 'Thank you';
         document.body.appendChild(notif);
         setTimeout(() => {
           window.location.href = 'https://thekachoo.github.io/Games/Fotoduluyuk.html';
         }, 1400);
       }
-
-      // Send data to Google Sheets (sistem tidak berubah)
-      async function submitToSheet(name, partOf) {
-        // URL Apps Script (tetap sama seperti semula)
-        const url = 'https://script.google.com/macros/s/AKfycbx7wCCX6vDbg_d_3_97fSB-k1lFiOeUwYJvvxToDGUQnJzawGSqxMK-ex-P3aVlqo93/exec';
-        const affiliationValue = partOf.trim() === "" ? "-" : partOf.trim();
-        const payload = new URLSearchParams({ 
-          fullname: name, 
-          username: affiliationValue 
-        });
-        try {
-          await fetch(url, { method: 'POST', mode: 'no-cors', body: payload });
-        } catch (e) {
-          console.warn("Fetch error (maybe network):", e);
-        }
-      }
-
-      // Handle sign button click
+      
+      // Handle sign
       async function handleSign() {
         const name = fullNameInput.value.trim();
         const partOf = affiliationInput.value.trim();
         
         if (!name) {
           feedback.style.display = 'block';
-          feedback.textContent = '❌ Name is required. Please enter your name.';
+          feedback.textContent = 'Name is required. Please enter your name.';
           feedback.style.background = '#fee';
           feedback.style.color = '#c00';
           setTimeout(() => {
@@ -715,7 +826,8 @@
         const originalText = signBtn.textContent;
         signBtn.textContent = 'Sending...';
         
-        await submitToSheet(name, partOf);
+        // Kirim data ke sheet dengan role yang dipilih
+        await submitToSheet(name, partOf, selectedRole);
         showThankYouAndRedirect();
         
         fullNameInput.value = '';
@@ -736,8 +848,8 @@
       fullNameInput.addEventListener('keypress', handleEnter);
       affiliationInput.addEventListener('keypress', handleEnter);
       
-      // Render daftar tamu dengan kategori VVIP, VIP, KACHOO TEAMS (dipisah)
-      renderFullGuestlist();
+      // Render daftar tamu VIP (Container List nama)
+      renderGuestList();
     })();
   </script>
 </body>
