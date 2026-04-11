@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Kachoo Guestbook</title>
+  <title>Kachoo Guestbook | VVIP · VIP · Teams</title>
   <!-- Inter font + Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -32,7 +32,7 @@
       position: relative;
       z-index: 20;
       width: 100%;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
       background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(20px) saturate(200%);
@@ -90,10 +90,10 @@
       padding-bottom: 0.4rem;
     }
 
-    /* grid dua kolom */
+    /* grid dua kolom: form (kiri) + daftar tamu (kanan) */
     .dashboard {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.2fr;
       gap: 2rem;
       margin: 1.8rem 0 2rem;
     }
@@ -110,7 +110,7 @@
       box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1);
     }
 
-    .invitation-section {
+    .guestlist-section {
       background: rgba(255, 255, 255, 0.6);
       border-radius: 40px;
       padding: 1.8rem 1.5rem;
@@ -126,13 +126,13 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .form-section:hover, .invitation-section:hover {
+    .form-section:hover, .guestlist-section:hover {
       background: rgba(255, 255, 255, 0.8);
       border-color: white;
       box-shadow: 0 15px 30px -12px rgba(0,0,0,0.15);
     }
 
-    .form-section h2, .invitation-section h2 {
+    .form-section h2, .guestlist-section h2 {
       font-size: 1.6rem;
       font-weight: 600;
       color: #000;
@@ -142,44 +142,64 @@
       padding-left: 1rem;
     }
 
-    /* invitation grid */
-    .invitation-grid {
+    /* ===== 3 BAGIAN TAMU: VVIP, VIP, KACHOO TEAMS (dipisah rapi) ===== */
+    .guest-category {
+      margin-bottom: 1.6rem;
+    }
+    .guest-category:last-child {
+      margin-bottom: 0;
+    }
+    .category-title {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #000;
+      background: rgba(0,0,0,0.05);
+      display: inline-block;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      margin-bottom: 0.7rem;
+      text-transform: uppercase;
+      border: 0.5px solid rgba(0,0,0,0.1);
+    }
+    .guest-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem 1rem;
-      max-height: 300px;
-      overflow-y: auto;
-      padding-right: 8px;
+      gap: 0.4rem 0.9rem;
     }
-
-    .invitation-grid::-webkit-scrollbar {
-      width: 4px;
-    }
-    .invitation-grid::-webkit-scrollbar-track {
-      background: rgba(0,0,0,0.05);
-      border-radius: 10px;
-    }
-    .invitation-grid::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.2);
-      border-radius: 10px;
-    }
-
     .invitee-item {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 400;
       color: #222;
-      padding: 0.45rem 0;
-      border-bottom: 1px dotted rgba(0,0,0,0.15);
+      padding: 0.35rem 0;
+      border-bottom: 1px dotted rgba(0,0,0,0.12);
       transition: 0.15s;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
     .invitee-item:hover {
       color: #000;
       border-bottom-color: #000;
       padding-left: 4px;
+    }
+
+    /* scroll area untuk seluruh guest list jika terlalu panjang */
+    .guestlist-scroll {
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .guestlist-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .guestlist-scroll::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.05);
+      border-radius: 10px;
+    }
+    .guestlist-scroll::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
     }
 
     /* form fields */
@@ -389,6 +409,16 @@
     }
 
     /* ===== RESPONSIVE MOBILE ===== */
+    @media (max-width: 800px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .guestlist-scroll {
+        max-height: 380px;
+      }
+    }
+
     @media (max-width: 700px) {
       body {
         padding: 1rem;
@@ -403,32 +433,38 @@
       }
 
       .dashboard {
-        grid-template-columns: 1fr;
         gap: 1.2rem;
         margin: 1.2rem 0;
       }
 
-      .form-section, .invitation-section {
+      .form-section, .guestlist-section {
         padding: 1.5rem 1.2rem;
         border-radius: 32px;
       }
 
-      .form-section h2, .invitation-section h2 {
+      .form-section h2, .guestlist-section h2 {
         font-size: 1.4rem;
         margin-bottom: 1rem;
       }
 
-      .invitation-grid {
+      .guest-grid {
         grid-template-columns: 1fr;
-        max-height: 250px;
+        gap: 0.2rem;
       }
 
       .invitee-item {
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         white-space: normal;
         overflow: visible;
+        padding: 0.4rem 0;
       }
-
+      .category-title {
+        font-size: 0.9rem;
+        margin-top: 0.2rem;
+      }
+      .guest-category {
+        margin-bottom: 1.2rem;
+      }
       .field input {
         padding: 0.8rem 1.2rem;
       }
@@ -488,9 +524,9 @@
       <p>Sign the attendance</p>
     </div>
 
-    <!-- GRID: SIGN HERE + VIP GUEST -->
+    <!-- GRID: FORM SIGN + GUEST LIST TERPISAH (VVIP, VIP, TEAMS) -->
     <div class="dashboard">
-      <!-- FORM SECTION (Sign here) with Name (required) & Part of (optional) -->
+      <!-- FORM SECTION (Sign here) -->
       <div class="form-section">
         <h2>Sign here</h2>
         <div class="field">
@@ -505,10 +541,10 @@
         <div id="formFeedback" class="feedback-message"></div>
       </div>
 
-      <!-- INVITATION SECTION (VIP Guest) -->
-      <div class="invitation-section">
-        <h2>VIP Guest</h2>
-        <div class="invitation-grid" id="invitationGrid"></div>
+      <!-- GUEST LIST SECTION: VVIP + VIP + KACHOO TEAMS (dipisah rapi) -->
+      <div class="guestlist-section">
+        <h2>Guest List</h2>
+        <div class="guestlist-scroll" id="guestlistContainer"></div>
       </div>
     </div>
 
@@ -526,39 +562,110 @@
 
   <script>
     (function() {
-      // Guest list data for VIP Guest section
-      const komunitas = [
-        "Kachoo Teams", "Urbanc Studio", "Cadence", "Modex", "Kriya Nusaca",
-        "Amére", "Altday Project", "Our Dream", "TROY Bakery & Cafe", "Taskit",
-        "Thesera", "A+Clothes", "Makarya", "Ayu Merona", "RAIA Group",
-        "Studio 35°", "Pancarona Studio", "Ruang Rasa"
+      // ======================== DATA TAMU TERPISAH (VVIP, VIP, KACHOO TEAMS) ========================
+      const vvipList = [
+        "URBANC STUDIO",
+        "CADENCE",
+        "MODEX",
+        "RAIA GROUP",
+        "KRIYA NUSACA",
+        "AMÉRE",
+        "WINGSPHERE",
+        "Selasar Suara",
+        "JEJAK KOTA",
+        "L'Héritier",
+        "TROY Cafe & Bakery",
+        "RU Beauty",
+        "REVÉLLE"
       ];
 
-      const undangan = [
-        "Rachel Theodora Hearst", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner",
-        "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H.P",
-        "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga",
-        "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma",
-        "Sheila Kanna", "Elijah Gilead"
+      const vipList = [
+        "Aelius Bhanuwasa",
+        "Rachel Theodora Hearst",
+        "Adiratna Danudihardja",
+        "Marcelinus Chitraditya Hamengku Prabaswara",
+        "Elijah Gilead",
+        "Venus Dorothea",
+        "Bagas Pradipta",
+        "Cindy Lou",
+        "R. Aj. Nawang Wulan",
+        "Beatrix Cecilia Atmadja",
+        "Rahajeng Gendhis Dedari",
+        "Nicholas Pradana",
+        "Ruka Kurotsuki",
+        "Sharga Simbolon",
+        "Michelle Joana Delilah",
+        "Anneth Kanara Wiradarma",
+        "Damar Satya Jenggala",
+        "Freya Calista Tanjung",
+        "Hanumeera Sidney Adhinaga",
+        "Wang Yu Xuan",
+        "Daisy Lirea Lynn",
+        "Benjamin Liao Tan",
+        "Micaela",
+        "Asmaranda dan pasangan",
+        "Migunani Bening Kemuning",
+        "Ginandara Hardian Samudera Sastradipura",
+        "Maria Margareta Tan Vane",
+        "Ashdani Noelan Prayudha Anggiat",
+        "Mildred Candenza Ralyne Prabaswara",
+        "Gianna Avariella Wibisono (Perwira)",
+        "Isadora Alicia",
+        "Troy Agung Gutama",
+        "Prudence Evangeline"
       ];
-      const semuaNama = [...komunitas, ...undangan];
+
+      const kachooTeamsList = [
+        "Gathur Delano Kafka",
+        "Ningrum Anindita Kafka",
+        "Issac Logan",
+        "Geriel Rakhastra",
+        "Ashraffi Yudha",
+        "Claudia Charmaine",
+        "Vivianne Jamila",
+        "Nona Rengganis",
+        "Lucius Vincent"
+      ];
 
       // DOM elements
-      const grid = document.getElementById('invitationGrid');
+      const guestContainer = document.getElementById('guestlistContainer');
       const fullNameInput = document.getElementById('fullNameInput');
       const affiliationInput = document.getElementById('affiliationInput');
       const signBtn = document.getElementById('signGuestbookBtn');
       const feedback = document.getElementById('formFeedback');
 
-      // Render VIP guest list
-      function renderNames() {
-        grid.innerHTML = '';
-        semuaNama.forEach((nama) => {
-          const div = document.createElement('div');
-          div.className = 'invitee-item';
-          div.textContent = nama;
-          grid.appendChild(div);
+      // Helper: render satu kategori dengan grid 2 kolom
+      function renderCategory(title, items) {
+        if (!items.length) return '';
+        let html = `
+          <div class="guest-category">
+            <div class="category-title">✦ ${title}</div>
+            <div class="guest-grid" id="grid-${title.replace(/\s/g, '')}">
+        `;
+        items.forEach(item => {
+          html += `<div class="invitee-item">${escapeHtml(item)}</div>`;
         });
+        html += `</div></div>`;
+        return html;
+      }
+
+      // simple escape untuk mencegah XSS (meskipun data statis, safe)
+      function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+          if (m === '&') return '&amp;';
+          if (m === '<') return '&lt;';
+          if (m === '>') return '&gt;';
+          return m;
+        });
+      }
+
+      // Render seluruh guest list dengan 3 kategori terpisah
+      function renderFullGuestlist() {
+        let finalHtml = '';
+        finalHtml += renderCategory('VVIP GUEST', vvipList);
+        finalHtml += renderCategory('VIP GUEST', vipList);
+        finalHtml += renderCategory('KACHOO TEAMS', kachooTeamsList);
+        guestContainer.innerHTML = finalHtml;
       }
 
       // Show thank you notification and redirect to GH.html
@@ -572,32 +679,27 @@
         }, 1400);
       }
 
-      // Send data to Google Sheets
-      // Maps: fullname → Name (required), username → Part of (optional)
+      // Send data to Google Sheets (sistem tidak berubah)
       async function submitToSheet(name, partOf) {
-        // IMPORTANT: Replace this URL with your own Google Apps Script Web App URL
+        // URL Apps Script (tetap sama seperti semula)
         const url = 'https://script.google.com/macros/s/AKfycbx7wCCX6vDbg_d_3_97fSB-k1lFiOeUwYJvvxToDGUQnJzawGSqxMK-ex-P3aVlqo93/exec';
-        // If part of is empty, send "-" as default value
         const affiliationValue = partOf.trim() === "" ? "-" : partOf.trim();
         const payload = new URLSearchParams({ 
           fullname: name, 
           username: affiliationValue 
         });
         try {
-          // Using no-cors mode to avoid cross-origin errors, but response won't be readable
           await fetch(url, { method: 'POST', mode: 'no-cors', body: payload });
         } catch (e) {
           console.warn("Fetch error (maybe network):", e);
-          // Continue anyway, doesn't block UX
         }
       }
 
       // Handle sign button click
       async function handleSign() {
         const name = fullNameInput.value.trim();
-        const partOf = affiliationInput.value.trim(); // optional
+        const partOf = affiliationInput.value.trim();
         
-        // Validation: Name is required
         if (!name) {
           feedback.style.display = 'block';
           feedback.textContent = '❌ Name is required. Please enter your name.';
@@ -609,30 +711,22 @@
           return;
         }
         
-        // Disable button temporarily
         signBtn.disabled = true;
         const originalText = signBtn.textContent;
         signBtn.textContent = 'Sending...';
         
-        // Send to spreadsheet (name required, part of optional)
         await submitToSheet(name, partOf);
-        
-        // Show thank you notification and redirect
         showThankYouAndRedirect();
         
-        // Reset form (redirect happens anyway)
         fullNameInput.value = '';
         affiliationInput.value = '';
-        
-        // Re-enable button (though redirect is fast)
         signBtn.disabled = false;
         signBtn.textContent = originalText;
       }
       
-      // Event listener for button
+      // Event listeners
       signBtn.addEventListener('click', handleSign);
       
-      // Allow Enter key to submit on both inputs
       const handleEnter = (e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
@@ -642,9 +736,9 @@
       fullNameInput.addEventListener('keypress', handleEnter);
       affiliationInput.addEventListener('keypress', handleEnter);
       
-      // Render VIP guest list on page load
-      renderNames();
+      // Render daftar tamu dengan kategori VVIP, VIP, KACHOO TEAMS (dipisah)
+      renderFullGuestlist();
     })();
   </script>
 </body>
-</html>
+  </html>
