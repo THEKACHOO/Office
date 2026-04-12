@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>RSVP Closed · Kursi Tamu VIP Kachoo</title>
+  <title>RSVP · The Kachoo New Building</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -93,36 +93,23 @@
       border-radius: 80px;
     }
 
-    /* VIP CLOSED NOTIFICATION BANNER */
+    /* VIP CLOSED NOTIFICATION - only one line, simple */
     .vip-closed-banner {
       background: #1a1a1a;
       border-radius: 50px;
-      padding: 1rem 2rem;
+      padding: 0.8rem 1.5rem;
       margin-bottom: 1.5rem;
       text-align: center;
-      border-left: 6px solid #d4af37;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
     .vip-closed-banner p {
-      color: #f5f0e0;
-      font-weight: 600;
-      font-size: 1rem;
+      color: #f0f0f0;
+      font-weight: 500;
+      font-size: 0.9rem;
       letter-spacing: 0.5px;
     }
     .vip-closed-banner strong {
-      color: #FFD966;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-    .closed-stamp {
-      display: inline-block;
-      background: rgba(212, 175, 55, 0.15);
-      padding: 0.2rem 1rem;
-      border-radius: 40px;
-      font-size: 0.75rem;
+      color: #dddddd;
       font-weight: 700;
-      color: #FFD966;
-      margin-top: 8px;
     }
 
     .dashboard {
@@ -141,8 +128,8 @@
       transition: 0.3s;
     }
 
-    .form-section {
-      opacity: 0.9;
+    .form-section:hover, .guestlist-section:hover {
+      background: rgba(255, 255, 255, 0.8);
     }
 
     .form-section h2, .guestlist-section h2 {
@@ -153,46 +140,18 @@
       padding-left: 1rem;
     }
 
-    .guest-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem 1rem;
-      max-height: 350px;
-      overflow-y: auto;
-      padding-right: 8px;
+    /* GUEST LIST SECTION - HIDDEN because removed */
+    .guestlist-section {
+      display: none;
     }
 
-    .guest-grid::-webkit-scrollbar {
-      width: 4px;
-    }
-    .guest-grid::-webkit-scrollbar-track {
-      background: rgba(0,0,0,0.05);
-      border-radius: 10px;
-    }
-    .guest-grid::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.2);
-      border-radius: 10px;
+    /* Make form section full width since guestlist is removed */
+    .dashboard {
+      grid-template-columns: 1fr;
     }
 
-    .guest-item {
-      font-size: 0.9rem;
-      padding: 0.45rem 0;
-      border-bottom: 1px dotted rgba(0,0,0,0.15);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .guest-item:hover {
-      color: #000;
-      padding-left: 4px;
-    }
-
-    /* DISABLED FORM STYLES */
-    .field.disabled-field {
-      opacity: 0.6;
-      pointer-events: none;
-      filter: grayscale(0.05);
+    .field {
+      margin-bottom: 1.5rem;
     }
 
     .field label {
@@ -205,9 +164,13 @@
       margin-bottom: 0.4rem;
     }
 
+    .required-star {
+      color: #c00;
+    }
+
     .field input, .field select {
       width: 100%;
-      background: #f5f5f5;
+      background: white;
       border: 1px solid rgba(0,0,0,0.15);
       border-radius: 50px;
       padding: 0.9rem 1.4rem;
@@ -215,9 +178,15 @@
       font-family: 'Inter', sans-serif;
     }
 
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: #000;
+      transform: scale(1.01);
+    }
+
     .field input:disabled, .field select:disabled {
-      background: #e9e9e9;
-      color: #777;
+      background: #f0f0f0;
+      color: #888;
       cursor: not-allowed;
     }
 
@@ -238,7 +207,11 @@
     .radio-option input {
       width: 1.1rem;
       height: 1.1rem;
-      accent-color: #aaa;
+      accent-color: #000;
+      cursor: pointer;
+    }
+
+    .radio-option input:disabled {
       cursor: not-allowed;
     }
 
@@ -246,7 +219,7 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      background: #e9e9e9;
+      background: white;
       border: 1px solid rgba(0,0,0,0.15);
       border-radius: 60px;
       padding: 0.3rem 0.3rem 0.3rem 1.2rem;
@@ -258,50 +231,41 @@
       font-size: 1rem;
       font-weight: 500;
       flex: 1;
-      color: #666;
     }
 
     .counter-btn {
-      background: #d4d4d4;
+      background: #f0f0f0;
       border: none;
       width: 36px;
       height: 36px;
       border-radius: 40px;
       font-size: 1.3rem;
       font-weight: 600;
+      cursor: pointer;
+    }
+
+    .counter-btn:disabled {
+      opacity: 0.4;
       cursor: not-allowed;
-      color: #888;
     }
 
-    .counter-btn:active {
-      transform: none;
-    }
-
-    .rsvp-btn-closed {
-      background: #2c2c2c;
+    .rsvp-btn {
+      background: #000;
       border: none;
-      color: #b0b0b0;
+      color: white;
       font-weight: 700;
       padding: 1rem;
       border-radius: 60px;
       font-size: 1rem;
       width: 100%;
+      cursor: pointer;
       text-transform: uppercase;
-      cursor: not-allowed;
-      letter-spacing: 2px;
       margin-top: 0.5rem;
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
     }
 
-    .closed-info {
-      text-align: center;
-      margin-top: 1.2rem;
-      background: rgba(0,0,0,0.05);
-      border-radius: 60px;
-      padding: 0.8rem;
-      font-size: 0.85rem;
-      color: #b5651e;
-      font-weight: 500;
+    .rsvp-btn:disabled {
+      background: #555;
+      cursor: not-allowed;
     }
 
     .feedback-message {
@@ -310,10 +274,8 @@
       padding: 0.6rem 1rem;
       border-radius: 60px;
       text-align: center;
-      background: #faf0e6;
-      display: block;
-      border: 1px solid #e0bc7c;
-      color: #7a4b0e;
+      background: white;
+      display: none;
     }
 
     .roleplay-footer {
@@ -348,16 +310,6 @@
       .glass-card {
         padding: 1.5rem;
       }
-      .guest-grid {
-        grid-template-columns: 1fr;
-        max-height: 250px;
-      }
-      .guest-item {
-        white-space: normal;
-      }
-      .vip-closed-banner p {
-        font-size: 0.85rem;
-      }
     }
   </style>
 </head>
@@ -378,30 +330,26 @@
       The Grand Hall of Kachoo Office, South Jakarta | 4:00 PM onwards
     </div>
 
-    <!-- VIP CLOSED NOTICE (form ditutup total) -->
+    <!-- VIP CLOSED NOTIFICATION - only one line, no emoji, simple -->
     <div class="vip-closed-banner">
-      <p>✧  KURSI TAMU VIP TELAH DITUTUP  ✧<br>
-      <strong>Pendaftaran VIP & RSVP resmi sudah ditutup</strong> — Kuota undangan VIP terpenuhi.<br>
-      Terima kasih atas antusiasme luar biasa untuk acara The Kachoo New Building.<br>
-      <span class="closed-stamp">#KachooVIPClosed</span></p>
+      <p><strong>VIP seats are now closed.</strong> Registration is no longer available.</p>
     </div>
 
     <div class="dashboard">
       <div class="form-section">
-        <h2>Formulir RSVP (Ditutup)</h2>
+        <h2>RSVP Form</h2>
         
-        <!-- seluruh form dinonaktifkan / tampilan readonly, tidak bisa submit -->
-        <div class="field disabled-field">
+        <div class="field">
           <label>Full name <span class="required-star">*</span></label>
-          <input type="text" id="fullName" placeholder="Formulir ditutup" value="RSVP sudah berakhir" disabled>
+          <input type="text" id="fullName" placeholder="Enter your full name" autocomplete="off" disabled>
         </div>
 
-        <div class="field disabled-field">
+        <div class="field">
           <label>Part of (optional)</label>
-          <input type="text" id="affiliation" placeholder="-" value="VIP Session Closed" disabled>
+          <input type="text" id="affiliation" placeholder="Community / Brand / Studio" autocomplete="off" disabled>
         </div>
 
-        <div class="field disabled-field">
+        <div class="field">
           <label>Attendance <span class="required-star">*</span></label>
           <div class="radio-group">
             <label class="radio-option">
@@ -413,37 +361,24 @@
           </div>
         </div>
 
-        <div class="field" id="guestsField" style="display: block; opacity: 0.6; pointer-events: none;">
+        <div class="field" id="guestsField" style="display: none;">
           <label>Total guests (including yourself)</label>
           <div class="guest-counter">
             <span id="guestCountValue">1</span>
             <button type="button" class="counter-btn" id="decrementGuest" disabled>-</button>
             <button type="button" class="counter-btn" id="incrementGuest" disabled>+</button>
           </div>
-          <small style="font-size: 0.7rem; color: #666; display: block; margin-top: 6px;">Maksimal 10 tamu (ditutup)</small>
+          <small style="font-size: 0.7rem; color: #666; display: block; margin-top: 6px;">Maximum 10 guests total</small>
         </div>
 
-        <div class="field disabled-field">
+        <div class="field">
           <label>Dietary restrictions (optional)</label>
-          <input type="text" id="dietary" placeholder="-" value="-" disabled>
+          <input type="text" id="dietary" placeholder="Any allergies or preferences" disabled>
         </div>
 
-        <!-- Tombol konfirmasi dinonaktifkan dengan teks jelas -->
-        <button class="rsvp-btn-closed" id="submitRsvpBtn" disabled>✕ RSVP TERTUTUP ✕</button>
-        
-        <div class="feedback-message" id="rsvpFeedback">
-          ⚠️ Pendaftaran VIP dan kursu tamu undangan resmi sudah ditutup. Terima kasih telah menghubungi The Kachoo.
-        </div>
-        <div class="closed-info">
-          🎫 Untuk informasi lebih lanjut, silakan hubungi tim Kachoo langsung. Sampai jumpa di Grand Opening!
-        </div>
-      </div>
-
-      <div class="guestlist-section">
-        <h2>Daftar Tamu Undangan VIP</h2>
-        <div class="guest-grid" id="guestGrid"></div>
-        <div style="margin-top: 1rem; font-size: 0.7rem; text-align: center; background: #00000010; border-radius: 30px; padding: 0.4rem;">
-          * Daftar terbatas untuk tamu kehormatan
+        <button class="rsvp-btn" id="submitRsvpBtn" disabled>RSVP Closed</button>
+        <div class="feedback-message" id="rsvpFeedback" style="display: block; background: #f5f5f5; color: #555;">
+          VIP registration is closed. Thank you for your interest.
         </div>
       </div>
     </div>
@@ -456,112 +391,25 @@
 
   <script>
     (function() {
-      // Data tamu undangan VIP (seperti daftar sebelumnya)
-      const komunitas = [
-        "Kachoo Teams", "Urbanc Studio", "Cadence", "Modex", "Kriya Nusaca",
-        "Amere", "Altday Project", "Our Dream", "TROY Bakery & Cafe", "Taskit",
-        "Thesera", "A+Clothes", "Makarya", "Ayu Merona", "RAIA Group",
-        "Studio 35°", "Pancarona Studio", "Ruang Rasa", "Wingsphere"
-      ];
-
-      const undangan = [
-        "Rachel Theodora Hearst", "Hein Dewantara", "Violita Rosela Lee", "Nararya Wiyasa", "Atale Noira", "Rosella Jane Tanuwijaya", "Beatrix Cecilia Atmadja", "Nawang Wulan and Partner", "Prudence Claire", "Cindy Lou", "Bagas Pradipta", "Marcelinus Chitraditya H. P", "Venus Dorothea", "Vishaka Niranjana", "Knox Caspian", "Arunika Jingga", "Benjamin Liao Tan", "Marcus Tjoa and Partner", "Dulsea Andromeda Hauteville", "Freya Calista Tanjung",
-        "Grayson Tahitoe", "Adiratna Danudihardja", "Gabriel Luca Wirakusuma", "Elang Segara", "Ethan Matthijs Eedenrijk", "Viera Lucienne Tan", "Sharga Simbolon", "Sheila Kanna", "Elijah Gilead", "Rosalio Luce", "Erni Maulina", "Gianna Avariella Perwira", "Gavina Jane", "Arestian Arkham Malik", "Arabella", "Aladrick D. Dhananjaya", "Andreas Darius", "Brian Averill", "Luna Amaris Kim", "Samahita Arunima T. Amara", "Damar Satya Jenggala",
-        "Meera Adhinata", "Risang N. Danudihardja", "Bianca Eugenia Wilhelmina", "Raizen Adimurti", "Reiss H. Monclair", "Anneth Kanara Wiradarma", "Ruka Kurotsuki", "Trevor Finn Hanford", "Helena Gabriella"
-      ];
+      // Disable all interactive elements - form is closed
+      const allInputs = document.querySelectorAll('input, select, button');
+      allInputs.forEach(el => {
+        el.disabled = true;
+      });
       
-      const allInvitedGuests = [...komunitas, ...undangan];
-      const guestGrid = document.getElementById('guestGrid');
-
-      // Tampilkan daftar tamu undangan (hanya untuk referensi)
-      function renderGuestList() {
-        if (!guestGrid) return;
-        guestGrid.innerHTML = '';
-        allInvitedGuests.forEach(guest => {
-          const div = document.createElement('div');
-          div.className = 'guest-item';
-          div.textContent = guest;
-          guestGrid.appendChild(div);
-        });
-      }
-
-      renderGuestList();
-
-      // Semua interaksi form dinonaktifkan karena RSVP closed (VIP ditutup)
-      // namun kita pastikan tidak ada fungsi submit aktif.
+      // Make sure no submission happens
       const submitBtn = document.getElementById('submitRsvpBtn');
       if (submitBtn) {
         submitBtn.disabled = true;
-        // tidak ada event handler submit
       }
-
-      // Disable semua input yang mungkin masih interaktif
-      const allInputs = document.querySelectorAll('input, select, button.counter-btn');
-      allInputs.forEach(input => {
-        if (input.id !== 'guestGrid' && input.type !== 'button') {
-          input.setAttribute('disabled', 'disabled');
-        }
-      });
       
-      // pastikan radio juga tidak bisa di klik (sudah disabled)
-      // dan tampilan guest counter tidak responsif
-      const guestSpan = document.getElementById('guestCountValue');
-      if (guestSpan) guestSpan.innerText = '—';
-      
-      // tidak ada increment decrement logic karena sudah disabled
-
-      // Membuat pesan bahwa pendaftaran VIP ditutup (teks konsisten)
-      const feedbackDiv = document.getElementById('rsvpFeedback');
-      if (feedbackDiv) {
-        feedbackDiv.innerHTML = '❌ KURSI TAMU VIP & FORMULIR RSVP SUDAH DITUTUP ❌<br>Kuota penuh. Terima kasih atas minat Anda kepada The Kachoo.';
-        feedbackDiv.style.background = '#f9e4d4';
-        feedbackDiv.style.borderLeft = '4px solid #b87333';
-        feedbackDiv.style.fontWeight = '500';
+      // Hide guests field completely
+      const guestsField = document.getElementById('guestsField');
+      if (guestsField) {
+        guestsField.style.display = 'none';
       }
-
-      // optional: tambahkan pesan di area tombol
-      const closedInfoDiv = document.querySelector('.closed-info');
-      if (closedInfoDiv) {
-        closedInfoDiv.innerHTML = '🎫 KESEMPATAN VIP TELAH BERAKHIR. Sampai jumpa di acara berikutnya! 🎫';
-      }
-
-      // menghilangkan semua potensi event listener sebelumnya
-      // Karena kita tidak ingin ada submission, cukup buat dummy
-      console.log('RSVP VIP Closed — formulir tamu VIP ditutup total');
       
-      // Juga pastikan tidak ada fungsi yang memanggil submit sheet, karena semuanya dinonaktifkan.
-      // (aman, tidak ada fetch karena tombol disabled dan tidak ada handler baru)
-      
-      // Event Enter pun dinonaktifkan
-      const preventAnyAction = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      };
-      
-      document.querySelectorAll('.field input, .field select, .radio-option input').forEach(el => {
-        el.addEventListener('click', preventAnyAction);
-        el.addEventListener('keydown', preventAnyAction);
-        el.addEventListener('change', preventAnyAction);
-      });
-      
-      // Pesan tambahan di console & UI friendly
-      const vipBanner = document.querySelector('.vip-closed-banner');
-      if (vipBanner) {
-        const extraNote = document.createElement('div');
-        extraNote.style.marginTop = '12px';
-        extraNote.style.fontSize = '0.8rem';
-        extraNote.style.opacity = '0.9';
-        extraNote.innerHTML = '🔒 Semua kursi VIP dan tamu undangan terkonfirmasi. Formulir tidak menerima entri baru.';
-        vipBanner.appendChild(extraNote);
-      }
-
-      // Disable guest counter field visual
-      const guestCounterDiv = document.querySelector('.guest-counter');
-      if(guestCounterDiv) {
-        guestCounterDiv.style.background = "#dddddd";
-        guestCounterDiv.style.cursor = "default";
-      }
+      console.log('RSVP form closed - VIP seats no longer available');
     })();
   </script>
 </body>
