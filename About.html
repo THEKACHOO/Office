@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>About Kachoo</title>
+    <!-- Outfit Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #eaeaea 100%);
+            font-family: 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            color: #000000;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+            font-weight: 400;
+        }
+
+        h1, h2, h3, h4, p, li, a, button, div, span {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        h2, .vm-head, .gallery-title, .kachoo-title {
+            font-weight: 700 !important;
+            letter-spacing: -0.3px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(14px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 18px 0;
+        }
+
+        .logo-img {
+            height: 48px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            filter: grayscale(100%) contrast(1.1);
+        }
+
+        /* Hero Section */
+        .hero-kachoo {
+            padding: 140px 0 60px 0;
+            background: linear-gradient(125deg, #ffffff 0%, #f2f2f2 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .kachoo-title {
+            font-size: 3.8rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: #000;
+            margin-bottom: 28px;
+            line-height: 1.2;
+        }
+
+        .kachoo-description {
+            font-size: 1.2rem;
+            max-width: 880px;
+            color: #2a2a2a;
+            font-weight: 450;
+            margin-bottom: 20px;
+            line-height: 1.55;
+        }
+
+        /* Vision & Mission */
+        .vision-mission-block {
+            margin: 60px 0 70px;
+            background: #ffffff;
+            border-radius: 44px;
+            padding: 56px 52px;
+            border: 1px solid #e6e6e6;
+            transition: all 0.4s ease;
+            box-shadow: 0 12px 28px -10px rgba(0,0,0,0.04);
+        }
+
+        .vm-head {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+            border-left: 5px solid #000;
+            padding-left: 28px;
+        }
+
+        .vision-text {
+            font-size: 1.28rem;
+            font-weight: 500;
+            line-height: 1.5;
+            background: #fafafa;
+            padding: 32px 36px;
+            border-radius: 32px;
+            margin-bottom: 48px;
+            color: #111;
+            border: 1px solid #ececec;
+        }
+
+        .mission-text {
+            font-size: 1.28rem;
+            font-weight: 500;
+            line-height: 1.5;
+            background: #fafafa;
+            padding: 32px 36px;
+            border-radius: 32px;
+            color: #111;
+            border: 1px solid #ececec;
+        }
+
+        /* Office Info */
+        .office-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            background: #fefefe;
+            border-radius: 44px;
+            padding: 38px 42px;
+            margin: 50px 0 60px;
+            border: 1px solid #e9e9e9;
+            justify-content: space-between;
+        }
+
+        .info-card {
+            flex: 1;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .info-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .info-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            font-size: 0.95rem;
+            line-height: 1.45;
+            color: #2c2c2c;
+        }
+
+        .founder-badge {
+            background: #ededed;
+            padding: 16px 24px;
+            border-radius: 60px;
+            display: inline-block;
+            margin-top: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .founder-badge:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        /* Gallery & Sliders */
+        .gallery-section {
+            margin: 70px 0 60px;
+        }
+
+        .gallery-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+            letter-spacing: -0.3px;
+            border-bottom: 2px solid #cbcbcb;
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            margin: 28px 0 48px;
+            border-radius: 36px;
+            overflow: hidden;
+            background: #f3f3f3;
+            border: 1px solid #e0e0e0;
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slider-track .slide-item {
+            width: 100%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .slider-track img {
+            width: 100%;
+            object-fit: cover;
+            max-height: 480px;
+            background: #fafafa;
+            display: block;
+        }
+
+        .image-caption {
+            text-align: center;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 5;
+        }
+
+        .no-caption .image-caption {
+            display: none;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(5px);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 12px 20px;
+            border-radius: 60px;
+            font-weight: 300;
+            transition: 0.2s;
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .slider-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .btn-left { left: 18px; }
+        .btn-right { right: 18px; }
+
+        .slider-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .dot-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .dot {
+            width: 9px;
+            height: 9px;
+            background: #aaa;
+            border-radius: 50%;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .dot.active-dot {
+            background: #000;
+            transform: scale(1.25);
+        }
+
+        /* Two Columns */
+        .two-cols {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin: 60px 0 80px;
+        }
+        .col-item {
+            flex: 1;
+            min-width: 240px;
+        }
+        .col-item img {
+            width: 100%;
+            border-radius: 32px;
+            border: 1px solid #ddd;
+            display: block;
+            background: #f2f2f2;
+        }
+        .single-img-caption {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2c2c2c;
+            background: #f5f5f5;
+            padding: 8px 12px;
+            border-radius: 60px;
+            display: inline-block;
+            width: auto;
+        }
+
+        .single-restroom {
+            margin-bottom: 60px;
+        }
+        .single-restroom img {
+            width: 100%;
+            border-radius: 36px;
+            border: 1px solid #ddd;
+        }
+
+        /* FOOTER STYLES - Diambil dari referensi */
+        footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 70px 0 40px;
+            margin-top: 80px;
+            border-top: 1px solid #2a2a2a;
+        }
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        .footer-brand h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        .footer-brand p {
+            color: #a0a0a0;
+            max-width: 300px;
+            line-height: 1.6;
+        }
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+        .footer-contact p {
+            color: #a0a0a0;
+            margin-bottom: 10px;
+        }
+        .footer-copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #2a2a2a;
+            color: #6c6c6c;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 900px) {
+            .container { padding: 0 20px; }
+            .kachoo-title { font-size: 2.6rem; }
+            .vision-mission-block { padding: 32px 24px; }
+            .office-details { padding: 28px 24px; flex-direction: column; }
+            .vm-head { font-size: 1.9rem; }
+            .vision-text, .mission-text { font-size: 1.1rem; padding: 22px 20px; }
+            .footer-grid { flex-direction: column; gap: 40px; }
+        }
+        @media (max-width: 680px) {
+            .navbar { padding: 14px 0; }
+            .logo-img { height: 38px; }
+            .gallery-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="navbar">
+            <img class="logo-img" src="logo-thekachoo.png" alt="The Kachoo logo" onerror="this.src='https://placehold.co/200x60/eeeeee/333333?text=KACHOO'">
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Hero Section dengan teks deskripsi yang sudah disederhanakan -->
+    <div class="hero-kachoo">
+        <div class="container">
+            <h1 class="kachoo-title">The Kachoo</h1>
+            <div class="kachoo-description">
+                Kachoo is a media and publishing company that develops digital projects including magazines, news platforms, and integrated digital systems. Rooted in innovation, Kachoo delivers information, creativity, and technology.
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- VISI & MISI -->
+        <div class="vision-mission-block">
+            <h2 class="vm-head">Vision & Mission</h2>
+            <div class="vision-text">
+                <strong>Vision:</strong> To become a media and publishing platform that develops various digital projects (such as media, magazines, and digital systems) to present information, creativity, and innovation within a single ecosystem.
+            </div>
+            <div class="mission-text">
+                <strong>Mission:</strong> Develop various digital projects (including Kafkapages, Kazine, Kaboom, and others), provide a media and publication platform for everyone, build technology features such as digital banking (Chobank) and directory systems (Chonnect) that make life easier for all people, integrate multiple services into one seamless digital ecosystem.
+            </div>
+        </div>
+
+        <!-- Kantor Pusat & Admin dengan alamat lengkap dan link -->
+        <div class="office-details">
+            <div class="info-card" id="headOfficeLink">
+                <h3>Head Office</h3>
+                <p>Jenderal Sudirman Avenue, Lots 61–62, South Jakarta 12930, Indonesia</p>
+                <p style="margin-top: 8px; font-size:0.85rem; color:#555;">Creative & Digital Command Center</p>
+            </div>
+            <div class="info-card" id="adminOfficeLink">
+                <h3>Administration Office</h3>
+                <p>H.O.S. Cokroaminoto Street No. 45, Menteng, Central Jakarta 10310, Indonesia</p>
+                <p style="margin-top: 8px; font-size:0.85rem; color:#555;">Corporate & Strategic Management</p>
+            </div>
+            <div class="info-card">
+                <div class="founder-badge" id="founderLink">
+                    <strong>Founder</strong><br>Gathur Delano Kafka
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN LOBBY (tanpa caption) -->
+        <div class="gallery-section">
+            <h3 class="gallery-title">Main Lobby</h3>
+            <div class="slider-wrapper" id="lobbySlider">
+                <div class="slider-track" id="lobbyTrack"></div>
+                <button class="slider-btn btn-left" data-slider="lobby">‹</button>
+                <button class="slider-btn btn-right" data-slider="lobby">›</button>
+                <div class="dot-group" id="lobbyDots"></div>
+            </div>
+        </div>
+
+        <!-- PUBLIC SPACE -->
+        <div class="gallery-section">
+            <h3 class="gallery-title">Public Space</h3>
+            <div class="slider-wrapper" id="publicSlider">
+                <div class="slider-track" id="publicTrack"></div>
+                <button class="slider-btn btn-left" data-slider="public">‹</button>
+                <button class="slider-btn btn-right" data-slider="public">›</button>
+                <div class="dot-group" id="publicDots"></div>
+            </div>
+        </div>
+
+        <!-- PRIVATE SPACE (Lounge, Meeting Room, Conference Room) -->
+        <div class="gallery-section">
+            <h3 class="gallery-title">Private Space</h3>
+            <div class="slider-wrapper" id="privateSlider">
+                <div class="slider-track" id="privateTrack"></div>
+                <button class="slider-btn btn-left" data-slider="private">‹</button>
+                <button class="slider-btn btn-right" data-slider="private">›</button>
+                <div class="dot-group" id="privateDots"></div>
+            </div>
+        </div>
+
+        <!-- WORK STATION (ws1.png - ws5.png) -->
+        <div class="gallery-section">
+            <h3 class="gallery-title">Work Station</h3>
+            <div class="slider-wrapper" id="stationSlider">
+                <div class="slider-track" id="stationTrack"></div>
+                <button class="slider-btn btn-left" data-slider="station">‹</button>
+                <button class="slider-btn btn-right" data-slider="station">›</button>
+                <div class="dot-group" id="stationDots"></div>
+            </div>
+        </div>
+
+        <!-- RESTROOM (Restroom1.png) -->
+        <div class="gallery-section single-restroom">
+            <h3 class="gallery-title">Restroom</h3>
+            <img src="Restroom1.png" alt="Restroom" onerror="this.src='https://placehold.co/1400x500/e8e8e8/222?text=Restroom+Area'">
+            <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Restroom</span></div>
+        </div>
+
+        <!-- ELEVATOR & EMERGENCY EXIT -->
+        <div class="two-cols">
+            <div class="col-item">
+                <h3 class="gallery-title" style="border-bottom: none; margin-bottom: 20px;">Elevator</h3>
+                <img src="lift2.png" alt="Elevator" onerror="this.src='https://placehold.co/1200x500/e2e2e2/111?text=Lift+Area'">
+                <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Elevator</span></div>
+            </div>
+            <div class="col-item">
+                <h3 class="gallery-title" style="border-bottom: none; margin-bottom: 20px;">Emergency Exit</h3>
+                <img src="EmergencyExit1.png" alt="Emergency Exit" onerror="this.src='https://placehold.co/1200x500/e2e2e2/111?text=Emergency+Exit'">
+                <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Emergency Exit</span></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- FOOTER BARU - Diambil dari referensi thekachoo.github.io/Home -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>KACHOO</h3>
+                <p>WE TURN IDEAS INTO ATTENTION</p>
+                <p style="margin-top: 15px;">A digital-first media and news publication built to shape conversations in a fast-moving world.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">The Kachoo Office</a></li>
+                    <li><a href="#">How To Work With Us</a></li>
+                    <li><a href="#">Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Connect</h4>
+                <p>Email: <a href="mailto:ohkachoo@gmail.com" style="color:#a0a0a0;">ohkachoo@gmail.com</a></p>
+                <p>X (Twitter): <a href="https://twitter.com/thekachoo" target="_blank" style="color:#a0a0a0;">@thekachoo</a></p>
+                <p>DM: @HAIKACHOO</p>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2026 Kachoo. All rights reserved. We turn ideas into attention.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    (function() {
+        // Redirect untuk Head Office (Jaksel)
+        const headOffice = document.getElementById('headOfficeLink');
+        if(headOffice) {
+            headOffice.style.cursor = 'pointer';
+            headOffice.addEventListener('click', () => {
+                window.location.href = 'https://thekachoo.github.io/Office/';
+            });
+        }
+        // Redirect untuk Administration Office (Jakpus)
+        const adminOffice = document.getElementById('adminOfficeLink');
+        if(adminOffice) {
+            adminOffice.style.cursor = 'pointer';
+            adminOffice.addEventListener('click', () => {
+                window.location.href = 'https://thekachoo.github.io/Office/Branch.html';
+            });
+        }
+
+        // Redirect Founder ke x.com/gaxlak
+        const founderElement = document.getElementById('founderLink');
+        if(founderElement) {
+            founderElement.addEventListener('click', () => {
+                window.open('https://x.com/gaxlak', '_blank');
+            });
+        }
+
+        // Helper untuk membuat slide item
+        function buildSlideItem(src, altText, captionText, hideCaption = false) {
+            const div = document.createElement('div');
+            div.className = 'slide-item';
+            if(hideCaption) div.classList.add('no-caption');
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = altText;
+            img.onerror = function() { this.src = 'https://placehold.co/1400x500/eeeeee/333333?text=' + encodeURIComponent(captionText || altText); };
+            div.appendChild(img);
+            if(!hideCaption && captionText) {
+                const captionDiv = document.createElement('div');
+                captionDiv.className = 'image-caption';
+                captionDiv.innerText = captionText;
+                div.appendChild(captionDiv);
+            }
+            return div;
+        }
+
+        // Slider non-loop
+        function initNonLoopSlider(config, sliderId, hideCaptionForAll = false) {
+            const track = document.getElementById(config.trackId);
+            if(!track) return;
+            track.innerHTML = '';
+            config.items.forEach(item => {
+                const slideDiv = buildSlideItem(item.src, item.alt, item.caption, hideCaptionForAll);
+                track.appendChild(slideDiv);
+            });
+            const slides = Array.from(track.children);
+            if(slides.length === 0) return;
+            let currentIndex = 0;
+            const total = slides.length;
+            const container = document.getElementById(sliderId);
+            const leftBtn = container ? container.querySelector('.btn-left') : null;
+            const rightBtn = container ? container.querySelector('.btn-right') : null;
+            const dotsContainer = document.getElementById(config.dotsId);
+
+            function updateButtonsState() {
+                if(leftBtn) {
+                    if(currentIndex === 0) leftBtn.classList.add('disabled');
+                    else leftBtn.classList.remove('disabled');
+                }
+                if(rightBtn) {
+                    if(currentIndex === total - 1) rightBtn.classList.add('disabled');
+                    else rightBtn.classList.remove('disabled');
+                }
+            }
+
+            function updateSlider(instant = false) {
+                const shift = -currentIndex * 100;
+                track.style.transition = instant ? 'none' : 'transform 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+                track.style.transform = `translateX(${shift}%)`;
+                updateDots();
+                updateButtonsState();
+            }
+
+            function updateDots() {
+                if(!dotsContainer) return;
+                dotsContainer.innerHTML = '';
+                for(let i=0; i<total; i++) {
+                    const dotSpan = document.createElement('div');
+                    dotSpan.classList.add('dot');
+                    if(i === currentIndex) dotSpan.classList.add('active-dot');
+                    dotSpan.addEventListener('click', () => {
+                        if(i !== currentIndex) {
+                            currentIndex = i;
+                            updateSlider(false);
+                        }
+                    });
+                    dotsContainer.appendChild(dotSpan);
+                }
+            }
+
+            if(leftBtn) leftBtn.addEventListener('click', () => { if(currentIndex > 0) { currentIndex--; updateSlider(false); } });
+            if(rightBtn) rightBtn.addEventListener('click', () => { if(currentIndex < total - 1) { currentIndex++; updateSlider(false); } });
+            updateSlider(true);
+        }
+
+        // KONFIGURASI SLIDER
+        const lobbyConfig = {
+            trackId: 'lobbyTrack', dotsId: 'lobbyDots',
+            items: [
+                { src: 'lobby1.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby3.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby4.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby5.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby6.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby7.png', alt: 'Main Lobby', caption: '' }
+            ]
+        };
+        const publicConfig = {
+            trackId: 'publicTrack', dotsId: 'publicDots',
+            items: [
+                { src: 'GH2.png', alt: 'Grand Hall', caption: 'Grand Hall' },
+                { src: 'Exhibition2.png', alt: 'Exhibition Space', caption: 'Exhibition Space' },
+                { src: 'Chobank.jpg', alt: 'Chobank', caption: 'Chobank' },
+                { src: 'Foodcourt2.png', alt: 'Food Court', caption: 'Food Court' },
+                { src: 'Readingcorner2.jpg', alt: 'Reading Corner', caption: 'Reading Corner' }
+            ]
+        };
+        const privateConfig = {
+            trackId: 'privateTrack', dotsId: 'privateDots',
+            items: [
+                { src: 'Lounge1.jpg', alt: 'Lounge', caption: 'Lounge' },
+                { src: 'MeetingRoom1.jpg', alt: 'Meeting Room', caption: 'Meeting Room' },
+                { src: 'Conference1.png', alt: 'Conference Room', caption: 'Conference Room' }
+            ]
+        };
+        const stationConfig = {
+            trackId: 'stationTrack', dotsId: 'stationDots',
+            items: [
+                { src: 'ws1.png', alt: 'Work Station', caption: 'Work Station' },
+                { src: 'ws2.png', alt: 'Work Station', caption: 'Work Station' },
+                { src: 'ws3.png', alt: 'Work Station', caption: 'Work Station' },
+                { src: 'ws4.png', alt: 'Work Station', caption: 'Work Station' },
+                { src: 'ws5.png', alt: 'Work Station', caption: 'Work Station' }
+            ]
+        };
+
+        if(document.getElementById('lobbySlider')) initNonLoopSlider(lobbyConfig, 'lobbySlider', true);
+        if(document.getElementById('publicSlider')) initNonLoopSlider(publicConfig, 'publicSlider', false);
+        if(document.getElementById('privateSlider')) initNonLoopSlider(privateConfig, 'privateSlider', false);
+        if(document.getElementById('stationSlider')) initNonLoopSlider(stationConfig, 'stationSlider', false);
+
+        // Header hide/show on scroll
+        let lastScroll = 0;
+        const headerEl = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 80 && currentScroll > lastScroll) {
+                headerEl.style.transform = 'translateY(-100%)';
+            } else {
+                headerEl.style.transform = 'translateY(0)';
+            }
+            lastScroll = currentScroll;
+        });
+    })();
+</script>
+</body>
+  </html>
