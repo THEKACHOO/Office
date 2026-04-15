@@ -64,7 +64,7 @@
             filter: grayscale(100%) contrast(1.1);
         }
 
-        /* Hero section - tanpa The Kafka Family */
+        /* Hero section - penjelasan The Kachoo (tanpa Kafka family) */
         .hero-kachoo {
             padding: 140px 0 60px 0;
             background: linear-gradient(125deg, #ffffff 0%, #f2f2f2 100%);
@@ -78,6 +78,24 @@
             color: #000;
             margin-bottom: 28px;
             line-height: 1.2;
+        }
+
+        .kachoo-description {
+            font-size: 1.2rem;
+            max-width: 880px;
+            color: #2a2a2a;
+            font-weight: 450;
+            margin-bottom: 20px;
+            line-height: 1.55;
+        }
+
+        .intro-highlight {
+            background: #f0f0f0;
+            padding: 24px 32px;
+            border-radius: 36px;
+            margin: 40px 0 20px;
+            border: 1px solid #e2e2e2;
+            font-weight: 500;
         }
 
         /* Vision & Mission Card */
@@ -112,7 +130,6 @@
             border: 1px solid #ececec;
         }
 
-        /* Mission text - format paragraf seperti vision, pakai koma */
         .mission-text {
             font-size: 1.28rem;
             font-weight: 500;
@@ -124,7 +141,7 @@
             border: 1px solid #ececec;
         }
 
-        /* Office info + founder */
+        /* Office info + founder dengan link */
         .office-details {
             display: flex;
             flex-wrap: wrap;
@@ -139,12 +156,23 @@
 
         .info-card {
             flex: 1;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .info-card:hover {
+            transform: translateY(-4px);
         }
 
         .info-card h3 {
             font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 12px;
+        }
+
+        .info-card p {
+            font-size: 0.95rem;
+            line-height: 1.45;
+            color: #2c2c2c;
         }
 
         .founder-badge {
@@ -154,9 +182,13 @@
             display: inline-block;
             margin-top: 16px;
             font-weight: 500;
+            cursor: default;
+        }
+        .founder-badge:hover {
+            transform: none;
         }
 
-        /* clickable building photo */
+        /* building photo (sudah tidak pakai icon/emoticon) */
         .building-photo {
             margin: 30px 0 40px;
             cursor: pointer;
@@ -233,6 +265,7 @@
             display: block;
         }
 
+        /* caption untuk ruangan selain lobby (lobby tanpa caption) */
         .image-caption {
             text-align: center;
             padding: 12px 16px;
@@ -247,6 +280,11 @@
             left: 0;
             right: 0;
             z-index: 5;
+        }
+
+        /* khusus lobby: tidak ada caption, jadi kita sembunyikan */
+        .no-caption .image-caption {
+            display: none;
         }
 
         .slider-btn {
@@ -278,7 +316,6 @@
             right: 18px;
         }
 
-        /* disabled state untuk tombol slider */
         .slider-btn.disabled {
             opacity: 0.3;
             cursor: not-allowed;
@@ -335,7 +372,6 @@
             width: auto;
         }
 
-        /* restroom single image container */
         .single-restroom {
             margin-bottom: 60px;
         }
@@ -392,15 +428,21 @@
 </header>
 
 <main>
-    <!-- Hero tanpa The Kafka Family -->
+    <!-- Penjelasan The Kachoo (tanpa Kafka family) -->
     <div class="hero-kachoo">
         <div class="container">
             <h1 class="kachoo-title">The Kachoo</h1>
+            <div class="kachoo-description">
+                Kachoo is a visionary media and publishing ecosystem that develops digital projects including magazines, news platforms, and integrated digital systems. Rooted in innovation, Kachoo delivers information, creativity, and technology through a seamless black-and-white aesthetic.
+            </div>
+            <div class="intro-highlight">
+                From editorial platforms like Kafkapages, Kazine, Kaboom to breakthrough systems such as Chobank (digital banking) and Chonnect (directory ecosystem), Kachoo unifies creative excellence and technological progress.
+            </div>
         </div>
     </div>
 
     <div class="container">
-        <!-- VISI & MISI (Mission pakai format paragraf seperti vision) -->
+        <!-- VISI & MISI -->
         <div class="vision-mission-block">
             <h2 class="vm-head">Vision & Mission</h2>
             <div class="vision-text">
@@ -411,15 +453,17 @@
             </div>
         </div>
 
-        <!-- Kantor pusat + administrasi + founder -->
+        <!-- Kantor pusat (Jaksel) & Kantor administrasi (Jakpus) dengan alamat lengkap dan link -->
         <div class="office-details">
-            <div class="info-card">
+            <div class="info-card" id="headOfficeLink">
                 <h3>Head Office</h3>
-                <p>South Jakarta — Jenderal Sudirman Area<br>Creative & Digital Command Center</p>
+                <p>Jenderal Sudirman Avenue, Lots 61–62, South Jakarta 12930, Indonesia</p>
+                <p style="margin-top: 8px; font-size:0.85rem; color:#555;">Creative & Digital Command Center</p>
             </div>
-            <div class="info-card">
+            <div class="info-card" id="adminOfficeLink">
                 <h3>Administration Office</h3>
-                <p>Central Jakarta — Menteng District<br>Corporate & Strategic Management</p>
+                <p>H.O.S. Cokroaminoto Street No. 45, Menteng, Central Jakarta 10310, Indonesia</p>
+                <p style="margin-top: 8px; font-size:0.85rem; color:#555;">Corporate & Strategic Management</p>
             </div>
             <div class="info-card">
                 <div class="founder-badge">
@@ -428,13 +472,7 @@
             </div>
         </div>
 
-        <!-- GAMBAR KANTOR (building1.png) klik redirect -->
-        <div class="building-photo" id="officeRedirectTrigger">
-            <img src="building1.png" alt="Kachoo Office Building" onerror="this.src='https://placehold.co/1400x700/f0f0f0/222222?text=KACHOO+OFFICE+BUILDING'">
-            <div class="click-hint">▼ Click to explore official office tour ▼</div>
-        </div>
-
-        <!-- MAIN LOBBY (lobby1.png, lobby3.png, lobby4.png, lobby5.png, lobby6.png, lobby7.png) -->
+        <!-- MAIN LOBBY (tanpa caption) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Main Lobby</h3>
             <div class="slider-wrapper" id="lobbySlider">
@@ -445,7 +483,7 @@
             </div>
         </div>
 
-        <!-- PUBLIC SPACE (dengan caption judul ruangan saja) -->
+        <!-- PUBLIC SPACE (dengan caption judul ruangan) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Public Space</h3>
             <div class="slider-wrapper" id="publicSlider">
@@ -456,7 +494,7 @@
             </div>
         </div>
 
-        <!-- PRIVATE SPACE (urutan: Lounge dulu, Meeting, Conference) -->
+        <!-- PRIVATE SPACE (Lounge, Meeting Room, Conference Room) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Private Space</h3>
             <div class="slider-wrapper" id="privateSlider">
@@ -478,7 +516,7 @@
             </div>
         </div>
 
-        <!-- WORK STATION (ws1.png s/d ws5.png) -->
+        <!-- WORK STATION (ws1.png sd ws5.png) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Work Station</h3>
             <div class="slider-wrapper" id="stationSlider">
@@ -489,14 +527,14 @@
             </div>
         </div>
 
-        <!-- RESTROOM hanya restroom2.png -->
+        <!-- RESTROOM hanya restroom1.png -->
         <div class="gallery-section single-restroom">
             <h3 class="gallery-title">Restroom</h3>
-            <img src="restroom2.png" alt="Restroom" onerror="this.src='https://placehold.co/1400x500/e8e8e8/222?text=Restroom+Area'">
+            <img src="restroom1.png" alt="Restroom" onerror="this.src='https://placehold.co/1400x500/e8e8e8/222?text=Restroom+Area'">
             <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Restroom</span></div>
         </div>
 
-        <!-- ELEVATOR (lift2.png) & EMERGENCY EXIT (EmergencyExit1.png) -->
+        <!-- ELEVATOR & EMERGENCY EXIT -->
         <div class="two-cols">
             <div class="col-item">
                 <h3 class="gallery-title" style="border-bottom: none; margin-bottom: 20px;">Elevator</h3>
@@ -514,37 +552,49 @@
 
 <script>
     (function() {
-        // Redirect building photo
-        const buildingDiv = document.getElementById('officeRedirectTrigger');
-        if(buildingDiv) {
-            buildingDiv.addEventListener('click', () => {
-                window.location.href = 'https://thekachoo.github.io/Office';
+        // Redirect untuk Head Office (Jaksel)
+        const headOffice = document.getElementById('headOfficeLink');
+        if(headOffice) {
+            headOffice.style.cursor = 'pointer';
+            headOffice.addEventListener('click', () => {
+                window.location.href = 'https://thekachoo.github.io/Office/';
+            });
+        }
+        // Redirect untuk Administration Office (Jakpus)
+        const adminOffice = document.getElementById('adminOfficeLink');
+        if(adminOffice) {
+            adminOffice.style.cursor = 'pointer';
+            adminOffice.addEventListener('click', () => {
+                window.location.href = 'https://thekachoo.github.io/Office/Branch.html';
             });
         }
 
-        // Helper: membuat slide item dengan caption (hanya judul ruangan)
-        function buildSlideItem(src, altText, captionText) {
+        // Helper membuat slide item: khusus lobby tanpa caption, lainnya pakai caption
+        function buildSlideItem(src, altText, captionText, hideCaption = false) {
             const div = document.createElement('div');
             div.className = 'slide-item';
+            if(hideCaption) div.classList.add('no-caption');
             const img = document.createElement('img');
             img.src = src;
             img.alt = altText;
-            img.onerror = function() { this.src = 'https://placehold.co/1400x500/eeeeee/333333?text=' + encodeURIComponent(captionText); };
+            img.onerror = function() { this.src = 'https://placehold.co/1400x500/eeeeee/333333?text=' + encodeURIComponent(captionText || altText); };
             div.appendChild(img);
-            const captionDiv = document.createElement('div');
-            captionDiv.className = 'image-caption';
-            captionDiv.innerText = captionText;
-            div.appendChild(captionDiv);
+            if(!hideCaption && captionText) {
+                const captionDiv = document.createElement('div');
+                captionDiv.className = 'image-caption';
+                captionDiv.innerText = captionText;
+                div.appendChild(captionDiv);
+            }
             return div;
         }
 
-        // Konfigurasi slider tanpa loop (tidak balik ke awal/akhir)
-        function initNonLoopSlider(config, sliderId) {
+        // Slider non-loop
+        function initNonLoopSlider(config, sliderId, hideCaptionForAll = false) {
             const track = document.getElementById(config.trackId);
             if(!track) return;
             track.innerHTML = '';
             config.items.forEach(item => {
-                const slideDiv = buildSlideItem(item.src, item.alt, item.caption);
+                const slideDiv = buildSlideItem(item.src, item.alt, item.caption, hideCaptionForAll);
                 track.appendChild(slideDiv);
             });
             const slides = Array.from(track.children);
@@ -558,18 +608,12 @@
 
             function updateButtonsState() {
                 if(leftBtn) {
-                    if(currentIndex === 0) {
-                        leftBtn.classList.add('disabled');
-                    } else {
-                        leftBtn.classList.remove('disabled');
-                    }
+                    if(currentIndex === 0) leftBtn.classList.add('disabled');
+                    else leftBtn.classList.remove('disabled');
                 }
                 if(rightBtn) {
-                    if(currentIndex === total - 1) {
-                        rightBtn.classList.add('disabled');
-                    } else {
-                        rightBtn.classList.remove('disabled');
-                    }
+                    if(currentIndex === total - 1) rightBtn.classList.add('disabled');
+                    else rightBtn.classList.remove('disabled');
                 }
             }
 
@@ -598,39 +642,24 @@
                 }
             }
 
-            if(leftBtn) {
-                leftBtn.addEventListener('click', () => {
-                    if(currentIndex > 0) {
-                        currentIndex--;
-                        updateSlider(false);
-                    }
-                });
-            }
-            if(rightBtn) {
-                rightBtn.addEventListener('click', () => {
-                    if(currentIndex < total - 1) {
-                        currentIndex++;
-                        updateSlider(false);
-                    }
-                });
-            }
+            if(leftBtn) leftBtn.addEventListener('click', () => { if(currentIndex > 0) { currentIndex--; updateSlider(false); } });
+            if(rightBtn) rightBtn.addEventListener('click', () => { if(currentIndex < total - 1) { currentIndex++; updateSlider(false); } });
             updateSlider(true);
         }
 
-        // Data lobby: 6 gambar (lobby1, lobby3, lobby4, lobby5, lobby6, lobby7)
+        // LOBBY (6 gambar, tanpa caption)
         const lobbyConfig = {
             trackId: 'lobbyTrack',
             dotsId: 'lobbyDots',
             items: [
-                { src: 'lobby1.png', alt: 'Main Lobby', caption: 'Main Lobby' },
-                { src: 'lobby3.png', alt: 'Main Lobby', caption: 'Main Lobby' },
-                { src: 'lobby4.png', alt: 'Main Lobby', caption: 'Main Lobby' },
-                { src: 'lobby5.png', alt: 'Main Lobby', caption: 'Main Lobby' },
-                { src: 'lobby6.png', alt: 'Main Lobby', caption: 'Main Lobby' },
-                { src: 'lobby7.png', alt: 'Main Lobby', caption: 'Main Lobby' }
+                { src: 'lobby1.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby3.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby4.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby5.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby6.png', alt: 'Main Lobby', caption: '' },
+                { src: 'lobby7.png', alt: 'Main Lobby', caption: '' }
             ]
         };
-
         // Public Space
         const publicConfig = {
             trackId: 'publicTrack',
@@ -643,8 +672,7 @@
                 { src: 'Readingcorner2.jpg', alt: 'Reading Corner', caption: 'Reading Corner' }
             ]
         };
-
-        // Private Space: Lounge dulu, Meeting, Conference
+        // Private Space
         const privateConfig = {
             trackId: 'privateTrack',
             dotsId: 'privateDots',
@@ -654,8 +682,7 @@
                 { src: 'Conference1.png', alt: 'Conference Room', caption: 'Conference Room' }
             ]
         };
-
-        // Workshop (3 gambar)
+        // Workshop
         const workshopConfig = {
             trackId: 'workshopTrack',
             dotsId: 'workshopDots',
@@ -665,8 +692,7 @@
                 { src: 'workshop3.png', alt: 'Workshop', caption: 'Workshop' }
             ]
         };
-
-        // Work Station: ws1.png, ws2.png, ws3.png, ws4.png, ws5.png
+        // Work Station (5 gambar)
         const stationConfig = {
             trackId: 'stationTrack',
             dotsId: 'stationDots',
@@ -679,12 +705,11 @@
             ]
         };
 
-        // Inisialisasi semua slider non-loop
-        if(document.getElementById('lobbySlider')) initNonLoopSlider(lobbyConfig, 'lobbySlider');
-        if(document.getElementById('publicSlider')) initNonLoopSlider(publicConfig, 'publicSlider');
-        if(document.getElementById('privateSlider')) initNonLoopSlider(privateConfig, 'privateSlider');
-        if(document.getElementById('workshopSlider')) initNonLoopSlider(workshopConfig, 'workshopSlider');
-        if(document.getElementById('stationSlider')) initNonLoopSlider(stationConfig, 'stationSlider');
+        if(document.getElementById('lobbySlider')) initNonLoopSlider(lobbyConfig, 'lobbySlider', true);
+        if(document.getElementById('publicSlider')) initNonLoopSlider(publicConfig, 'publicSlider', false);
+        if(document.getElementById('privateSlider')) initNonLoopSlider(privateConfig, 'privateSlider', false);
+        if(document.getElementById('workshopSlider')) initNonLoopSlider(workshopConfig, 'workshopSlider', false);
+        if(document.getElementById('stationSlider')) initNonLoopSlider(stationConfig, 'stationSlider', false);
 
         // Header hide/show on scroll
         let lastScroll = 0;
@@ -701,4 +726,4 @@
     })();
 </script>
 </body>
-                </html>
+    </html>
