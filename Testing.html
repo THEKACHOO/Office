@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>About Kachoo</title>
-    <!-- Outfit Font - Google Fonts (semua weight dari 300 hingga 900) -->
+    <!-- Outfit Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -22,20 +22,13 @@
             font-weight: 400;
         }
 
-        /* Semua heading dan teks menggunakan Outfit */
         h1, h2, h3, h4, p, li, a, button, div, span {
             font-family: 'Outfit', sans-serif;
         }
 
-        /* Title H2 khusus: Outfit Bold (weight 700) */
-        h2, .vm-head, .gallery-title, .kachoo-title, .section-title-custom {
+        h2, .vm-head, .gallery-title, .kachoo-title {
             font-weight: 700 !important;
             letter-spacing: -0.3px;
-        }
-
-        /* Only black, white, grayscale gradients — no other colors */
-        .gradient-motion {
-            background: radial-gradient(circle at 10% 20%, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.05) 100%);
         }
 
         .container {
@@ -44,7 +37,7 @@
             padding: 0 28px;
         }
 
-        /* HEADER - simple, only The Kachoo with logo */
+        /* HEADER - logo di tengah */
         header {
             background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(14px);
@@ -58,40 +51,22 @@
 
         .navbar {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             padding: 18px 0;
         }
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
         .logo-img {
-            height: 44px;
+            height: 48px;
             width: auto;
-            max-width: 180px;
+            max-width: 200px;
             object-fit: contain;
             filter: grayscale(100%) contrast(1.1);
         }
 
-        /* No main menu, only The Kachoo word (optional but clean) */
-        .brand-text {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            color: #000000;
-            background: linear-gradient(115deg, #000 30%, #3b3b3b);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        /* HERO / Kafka Family explanation merged into The Kachoo intro */
+        /* Hero section - tanpa The Kafka Family */
         .hero-kachoo {
-            padding: 140px 0 70px 0;
+            padding: 140px 0 60px 0;
             background: linear-gradient(125deg, #ffffff 0%, #f2f2f2 100%);
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
@@ -103,30 +78,9 @@
             color: #000;
             margin-bottom: 28px;
             line-height: 1.2;
-            font-family: 'Outfit', sans-serif;
         }
 
-        .family-desc {
-            font-size: 1.2rem;
-            max-width: 880px;
-            color: #2a2a2a;
-            font-weight: 450;
-            margin-bottom: 20px;
-            line-height: 1.55;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .intro-highlight {
-            background: #f0f0f0;
-            padding: 24px 32px;
-            border-radius: 36px;
-            margin: 40px 0 20px;
-            border: 1px solid #e2e2e2;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 500;
-        }
-
-        /* Vision & Mission Card — same design as office style */
+        /* Vision & Mission Card */
         .vision-mission-block {
             margin: 60px 0 70px;
             background: #ffffff;
@@ -144,7 +98,6 @@
             letter-spacing: -1px;
             border-left: 5px solid #000;
             padding-left: 28px;
-            font-family: 'Outfit', sans-serif;
         }
 
         .vision-text {
@@ -157,29 +110,18 @@
             margin-bottom: 48px;
             color: #111;
             border: 1px solid #ececec;
-            font-family: 'Outfit', sans-serif;
         }
 
-        .mission-list {
-            list-style: none;
-        }
-
-        .mission-list li {
-            margin-bottom: 22px;
-            padding-left: 28px;
-            position: relative;
-            font-size: 1.05rem;
-            font-weight: 460;
-            color: #262626;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .mission-list li::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: #000;
-            font-weight: 700;
+        /* Mission text - format paragraf seperti vision, pakai koma */
+        .mission-text {
+            font-size: 1.28rem;
+            font-weight: 500;
+            line-height: 1.5;
+            background: #fafafa;
+            padding: 32px 36px;
+            border-radius: 32px;
+            color: #111;
+            border: 1px solid #ececec;
         }
 
         /* Office info + founder */
@@ -203,12 +145,6 @@
             font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 12px;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .info-card p {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 400;
         }
 
         .founder-badge {
@@ -218,10 +154,9 @@
             display: inline-block;
             margin-top: 16px;
             font-weight: 500;
-            font-family: 'Outfit', sans-serif;
         }
 
-        /* clickable building photo (building1.png) */
+        /* clickable building photo */
         .building-photo {
             margin: 30px 0 40px;
             cursor: pointer;
@@ -252,7 +187,6 @@
             letter-spacing: 0.3px;
             background: #fff;
             border-top: 1px solid #eee;
-            font-family: 'Outfit', sans-serif;
         }
 
         /* gallery & sliders */
@@ -268,7 +202,6 @@
             border-bottom: 2px solid #cbcbcb;
             display: inline-block;
             padding-bottom: 6px;
-            font-family: 'Outfit', sans-serif;
         }
 
         .slider-wrapper {
@@ -308,7 +241,6 @@
             font-size: 0.9rem;
             font-weight: 500;
             letter-spacing: 0.5px;
-            font-family: 'Outfit', sans-serif;
             backdrop-filter: blur(4px);
             position: absolute;
             bottom: 0;
@@ -333,7 +265,6 @@
             transition: 0.2s;
             z-index: 10;
             line-height: 1;
-            font-family: 'Outfit', sans-serif;
         }
 
         .slider-btn:hover {
@@ -345,6 +276,13 @@
         }
         .btn-right {
             right: 18px;
+        }
+
+        /* disabled state untuk tombol slider */
+        .slider-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
         }
 
         .dot-group {
@@ -384,10 +322,6 @@
             display: block;
             background: #f2f2f2;
         }
-        .col-item h3 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-        }
         .single-img-caption {
             text-align: center;
             margin-top: 10px;
@@ -401,7 +335,16 @@
             width: auto;
         }
 
-        /* responsive */
+        /* restroom single image container */
+        .single-restroom {
+            margin-bottom: 60px;
+        }
+        .single-restroom img {
+            width: 100%;
+            border-radius: 36px;
+            border: 1px solid #ddd;
+        }
+
         @media (max-width: 900px) {
             .container {
                 padding: 0 20px;
@@ -419,6 +362,10 @@
             .vm-head {
                 font-size: 1.9rem;
             }
+            .vision-text, .mission-text {
+                font-size: 1.1rem;
+                padding: 22px 20px;
+            }
         }
 
         @media (max-width: 680px) {
@@ -426,23 +373,11 @@
                 padding: 14px 0;
             }
             .logo-img {
-                height: 36px;
-            }
-            .vision-text {
-                padding: 22px 20px;
-                font-size: 1.1rem;
+                height: 38px;
             }
             .gallery-title {
                 font-size: 1.6rem;
             }
-        }
-
-        /* No icons, no emoticons */
-        a, button, div {
-            user-select: none;
-        }
-        img {
-            background-color: #fff;
         }
     </style>
 </head>
@@ -451,40 +386,29 @@
 <header>
     <div class="container">
         <div class="navbar">
-            <div class="logo-area">
-                <img class="logo-img" src="logo-thekachoo.png" alt="The Kachoo logo" onerror="this.src='https://placehold.co/200x60/eeeeee/333333?text=KACHOO'">
-            </div>
+            <img class="logo-img" src="logo-thekachoo.png" alt="The Kachoo logo" onerror="this.src='https://placehold.co/200x60/eeeeee/333333?text=KACHOO'">
         </div>
     </div>
 </header>
 
 <main>
-    <!-- Penjelasan The Kafka Family digabung ke dalam The Kachoo -->
+    <!-- Hero tanpa The Kafka Family -->
     <div class="hero-kachoo">
         <div class="container">
             <h1 class="kachoo-title">The Kachoo</h1>
-            <div class="family-desc">
-                The Kafka family legacy evolves through Kachoo — a visionary ecosystem where media, publishing, and digital innovation converge. Rooted in storytelling heritage, Kachoo expands into digital projects, creative magazines, and integrated technology.
-            </div>
-            <div class="intro-highlight">
-                <p style="font-weight: 500;">Kachoo represents the future of digital media: from editorial platforms (Kafkapages, Kazine, Kaboom) to breakthrough systems like Chobank (digital banking) and Chonnect (directory ecosystem). All unified under a single black & white aesthetic, with seamless motion and clarity.</p>
-            </div>
         </div>
     </div>
 
     <div class="container">
-        <!-- VISI & MISI (English) -->
+        <!-- VISI & MISI (Mission pakai format paragraf seperti vision) -->
         <div class="vision-mission-block">
             <h2 class="vm-head">Vision & Mission</h2>
             <div class="vision-text">
                 <strong>Vision:</strong> To become a media and publishing platform that develops various digital projects (such as media, magazines, and digital systems) to present information, creativity, and innovation within a single ecosystem.
             </div>
-            <ul class="mission-list">
-                <li><strong>Mission:</strong> Develop various digital projects (including Kafkapages, Kazine, Kaboom, and others)</li>
-                <li>Provide a media and publication platform for everyone</li>
-                <li>Build technology features such as digital banking (Chobank) and directory systems (Chonnect) that make life easier for all people</li>
-                <li>Integrate multiple services into one seamless digital ecosystem</li>
-            </ul>
+            <div class="mission-text">
+                <strong>Mission:</strong> Develop various digital projects (including Kafkapages, Kazine, Kaboom, and others), provide a media and publication platform for everyone, build technology features such as digital banking (Chobank) and directory systems (Chonnect) that make life easier for all people, integrate multiple services into one seamless digital ecosystem.
+            </div>
         </div>
 
         <!-- Kantor pusat + administrasi + founder -->
@@ -504,13 +428,13 @@
             </div>
         </div>
 
-        <!-- GAMBAR KANTOR (building1.png) klik redirect ke Office -->
+        <!-- GAMBAR KANTOR (building1.png) klik redirect -->
         <div class="building-photo" id="officeRedirectTrigger">
             <img src="building1.png" alt="Kachoo Office Building" onerror="this.src='https://placehold.co/1400x700/f0f0f0/222222?text=KACHOO+OFFICE+BUILDING'">
-            <div class="click-hint">▼ click to explore official office tour ▼</div>
+            <div class="click-hint">▼ Click to explore official office tour ▼</div>
         </div>
 
-        <!-- MAIN LOBBY (lobby1.png, lobby2.png) -->
+        <!-- MAIN LOBBY (lobby1.png, lobby3.png, lobby4.png, lobby5.png, lobby6.png, lobby7.png) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Main Lobby</h3>
             <div class="slider-wrapper" id="lobbySlider">
@@ -521,7 +445,7 @@
             </div>
         </div>
 
-        <!-- PUBLIC SPACE (5 gambar dengan caption: Grand Hall, Exhibition Space, Chobank, Food Court, Reading Corner) -->
+        <!-- PUBLIC SPACE (dengan caption judul ruangan saja) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Public Space</h3>
             <div class="slider-wrapper" id="publicSlider">
@@ -532,7 +456,7 @@
             </div>
         </div>
 
-        <!-- PRIVATE SPACE (MeetingRoom1.jpg, Conference1.png, Lounge1.jpg) -->
+        <!-- PRIVATE SPACE (urutan: Lounge dulu, Meeting, Conference) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Private Space</h3>
             <div class="slider-wrapper" id="privateSlider">
@@ -554,7 +478,7 @@
             </div>
         </div>
 
-        <!-- WORK STATION (3 gambar) -->
+        <!-- WORK STATION (ws1.png s/d ws5.png) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Work Station</h3>
             <div class="slider-wrapper" id="stationSlider">
@@ -565,15 +489,11 @@
             </div>
         </div>
 
-        <!-- RESTROOM (2 gambar: Restroom1.png, Restroom2.png) -->
-        <div class="gallery-section">
+        <!-- RESTROOM hanya restroom2.png -->
+        <div class="gallery-section single-restroom">
             <h3 class="gallery-title">Restroom</h3>
-            <div class="slider-wrapper" id="restroomSlider">
-                <div class="slider-track" id="restroomTrack"></div>
-                <button class="slider-btn btn-left" data-slider="restroom">‹</button>
-                <button class="slider-btn btn-right" data-slider="restroom">›</button>
-                <div class="dot-group" id="restroomDots"></div>
-            </div>
+            <img src="restroom2.png" alt="Restroom" onerror="this.src='https://placehold.co/1400x500/e8e8e8/222?text=Restroom+Area'">
+            <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Restroom</span></div>
         </div>
 
         <!-- ELEVATOR (lift2.png) & EMERGENCY EXIT (EmergencyExit1.png) -->
@@ -581,12 +501,12 @@
             <div class="col-item">
                 <h3 class="gallery-title" style="border-bottom: none; margin-bottom: 20px;">Elevator</h3>
                 <img src="lift2.png" alt="Elevator" onerror="this.src='https://placehold.co/1200x500/e2e2e2/111?text=Lift+Area'">
-                <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Elevator Access</span></div>
+                <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Elevator</span></div>
             </div>
             <div class="col-item">
                 <h3 class="gallery-title" style="border-bottom: none; margin-bottom: 20px;">Emergency Exit</h3>
                 <img src="EmergencyExit1.png" alt="Emergency Exit" onerror="this.src='https://placehold.co/1200x500/e2e2e2/111?text=Emergency+Exit'">
-                <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Emergency Exit Route</span></div>
+                <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Emergency Exit</span></div>
             </div>
         </div>
     </div>
@@ -602,7 +522,7 @@
             });
         }
 
-        // Fungsi untuk membuat slide dengan gambar dan caption
+        // Helper: membuat slide item dengan caption (hanya judul ruangan)
         function buildSlideItem(src, altText, captionText) {
             const div = document.createElement('div');
             div.className = 'slide-item';
@@ -618,66 +538,8 @@
             return div;
         }
 
-        // Data untuk setiap slider
-        const slidersConfig = {
-            lobby: {
-                trackId: 'lobbyTrack',
-                dotsId: 'lobbyDots',
-                items: [
-                    { src: 'lobby1.png', alt: 'Main Lobby 1', caption: 'Main Lobby — Reception Area' },
-                    { src: 'lobby2.png', alt: 'Main Lobby 2', caption: 'Main Lobby — Waiting Lounge' }
-                ]
-            },
-            public: {
-                trackId: 'publicTrack',
-                dotsId: 'publicDots',
-                items: [
-                    { src: 'GH2.png', alt: 'Grand Hall', caption: 'Grand Hall' },
-                    { src: 'Exhibition2.png', alt: 'Exhibition Space', caption: 'Exhibition Space' },
-                    { src: 'Chobank.jpg', alt: 'Chobank', caption: 'Chobank — Digital Banking Zone' },
-                    { src: 'Foodcourt2.png', alt: 'Food Court', caption: 'Food Court' },
-                    { src: 'Readingcorner2.jpg', alt: 'Reading Corner', caption: 'Reading Corner (L1)' }
-                ]
-            },
-            private: {
-                trackId: 'privateTrack',
-                dotsId: 'privateDots',
-                items: [
-                    { src: 'MeetingRoom1.jpg', alt: 'Meeting Room', caption: 'Meeting Room' },
-                    { src: 'Conference1.png', alt: 'Conference Room', caption: 'Conference Room' },
-                    { src: 'Lounge1.jpg', alt: 'Executive Lounge', caption: 'Lounge — Relaxation Area' }
-                ]
-            },
-            workshop: {
-                trackId: 'workshopTrack',
-                dotsId: 'workshopDots',
-                items: [
-                    { src: 'workshop1.png', alt: 'Workshop Zone', caption: 'Workshop — Creative Lab' },
-                    { src: 'workshop2.png', alt: 'Workshop Zone', caption: 'Workshop — Production Space' },
-                    { src: 'workshop3.png', alt: 'Workshop Zone', caption: 'Workshop — Prototyping Area' }
-                ]
-            },
-            station: {
-                trackId: 'stationTrack',
-                dotsId: 'stationDots',
-                items: [
-                    { src: 'workstation1.png', alt: 'Workstation', caption: 'Work Station — Open Desk' },
-                    { src: 'workstation2.png', alt: 'Workstation', caption: 'Work Station — Collaborative Zone' },
-                    { src: 'workstation3.png', alt: 'Workstation', caption: 'Work Station — Private Booth' }
-                ]
-            },
-            restroom: {
-                trackId: 'restroomTrack',
-                dotsId: 'restroomDots',
-                items: [
-                    { src: 'Restroom1.png', alt: 'Restroom', caption: 'Restroom — Premium Facility' },
-                    { src: 'Restroom2.png', alt: 'Restroom', caption: 'Restroom — Accessible Area' }
-                ]
-            }
-        };
-
-        // Inisialisasi semua slider
-        function initSliderWithCaptions(config, sliderId) {
+        // Konfigurasi slider tanpa loop (tidak balik ke awal/akhir)
+        function initNonLoopSlider(config, sliderId) {
             const track = document.getElementById(config.trackId);
             if(!track) return;
             track.innerHTML = '';
@@ -689,17 +551,34 @@
             if(slides.length === 0) return;
             let currentIndex = 0;
             const total = slides.length;
-
             const container = document.getElementById(sliderId);
             const leftBtn = container ? container.querySelector('.btn-left') : null;
             const rightBtn = container ? container.querySelector('.btn-right') : null;
             const dotsContainer = document.getElementById(config.dotsId);
+
+            function updateButtonsState() {
+                if(leftBtn) {
+                    if(currentIndex === 0) {
+                        leftBtn.classList.add('disabled');
+                    } else {
+                        leftBtn.classList.remove('disabled');
+                    }
+                }
+                if(rightBtn) {
+                    if(currentIndex === total - 1) {
+                        rightBtn.classList.add('disabled');
+                    } else {
+                        rightBtn.classList.remove('disabled');
+                    }
+                }
+            }
 
             function updateSlider(instant = false) {
                 const shift = -currentIndex * 100;
                 track.style.transition = instant ? 'none' : 'transform 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
                 track.style.transform = `translateX(${shift}%)`;
                 updateDots();
+                updateButtonsState();
             }
 
             function updateDots() {
@@ -710,8 +589,10 @@
                     dotSpan.classList.add('dot');
                     if(i === currentIndex) dotSpan.classList.add('active-dot');
                     dotSpan.addEventListener('click', () => {
-                        currentIndex = i;
-                        updateSlider(false);
+                        if(i !== currentIndex) {
+                            currentIndex = i;
+                            updateSlider(false);
+                        }
                     });
                     dotsContainer.appendChild(dotSpan);
                 }
@@ -719,26 +600,91 @@
 
             if(leftBtn) {
                 leftBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex - 1 + total) % total;
-                    updateSlider(false);
+                    if(currentIndex > 0) {
+                        currentIndex--;
+                        updateSlider(false);
+                    }
                 });
             }
             if(rightBtn) {
                 rightBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex + 1) % total;
-                    updateSlider(false);
+                    if(currentIndex < total - 1) {
+                        currentIndex++;
+                        updateSlider(false);
+                    }
                 });
             }
             updateSlider(true);
         }
 
-        // Jalankan semua slider
-        if(document.getElementById('lobbySlider')) initSliderWithCaptions(slidersConfig.lobby, 'lobbySlider');
-        if(document.getElementById('publicSlider')) initSliderWithCaptions(slidersConfig.public, 'publicSlider');
-        if(document.getElementById('privateSlider')) initSliderWithCaptions(slidersConfig.private, 'privateSlider');
-        if(document.getElementById('workshopSlider')) initSliderWithCaptions(slidersConfig.workshop, 'workshopSlider');
-        if(document.getElementById('stationSlider')) initSliderWithCaptions(slidersConfig.station, 'stationSlider');
-        if(document.getElementById('restroomSlider')) initSliderWithCaptions(slidersConfig.restroom, 'restroomSlider');
+        // Data lobby: 6 gambar (lobby1, lobby3, lobby4, lobby5, lobby6, lobby7)
+        const lobbyConfig = {
+            trackId: 'lobbyTrack',
+            dotsId: 'lobbyDots',
+            items: [
+                { src: 'lobby1.png', alt: 'Main Lobby', caption: 'Main Lobby' },
+                { src: 'lobby3.png', alt: 'Main Lobby', caption: 'Main Lobby' },
+                { src: 'lobby4.png', alt: 'Main Lobby', caption: 'Main Lobby' },
+                { src: 'lobby5.png', alt: 'Main Lobby', caption: 'Main Lobby' },
+                { src: 'lobby6.png', alt: 'Main Lobby', caption: 'Main Lobby' },
+                { src: 'lobby7.png', alt: 'Main Lobby', caption: 'Main Lobby' }
+            ]
+        };
+
+        // Public Space
+        const publicConfig = {
+            trackId: 'publicTrack',
+            dotsId: 'publicDots',
+            items: [
+                { src: 'GH2.png', alt: 'Grand Hall', caption: 'Grand Hall' },
+                { src: 'Exhibition2.png', alt: 'Exhibition Space', caption: 'Exhibition Space' },
+                { src: 'Chobank.jpg', alt: 'Chobank', caption: 'Chobank' },
+                { src: 'Foodcourt2.png', alt: 'Food Court', caption: 'Food Court' },
+                { src: 'Readingcorner2.jpg', alt: 'Reading Corner', caption: 'Reading Corner' }
+            ]
+        };
+
+        // Private Space: Lounge dulu, Meeting, Conference
+        const privateConfig = {
+            trackId: 'privateTrack',
+            dotsId: 'privateDots',
+            items: [
+                { src: 'Lounge1.jpg', alt: 'Lounge', caption: 'Lounge' },
+                { src: 'MeetingRoom1.jpg', alt: 'Meeting Room', caption: 'Meeting Room' },
+                { src: 'Conference1.png', alt: 'Conference Room', caption: 'Conference Room' }
+            ]
+        };
+
+        // Workshop (3 gambar)
+        const workshopConfig = {
+            trackId: 'workshopTrack',
+            dotsId: 'workshopDots',
+            items: [
+                { src: 'workshop1.png', alt: 'Workshop', caption: 'Workshop' },
+                { src: 'workshop2.png', alt: 'Workshop', caption: 'Workshop' },
+                { src: 'workshop3.png', alt: 'Workshop', caption: 'Workshop' }
+            ]
+        };
+
+        // Work Station: ws1.png, ws2.png, ws3.png, ws4.png, ws5.png
+        const stationConfig = {
+            trackId: 'stationTrack',
+            dotsId: 'stationDots',
+            items: [
+                { src: 'ws1.png', alt: 'Work Station', caption: 'Work Station' },
+                { src: 'ws2.png', alt: 'Work Station', caption: 'Work Station' },
+                { src: 'ws3.png', alt: 'Work Station', caption: 'Work Station' },
+                { src: 'ws4.png', alt: 'Work Station', caption: 'Work Station' },
+                { src: 'ws5.png', alt: 'Work Station', caption: 'Work Station' }
+            ]
+        };
+
+        // Inisialisasi semua slider non-loop
+        if(document.getElementById('lobbySlider')) initNonLoopSlider(lobbyConfig, 'lobbySlider');
+        if(document.getElementById('publicSlider')) initNonLoopSlider(publicConfig, 'publicSlider');
+        if(document.getElementById('privateSlider')) initNonLoopSlider(privateConfig, 'privateSlider');
+        if(document.getElementById('workshopSlider')) initNonLoopSlider(workshopConfig, 'workshopSlider');
+        if(document.getElementById('stationSlider')) initNonLoopSlider(stationConfig, 'stationSlider');
 
         // Header hide/show on scroll
         let lastScroll = 0;
@@ -755,4 +701,4 @@
     })();
 </script>
 </body>
-                    </html>
+                </html>
