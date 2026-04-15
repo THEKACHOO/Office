@@ -286,13 +286,35 @@
             will-change: transform;
         }
 
-        .slider-track img {
+        .slider-track .slide-item {
             width: 100%;
             flex-shrink: 0;
+            position: relative;
+        }
+
+        .slider-track img {
+            width: 100%;
             object-fit: cover;
             max-height: 480px;
             background: #fafafa;
             display: block;
+        }
+
+        .image-caption {
+            text-align: center;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            font-family: 'Outfit', sans-serif;
+            backdrop-filter: blur(4px);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 5;
         }
 
         .slider-btn {
@@ -366,6 +388,18 @@
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
         }
+        .single-img-caption {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2c2c2c;
+            background: #f5f5f5;
+            padding: 8px 12px;
+            border-radius: 60px;
+            display: inline-block;
+            width: auto;
+        }
 
         /* responsive */
         @media (max-width: 900px) {
@@ -418,16 +452,14 @@
     <div class="container">
         <div class="navbar">
             <div class="logo-area">
-                <!-- logo-thekachoo.png (ukuran kecil/sedang) -->
                 <img class="logo-img" src="logo-thekachoo.png" alt="The Kachoo logo" onerror="this.src='https://placehold.co/200x60/eeeeee/333333?text=KACHOO'">
             </div>
-            <!-- tidak ada main menu navigator, hanya The Kachoo identitas -->
         </div>
     </div>
 </header>
 
 <main>
-    <!-- Penjelasan The Kafka Family digabung ke dalam The Kachoo (sejarah singkat) -->
+    <!-- Penjelasan The Kafka Family digabung ke dalam The Kachoo -->
     <div class="hero-kachoo">
         <div class="container">
             <h1 class="kachoo-title">The Kachoo</h1>
@@ -441,7 +473,7 @@
     </div>
 
     <div class="container">
-        <!-- VISI & MISI (English, design seragam) -->
+        <!-- VISI & MISI (English) -->
         <div class="vision-mission-block">
             <h2 class="vm-head">Vision & Mission</h2>
             <div class="vision-text">
@@ -472,110 +504,89 @@
             </div>
         </div>
 
-        <!-- GAMBAR KANTOR (building1.png) yang jika diklik pindah ke thekachoo.github.io/Office -->
+        <!-- GAMBAR KANTOR (building1.png) klik redirect ke Office -->
         <div class="building-photo" id="officeRedirectTrigger">
             <img src="building1.png" alt="Kachoo Office Building" onerror="this.src='https://placehold.co/1400x700/f0f0f0/222222?text=KACHOO+OFFICE+BUILDING'">
             <div class="click-hint">▼ click to explore official office tour ▼</div>
         </div>
 
-        <!-- MAIN LOBBY (2 gambar slide: lobby1.png, lobby2.png) -->
+        <!-- MAIN LOBBY (lobby1.png, lobby2.png) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Main Lobby</h3>
             <div class="slider-wrapper" id="lobbySlider">
-                <div class="slider-track" id="lobbyTrack">
-                    <img src="lobby1.png" alt="Lobby View 1" onerror="this.src='https://placehold.co/1400x500/ececec/2c2c2c?text=Lobby+Area+1'">
-                    <img src="lobby2.png" alt="Lobby View 2" onerror="this.src='https://placehold.co/1400x500/ececec/2c2c2c?text=Lobby+Area+2'">
-                </div>
+                <div class="slider-track" id="lobbyTrack"></div>
                 <button class="slider-btn btn-left" data-slider="lobby">‹</button>
                 <button class="slider-btn btn-right" data-slider="lobby">›</button>
                 <div class="dot-group" id="lobbyDots"></div>
             </div>
         </div>
 
-        <!-- PUBLIC SPACE (5 gambar) GH2.png, Exhibition2.png, Chobank.jpg, Foodcourt2.png, Readingcorner2.jpg -->
+        <!-- PUBLIC SPACE (5 gambar dengan caption: Grand Hall, Exhibition Space, Chobank, Food Court, Reading Corner) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Public Space</h3>
             <div class="slider-wrapper" id="publicSlider">
-                <div class="slider-track" id="publicTrack">
-                    <img src="GH2.png" alt="Grand Hall" onerror="this.src='https://placehold.co/1400x500/ececec/333?text=Grand+Hall'">
-                    <img src="Exhibition2.png" alt="Exhibition Space" onerror="this.src='https://placehold.co/1400x500/ececec/333?text=Exhibition+Space'">
-                    <img src="Chobank.jpg" alt="Chobank Digital" onerror="this.src='https://placehold.co/1400x500/ececec/333?text=Chobank+Digital+Banking'">
-                    <img src="Foodcourt2.png" alt="Food Court" onerror="this.src='https://placehold.co/1400x500/ececec/333?text=Food+Court'">
-                    <img src="Readingcorner2.jpg" alt="Reading Corner L1" onerror="this.src='https://placehold.co/1400x500/ececec/333?text=Reading+Corner'">
-                </div>
+                <div class="slider-track" id="publicTrack"></div>
                 <button class="slider-btn btn-left" data-slider="public">‹</button>
                 <button class="slider-btn btn-right" data-slider="public">›</button>
                 <div class="dot-group" id="publicDots"></div>
             </div>
         </div>
 
-        <!-- PRIVATE SPACE (MeetingRoom2.png, Conference2.png) -->
+        <!-- PRIVATE SPACE (MeetingRoom1.jpg, Conference1.png, Lounge1.jpg) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Private Space</h3>
             <div class="slider-wrapper" id="privateSlider">
-                <div class="slider-track" id="privateTrack">
-                    <img src="MeetingRoom2.png" alt="Meeting Room" onerror="this.src='https://placehold.co/1400x500/e0e0e0/111?text=Meeting+Room'">
-                    <img src="Conference2.png" alt="Conference Room" onerror="this.src='https://placehold.co/1400x500/e0e0e0/111?text=Conference+Room'">
-                </div>
+                <div class="slider-track" id="privateTrack"></div>
                 <button class="slider-btn btn-left" data-slider="private">‹</button>
                 <button class="slider-btn btn-right" data-slider="private">›</button>
                 <div class="dot-group" id="privateDots"></div>
             </div>
         </div>
 
-        <!-- WORKSHOP (3 gambar slide) -->
+        <!-- WORKSHOP (3 gambar) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Workshop</h3>
             <div class="slider-wrapper" id="workshopSlider">
-                <div class="slider-track" id="workshopTrack">
-                    <img src="workshop1.png" alt="Workshop Area" onerror="this.src='https://placehold.co/1400x500/d9d9d9/000?text=Workshop+Zone+1'">
-                    <img src="workshop2.png" alt="Workshop Area" onerror="this.src='https://placehold.co/1400x500/d9d9d9/000?text=Workshop+Zone+2'">
-                    <img src="workshop3.png" alt="Workshop Area" onerror="this.src='https://placehold.co/1400x500/d9d9d9/000?text=Workshop+Zone+3'">
-                </div>
+                <div class="slider-track" id="workshopTrack"></div>
                 <button class="slider-btn btn-left" data-slider="workshop">‹</button>
                 <button class="slider-btn btn-right" data-slider="workshop">›</button>
                 <div class="dot-group" id="workshopDots"></div>
             </div>
         </div>
 
-        <!-- WORK STATION (3 gambar slide) -->
+        <!-- WORK STATION (3 gambar) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Work Station</h3>
             <div class="slider-wrapper" id="stationSlider">
-                <div class="slider-track" id="stationTrack">
-                    <img src="workstation1.png" alt="Workstation" onerror="this.src='https://placehold.co/1400x500/d4d4d4/1a1a1a?text=Workstation+Area'">
-                    <img src="workstation2.png" alt="Workstation" onerror="this.src='https://placehold.co/1400x500/d4d4d4/1a1a1a?text=Workstation+Area'">
-                    <img src="workstation3.png" alt="Workstation" onerror="this.src='https://placehold.co/1400x500/d4d4d4/1a1a1a?text=Workstation+Area'">
-                </div>
+                <div class="slider-track" id="stationTrack"></div>
                 <button class="slider-btn btn-left" data-slider="station">‹</button>
                 <button class="slider-btn btn-right" data-slider="station">›</button>
                 <div class="dot-group" id="stationDots"></div>
             </div>
         </div>
 
-        <!-- RESTROOM 2 gambar slide: Restroom1.png, Restroom2.png -->
+        <!-- RESTROOM (2 gambar: Restroom1.png, Restroom2.png) -->
         <div class="gallery-section">
             <h3 class="gallery-title">Restroom</h3>
             <div class="slider-wrapper" id="restroomSlider">
-                <div class="slider-track" id="restroomTrack">
-                    <img src="Restroom1.png" alt="Restroom" onerror="this.src='https://placehold.co/1400x500/e8e8e8/222?text=Restroom+Area'">
-                    <img src="Restroom2.png" alt="Restroom" onerror="this.src='https://placehold.co/1400x500/e8e8e8/222?text=Restroom+Area'">
-                </div>
+                <div class="slider-track" id="restroomTrack"></div>
                 <button class="slider-btn btn-left" data-slider="restroom">‹</button>
                 <button class="slider-btn btn-right" data-slider="restroom">›</button>
                 <div class="dot-group" id="restroomDots"></div>
             </div>
         </div>
 
-        <!-- ELEVATOR 1 gambar (lift2.png) & EMERGENCY EXIT 1 gambar (Exhibition2.png) -->
+        <!-- ELEVATOR (lift2.png) & EMERGENCY EXIT (EmergencyExit1.png) -->
         <div class="two-cols">
             <div class="col-item">
                 <h3 class="gallery-title" style="border-bottom: none; margin-bottom: 20px;">Elevator</h3>
                 <img src="lift2.png" alt="Elevator" onerror="this.src='https://placehold.co/1200x500/e2e2e2/111?text=Lift+Area'">
+                <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Elevator Access</span></div>
             </div>
             <div class="col-item">
                 <h3 class="gallery-title" style="border-bottom: none; margin-bottom: 20px;">Emergency Exit</h3>
-                <img src="Exhibition2.png" alt="Emergency Exit" onerror="this.src='https://placehold.co/1200x500/e2e2e2/111?text=Emergency+Exit'">
+                <img src="EmergencyExit1.png" alt="Emergency Exit" onerror="this.src='https://placehold.co/1200x500/e2e2e2/111?text=Emergency+Exit'">
+                <div style="text-align: center; margin-top: 12px;"><span class="single-img-caption">Emergency Exit Route</span></div>
             </div>
         </div>
     </div>
@@ -583,7 +594,7 @@
 
 <script>
     (function() {
-        // Redirect for building photo -> thekachoo.github.io/Office
+        // Redirect building photo
         const buildingDiv = document.getElementById('officeRedirectTrigger');
         if(buildingDiv) {
             buildingDiv.addEventListener('click', () => {
@@ -591,18 +602,98 @@
             });
         }
 
-        // Helper: initialize slider with dots + motion
-        function initSlider(trackId, dotsId, leftBtnSelector, rightBtnSelector, sliderContainerId) {
-            const track = document.getElementById(trackId);
+        // Fungsi untuk membuat slide dengan gambar dan caption
+        function buildSlideItem(src, altText, captionText) {
+            const div = document.createElement('div');
+            div.className = 'slide-item';
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = altText;
+            img.onerror = function() { this.src = 'https://placehold.co/1400x500/eeeeee/333333?text=' + encodeURIComponent(captionText); };
+            div.appendChild(img);
+            const captionDiv = document.createElement('div');
+            captionDiv.className = 'image-caption';
+            captionDiv.innerText = captionText;
+            div.appendChild(captionDiv);
+            return div;
+        }
+
+        // Data untuk setiap slider
+        const slidersConfig = {
+            lobby: {
+                trackId: 'lobbyTrack',
+                dotsId: 'lobbyDots',
+                items: [
+                    { src: 'lobby1.png', alt: 'Main Lobby 1', caption: 'Main Lobby — Reception Area' },
+                    { src: 'lobby2.png', alt: 'Main Lobby 2', caption: 'Main Lobby — Waiting Lounge' }
+                ]
+            },
+            public: {
+                trackId: 'publicTrack',
+                dotsId: 'publicDots',
+                items: [
+                    { src: 'GH2.png', alt: 'Grand Hall', caption: 'Grand Hall' },
+                    { src: 'Exhibition2.png', alt: 'Exhibition Space', caption: 'Exhibition Space' },
+                    { src: 'Chobank.jpg', alt: 'Chobank', caption: 'Chobank — Digital Banking Zone' },
+                    { src: 'Foodcourt2.png', alt: 'Food Court', caption: 'Food Court' },
+                    { src: 'Readingcorner2.jpg', alt: 'Reading Corner', caption: 'Reading Corner (L1)' }
+                ]
+            },
+            private: {
+                trackId: 'privateTrack',
+                dotsId: 'privateDots',
+                items: [
+                    { src: 'MeetingRoom1.jpg', alt: 'Meeting Room', caption: 'Meeting Room' },
+                    { src: 'Conference1.png', alt: 'Conference Room', caption: 'Conference Room' },
+                    { src: 'Lounge1.jpg', alt: 'Executive Lounge', caption: 'Lounge — Relaxation Area' }
+                ]
+            },
+            workshop: {
+                trackId: 'workshopTrack',
+                dotsId: 'workshopDots',
+                items: [
+                    { src: 'workshop1.png', alt: 'Workshop Zone', caption: 'Workshop — Creative Lab' },
+                    { src: 'workshop2.png', alt: 'Workshop Zone', caption: 'Workshop — Production Space' },
+                    { src: 'workshop3.png', alt: 'Workshop Zone', caption: 'Workshop — Prototyping Area' }
+                ]
+            },
+            station: {
+                trackId: 'stationTrack',
+                dotsId: 'stationDots',
+                items: [
+                    { src: 'workstation1.png', alt: 'Workstation', caption: 'Work Station — Open Desk' },
+                    { src: 'workstation2.png', alt: 'Workstation', caption: 'Work Station — Collaborative Zone' },
+                    { src: 'workstation3.png', alt: 'Workstation', caption: 'Work Station — Private Booth' }
+                ]
+            },
+            restroom: {
+                trackId: 'restroomTrack',
+                dotsId: 'restroomDots',
+                items: [
+                    { src: 'Restroom1.png', alt: 'Restroom', caption: 'Restroom — Premium Facility' },
+                    { src: 'Restroom2.png', alt: 'Restroom', caption: 'Restroom — Accessible Area' }
+                ]
+            }
+        };
+
+        // Inisialisasi semua slider
+        function initSliderWithCaptions(config, sliderId) {
+            const track = document.getElementById(config.trackId);
             if(!track) return;
-            const slides = track ? Array.from(track.children) : [];
+            track.innerHTML = '';
+            config.items.forEach(item => {
+                const slideDiv = buildSlideItem(item.src, item.alt, item.caption);
+                track.appendChild(slideDiv);
+            });
+            const slides = Array.from(track.children);
             if(slides.length === 0) return;
             let currentIndex = 0;
             const total = slides.length;
 
-            const container = document.getElementById(sliderContainerId);
-            const leftBtn = container ? container.querySelector(leftBtnSelector) : null;
-            const rightBtn = container ? container.querySelector(rightBtnSelector) : null;
+            const container = document.getElementById(sliderId);
+            const leftBtn = container ? container.querySelector('.btn-left') : null;
+            const rightBtn = container ? container.querySelector('.btn-right') : null;
+            const dotsContainer = document.getElementById(config.dotsId);
 
             function updateSlider(instant = false) {
                 const shift = -currentIndex * 100;
@@ -612,7 +703,6 @@
             }
 
             function updateDots() {
-                const dotsContainer = document.getElementById(dotsId);
                 if(!dotsContainer) return;
                 dotsContainer.innerHTML = '';
                 for(let i=0; i<total; i++) {
@@ -642,32 +732,15 @@
             updateSlider(true);
         }
 
-        // Lobby slider
-        if(document.getElementById('lobbySlider')) {
-            initSlider('lobbyTrack', 'lobbyDots', '.btn-left', '.btn-right', 'lobbySlider');
-        }
-        // Public Space
-        if(document.getElementById('publicSlider')) {
-            initSlider('publicTrack', 'publicDots', '.btn-left', '.btn-right', 'publicSlider');
-        }
-        // Private Space
-        if(document.getElementById('privateSlider')) {
-            initSlider('privateTrack', 'privateDots', '.btn-left', '.btn-right', 'privateSlider');
-        }
-        // Workshop
-        if(document.getElementById('workshopSlider')) {
-            initSlider('workshopTrack', 'workshopDots', '.btn-left', '.btn-right', 'workshopSlider');
-        }
-        // Work Station
-        if(document.getElementById('stationSlider')) {
-            initSlider('stationTrack', 'stationDots', '.btn-left', '.btn-right', 'stationSlider');
-        }
-        // Restroom
-        if(document.getElementById('restroomSlider')) {
-            initSlider('restroomTrack', 'restroomDots', '.btn-left', '.btn-right', 'restroomSlider');
-        }
+        // Jalankan semua slider
+        if(document.getElementById('lobbySlider')) initSliderWithCaptions(slidersConfig.lobby, 'lobbySlider');
+        if(document.getElementById('publicSlider')) initSliderWithCaptions(slidersConfig.public, 'publicSlider');
+        if(document.getElementById('privateSlider')) initSliderWithCaptions(slidersConfig.private, 'privateSlider');
+        if(document.getElementById('workshopSlider')) initSliderWithCaptions(slidersConfig.workshop, 'workshopSlider');
+        if(document.getElementById('stationSlider')) initSliderWithCaptions(slidersConfig.station, 'stationSlider');
+        if(document.getElementById('restroomSlider')) initSliderWithCaptions(slidersConfig.restroom, 'restroomSlider');
 
-        // Optional: smooth header hide/show on scroll (minimal)
+        // Header hide/show on scroll
         let lastScroll = 0;
         const headerEl = document.querySelector('header');
         window.addEventListener('scroll', () => {
@@ -682,4 +755,4 @@
     })();
 </script>
 </body>
-    </html>
+                    </html>
