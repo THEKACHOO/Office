@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>The Kafka | KACHOO | Monochromatic Ecosystem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #ffffff 0%, #f2f2f2 40%, #e8e8e8 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            color: #000000;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* BLACK & WHITE ONLY - NO OTHER COLORS */
+        a, button, .nav-btn, .slide-btn, .image-slider img, .modal-trigger, .office-tile, .vision-mission-card {
+            color: #000000;
+        }
+
+        /* gradients only in black/white spectrum */
+        .gradient-bg {
+            background: radial-gradient(circle at 20% 30%, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.04) 100%);
+        }
+
+        /* container */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* HEADER (white backdrop, black accents) */
+        header {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.12);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+
+        .logo {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #000000;
+            text-decoration: none;
+            background: linear-gradient(135deg, #000 30%, #3a3a3a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.2s;
+        }
+
+        /* main menu navigator (pojok kanan) */
+        .main-menu {
+            display: flex;
+            gap: 36px;
+            align-items: center;
+        }
+
+        .main-menu a {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: -0.2px;
+            color: #1a1a1a;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 6px;
+        }
+
+        .main-menu a:hover {
+            color: #000000;
+            opacity: 0.7;
+        }
+
+        .main-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #000000;
+            transition: width 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .main-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero / Kafka intro */
+        .kafka-intro {
+            padding: 160px 0 90px 0;
+            background: linear-gradient(125deg, #ffffff 0%, #f6f6f6 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .kafka-title {
+            font-size: 3.6rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: #000000;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .kafka-desc {
+            font-size: 1.2rem;
+            max-width: 780px;
+            color: #2c2c2c;
+            margin-bottom: 48px;
+            font-weight: 450;
+        }
+
+        .offices-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .office-tile {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 28px;
+            padding: 28px 32px;
+            flex: 1;
+            min-width: 240px;
+            transition: all 0.35s ease;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.02);
+        }
+
+        .office-tile:hover {
+            transform: translateY(-8px);
+            border-color: #aaaaaa;
+            box-shadow: 0 24px 38px -16px rgba(0,0,0,0.12);
+        }
+
+        .office-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .office-loc {
+            font-weight: 500;
+            color: #3a3a3a;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .office-badge {
+            display: inline-block;
+            background: #efefef;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1f1f1f;
+        }
+
+        /* KACHOO SECTION (visi misi + kantor) */
+        .kachoo-section {
+            padding: 100px 0;
+            background: #ffffff;
+            border-top: 1px solid #ebebeb;
+            border-bottom: 1px solid #ebebeb;
+        }
+
+        .vision-mission {
+            background: #fafafa;
+            border-radius: 38px;
+            padding: 56px 48px;
+            margin-bottom: 80px;
+            border: 1px solid #e6e6e6;
+            transition: all 0.4s;
+        }
+
+        .vm-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            letter-spacing: -1px;
+            border-left: 5px solid #000;
+            padding-left: 22px;
+        }
+
+        .visi-text {
+            font-size: 1.28rem;
+            font-weight: 500;
+            margin-bottom: 48px;
+            line-height: 1.45;
+            color: #111;
+            background: #fff;
+            padding: 28px 32px;
+            border-radius: 28px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .misi-list {
+            list-style: none;
+        }
+
+        .misi-list li {
+            margin-bottom: 20px;
+            padding-left: 26px;
+            position: relative;
+            font-size: 1.05rem;
+            font-weight: 450;
+            color: #2b2b2b;
+        }
+
+        .misi-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* kantor pusat + info */
+        .office-hq {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            justify-content: space-between;
+            margin-bottom: 70px;
+            background: #fefefe;
+            border-radius: 36px;
+            padding: 28px 32px;
+            border: 1px solid #eaeaea;
+        }
+
+        .hq-card {
+            flex: 1;
+        }
+
+        .hq-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .founder {
+            margin-top: 24px;
+            font-style: normal;
+            background: #f0f0f0;
+            padding: 12px 20px;
+            border-radius: 48px;
+            display: inline-block;
+        }
+
+        /* GALLERY & SLIDERS (motion halus) */
+        .gallery-block {
+            margin: 70px 0 60px;
+        }
+
+        .gallery-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+            border-bottom: 2px solid #ccc;
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+
+        .slider-container {
+            position: relative;
+            margin: 30px 0 48px;
+            border-radius: 32px;
+            overflow: hidden;
+            background: #f2f2f2;
+            border: 1px solid #e2e2e2;
+        }
+
+        .slider-images {
+            display: flex;
+            transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slider-images img {
+            width: 100%;
+            flex-shrink: 0;
+            object-fit: cover;
+            max-height: 460px;
+            background: #f9f9f9;
+            display: block;
+            pointer-events: none;
+        }
+
+        .slide-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 12px 18px;
+            border-radius: 60px;
+            font-weight: 300;
+            transition: 0.2s;
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .slide-btn:hover {
+            background: rgba(0,0,0,0.85);
+        }
+
+        .btn-left {
+            left: 18px;
+        }
+        .btn-right {
+            right: 18px;
+        }
+
+        .indicator-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .dot {
+            width: 9px;
+            height: 9px;
+            background: #aaa;
+            border-radius: 50%;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .dot.active {
+            background: #000;
+            transform: scale(1.2);
+        }
+
+        /* foto jaksel (klik pindah) */
+        .featured-photo {
+            margin: 45px 0 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 36px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        .featured-photo img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .featured-photo:hover img {
+            transform: scale(1.02);
+        }
+        .caption-click {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            text-align: center;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+        }
+
+        /* responsive */
+        @media (max-width: 900px) {
+            .container {
+                padding: 0 20px;
+            }
+            .kafka-title {
+                font-size: 2.5rem;
+            }
+            .offices-row {
+                flex-direction: column;
+            }
+            .vm-title {
+                font-size: 1.8rem;
+            }
+        }
+        @media (max-width: 680px) {
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .main-menu {
+                gap: 22px;
+            }
+        }
+
+        /* NO ICONS, NO EMOTICONS — ONLY TEXT */
+        a, div, span {
+            user-select: none;
+        }
+        img {
+            background-color: #fefefe;
+        }
+        .no-icon-force {
+            font-style: normal;
+        }
+        hr {
+            border-color: #ddd;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">KAFKA</div>
+            <div class="main-menu">
+                <a href="#" id="navTheKafka">The Kafka</a>
+                <a href="#" id="navTheKachoo">The Kachoo</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- THE KAFKA SECTION (default visible) -->
+    <div id="theKafkaSection">
+        <div class="kafka-intro">
+            <div class="container">
+                <h1 class="kafka-title">The Kafka<br>Family Heritage</h1>
+                <p class="kafka-desc">The Kafka name represents a legacy of creative expansion, blending traditional publishing ethos with future-forward digital ecosystems. Rooted in family values, the Kafka lineage has nurtured three core offices that operate as pillars of innovation, media, and technological synergy across continents.</p>
+                <div class="offices-row">
+                    <div class="office-tile">
+                        <div class="office-name">Kafka London</div>
+                        <div class="office-loc">United Kingdom · European Creative Hub</div>
+                        <div class="office-badge">Literature & Archive</div>
+                    </div>
+                    <div class="office-tile">
+                        <div class="office-name">Kafka New York</div>
+                        <div class="office-loc">USA · Global Media Strategy</div>
+                        <div class="office-badge">Publishing & Innovation</div>
+                    </div>
+                    <div class="office-tile">
+                        <div class="office-name">Kafka Jakarta</div>
+                        <div class="office-loc">Indonesia · Digital & Tech Incubator</div>
+                        <div class="office-badge">KACHOO Headquarters</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- THE KACHOO SECTION (hidden awal, tampil via navigator) -->
+    <div id="theKachooSection" style="display: none;">
+        <div class="kachoo-section">
+            <div class="container">
+                <!-- VISI & MISI (BAHASA INGGRIS) -->
+                <div class="vision-mission">
+                    <h2 class="vm-title">Vision & Mission</h2>
+                    <div class="visi-text">
+                        <strong>Vision:</strong> To become a media and publishing platform that develops various digital projects (such as media, magazines, and digital systems) to present information, creativity, and innovation within a single ecosystem.
+                    </div>
+                    <ul class="misi-list">
+                        <li><strong>Mission:</strong> Develop various digital projects (including Kafkapages, Kazine, Kaboom, etc.)</li>
+                        <li>Provide a media and publication platform for diverse audiences</li>
+                        <li>Build technology features such as digital banking (Chobank) and directory systems (Chonnect) that make life easier for everyone</li>
+                        <li>Integrate multiple services into one seamless digital ecosystem</li>
+                    </ul>
+                </div>
+
+                <!-- kantor pusat + admin + founder -->
+                <div class="office-hq">
+                    <div class="hq-card">
+                        <h3>Head Office</h3>
+                        <p>South Jakarta — Jenderal Sudirman Area<br>Digital Command Center & KACHOO Core Operations</p>
+                    </div>
+                    <div class="hq-card">
+                        <h3>Administrative Office</h3>
+                        <p>Central Jakarta — Menteng District<br>Corporate Administration & Strategic Management</p>
+                    </div>
+                    <div class="hq-card">
+                        <div class="founder">
+                            <strong>Founder</strong><br>Gathur Delano Kafka
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOTO JAKSEL (klik pindah ke thekachoo.github.io/Office) -->
+                <div class="featured-photo" id="jakselPhotoTrigger">
+                    <img src="https://placehold.co/1200x600/eeeeee/444444?text=KACHOO+Jakarta+South+Office" alt="Kachoo South Jakarta Office">
+                    <div class="caption-click">Click image to explore official office tour →</div>
+                </div>
+
+                <!-- MAIN LOBBY (2 slide: lobby1, lobby2) -->
+                <div class="gallery-block">
+                    <h3 class="gallery-title">Main Lobby</h3>
+                    <div class="slider-container" id="lobbySlider">
+                        <div class="slider-images" id="lobbyImages">
+                            <img src="https://placehold.co/1400x500/ffffff/dddddd?text=LOBBY+VIEW+1" alt="Lobby 1">
+                            <img src="https://placehold.co/1400x500/ffffff/dddddd?text=LOBBY+VIEW+2" alt="Lobby 2">
+                        </div>
+                        <button class="slide-btn btn-left" data-slider="lobby">‹</button>
+                        <button class="slide-btn btn-right" data-slider="lobby">›</button>
+                        <div class="indicator-dots" id="lobbyDots"></div>
+                    </div>
+                </div>
+
+                <!-- PUBLIC SPACE (5 gambar) Grand hall, exhibition space, chobank, food court, reading corner -->
+                <div class="gallery-block">
+                    <h3 class="gallery-title">Public Space</h3>
+                    <div class="slider-container" id="publicSlider">
+                        <div class="slider-images" id="publicImages">
+                            <img src="https://placehold.co/1400x500/ececec/2c2c2c?text=Grand+Hall+GH2" alt="Grand Hall">
+                            <img src="https://placehold.co/1400x500/ececec/2c2c2c?text=Exhibition+Space+Exhibition2" alt="Exhibition Space">
+                            <img src="https://placehold.co/1400x500/ececec/2c2c2c?text=Chobank+Digital+Banking" alt="Chobank">
+                            <img src="https://placehold.co/1400x500/ececec/2c2c2c?text=Food+Court+Area" alt="Food Court">
+                            <img src="https://placehold.co/1400x500/ececec/2c2c2c?text=Reading+Corner+L1" alt="Reading Corner L1">
+                        </div>
+                        <button class="slide-btn btn-left" data-slider="public">‹</button>
+                        <button class="slide-btn btn-right" data-slider="public">›</button>
+                        <div class="indicator-dots" id="publicDots"></div>
+                    </div>
+                </div>
+
+                <!-- PRIVATE SPACE (2 gambar) Meeting Room, Conference room -->
+                <div class="gallery-block">
+                    <h3 class="gallery-title">Private Space</h3>
+                    <div class="slider-container" id="privateSlider">
+                        <div class="slider-images" id="privateImages">
+                            <img src="https://placehold.co/1400x500/e0e0e0/111111?text=Meeting+Room+MeetingRoom2" alt="Meeting Room">
+                            <img src="https://placehold.co/1400x500/e0e0e0/111111?text=Conference+Room+Conference2" alt="Conference Room">
+                        </div>
+                        <button class="slide-btn btn-left" data-slider="private">‹</button>
+                        <button class="slide-btn btn-right" data-slider="private">›</button>
+                        <div class="indicator-dots" id="privateDots"></div>
+                    </div>
+                </div>
+
+                <!-- WORKSHOP (3 gambar slide) -->
+                <div class="gallery-block">
+                    <h3 class="gallery-title">Workshop</h3>
+                    <div class="slider-container" id="workshopSlider">
+                        <div class="slider-images" id="workshopImages">
+                            <img src="https://placehold.co/1400x500/d9d9d9/000000?text=Workshop+Area+1" alt="Workshop 1">
+                            <img src="https://placehold.co/1400x500/d9d9d9/000000?text=Workshop+Area+2" alt="Workshop 2">
+                            <img src="https://placehold.co/1400x500/d9d9d9/000000?text=Workshop+Area+3" alt="Workshop 3">
+                        </div>
+                        <button class="slide-btn btn-left" data-slider="workshop">‹</button>
+                        <button class="slide-btn btn-right" data-slider="workshop">›</button>
+                        <div class="indicator-dots" id="workshopDots"></div>
+                    </div>
+                </div>
+
+                <!-- WORK STATION (3 gambar slide) -->
+                <div class="gallery-block">
+                    <h3 class="gallery-title">Work Station</h3>
+                    <div class="slider-container" id="stationSlider">
+                        <div class="slider-images" id="stationImages">
+                            <img src="https://placehold.co/1400x500/d4d4d4/1a1a1a?text=Workstation+Zone+A" alt="Station 1">
+                            <img src="https://placehold.co/1400x500/d4d4d4/1a1a1a?text=Workstation+Zone+B" alt="Station 2">
+                            <img src="https://placehold.co/1400x500/d4d4d4/1a1a1a?text=Workstation+Zone+C" alt="Station 3">
+                        </div>
+                        <button class="slide-btn btn-left" data-slider="station">‹</button>
+                        <button class="slide-btn btn-right" data-slider="station">›</button>
+                        <div class="indicator-dots" id="stationDots"></div>
+                    </div>
+                </div>
+
+                <!-- RESTROOM 2 gambar slide (Restroom1, Restroom2) -->
+                <div class="gallery-block">
+                    <h3 class="gallery-title">Restroom</h3>
+                    <div class="slider-container" id="restroomSlider">
+                        <div class="slider-images" id="restroomImages">
+                            <img src="https://placehold.co/1400x500/e8e8e8/222?text=Restroom+1" alt="Restroom 1">
+                            <img src="https://placehold.co/1400x500/e8e8e8/222?text=Restroom+2" alt="Restroom 2">
+                        </div>
+                        <button class="slide-btn btn-left" data-slider="restroom">‹</button>
+                        <button class="slide-btn btn-right" data-slider="restroom">›</button>
+                        <div class="indicator-dots" id="restroomDots"></div>
+                    </div>
+                </div>
+
+                <!-- ELEVATOR 1 gambar (lift2.png) & EMERGENCY EXIT 1 gambar (Exhibition2.png) -->
+                <div style="display: flex; gap: 32px; flex-wrap: wrap; margin: 60px 0 40px;">
+                    <div style="flex:1; min-width: 220px;">
+                        <h3 class="gallery-title" style="margin-bottom: 16px;">Elevator</h3>
+                        <div style="border-radius: 28px; overflow: hidden; border:1px solid #ddd;">
+                            <img src="https://placehold.co/1200x500/e2e2e2/111?text=Lift+2+Elevator" alt="Elevator" style="width:100%; display:block;">
+                        </div>
+                    </div>
+                    <div style="flex:1; min-width: 220px;">
+                        <h3 class="gallery-title" style="margin-bottom: 16px;">Emergency Exit</h3>
+                        <div style="border-radius: 28px; overflow: hidden; border:1px solid #ddd;">
+                            <img src="https://placehold.co/1200x500/e2e2e2/111?text=Exhibition2+Emergency+Route" alt="Emergency Exit">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // navigasi main menu
+    const kafkaSection = document.getElementById('theKafkaSection');
+    const kachooSection = document.getElementById('theKachooSection');
+    const navKafka = document.getElementById('navTheKafka');
+    const navKachoo = document.getElementById('navTheKachoo');
+
+    function showKafka() {
+        kafkaSection.style.display = 'block';
+        kachooSection.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showKachoo() {
+        kafkaSection.style.display = 'none';
+        kachooSection.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        initAllSliders(); // reinit sliders if needed (but each already setup once)
+    }
+
+    navKafka.addEventListener('click', (e) => {
+        e.preventDefault();
+        showKafka();
+    });
+    navKachoo.addEventListener('click', (e) => {
+        e.preventDefault();
+        showKachoo();
+    });
+
+    // Foto Jakarta Selatan klik -> pindah ke thekachoo.github.io/Office
+    const photoTrigger = document.getElementById('jakselPhotoTrigger');
+    if(photoTrigger) {
+        photoTrigger.addEventListener('click', () => {
+            window.location.href = 'https://thekachoo.github.io/Office';
+        });
+    }
+
+    // Generic slider factory (motion halus)
+    function initSlider(containerId, imagesId, dotsId, btnLeftClass, btnRightClass) {
+        const sliderDiv = document.getElementById(containerId);
+        if(!sliderDiv) return;
+        const track = document.getElementById(imagesId);
+        const slides = track ? Array.from(track.children) : [];
+        if(slides.length === 0) return;
+        let currentIdx = 0;
+        const total = slides.length;
+        
+        function updateSlider(instant = false) {
+            const shift = -currentIdx * 100;
+            track.style.transition = instant ? 'none' : 'transform 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+            track.style.transform = `translateX(${shift}%)`;
+            updateDots();
+        }
+        function updateDots() {
+            const dotsContainer = document.getElementById(dotsId);
+            if(!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            for(let i=0; i<total; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if(i === currentIdx) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    currentIdx = i;
+                    updateSlider(false);
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+        const leftBtn = sliderDiv.querySelector(`.${btnLeftClass}`);
+        const rightBtn = sliderDiv.querySelector(`.${btnRightClass}`);
+        if(leftBtn) leftBtn.addEventListener('click', () => {
+            currentIdx = (currentIdx - 1 + total) % total;
+            updateSlider(false);
+        });
+        if(rightBtn) rightBtn.addEventListener('click', () => {
+            currentIdx = (currentIdx + 1) % total;
+            updateSlider(false);
+        });
+        updateSlider(true);
+    }
+
+    function initAllSliders() {
+        // Main Lobby (2)
+        if(document.getElementById('lobbySlider')) {
+            initSlider('lobbySlider', 'lobbyImages', 'lobbyDots', 'btn-left', 'btn-right');
+        }
+        // Public (5)
+        if(document.getElementById('publicSlider')) {
+            initSlider('publicSlider', 'publicImages', 'publicDots', 'btn-left', 'btn-right');
+        }
+        // Private (2)
+        if(document.getElementById('privateSlider')) {
+            initSlider('privateSlider', 'privateImages', 'privateDots', 'btn-left', 'btn-right');
+        }
+        // Workshop (3)
+        if(document.getElementById('workshopSlider')) {
+            initSlider('workshopSlider', 'workshopImages', 'workshopDots', 'btn-left', 'btn-right');
+        }
+        // Work station (3)
+        if(document.getElementById('stationSlider')) {
+            initSlider('stationSlider', 'stationImages', 'stationDots', 'btn-left', 'btn-right');
+        }
+        // Restroom (2)
+        if(document.getElementById('restroomSlider')) {
+            initSlider('restroomSlider', 'restroomImages', 'restroomDots', 'btn-left', 'btn-right');
+        }
+    }
+
+    // observer untuk initial jika kachoo ditampilkan, sliders aktif
+    const observer = new MutationObserver(() => {
+        if(kachooSection.style.display === 'block') {
+            initAllSliders();
+            observer.disconnect();
+        }
+    });
+    observer.observe(kachooSection, { attributes: true, attributeFilter: ['style'] });
+
+    // jika langsung muncul via hash? default kafka
+    showKafka();
+    // juga init sliders jika kebetulan kachoo tampil di kemudian hari
+    window.addEventListener('load', () => {
+        if(kachooSection.style.display === 'block') initAllSliders();
+    });
+    
+    // navigasi KACHOO: juga redirect internal untuk The Kachoo link ke thekachoo.github.io/Home sesuai permintaan
+    // "The Kachoo (kantor media dan berita sklian sm visi dan misinya) yg kalau di klik ngarah ke thekachoo.github.io/Home"
+    // Maka tambahkan event untuk navigasi menu "The Kachoo" agar mengarah ke link tsb, tapi karena di spec: navigator main menu isinya The Kafka (penjelasan keluarga) dan The Kachoo (kantor media dan berita sekalian visi misi) yg kalau di klik ngarah ke thekachoo.github.io/Home.
+    // Jadi kami sesuaikan: navigator The Kachoo akan redirect ke website eksternal? namun juga menampilkan bagian visi misi di halaman? Permintaan: "yg kalau di klik ngarah ke thekachoo.github.io/Home". Tapi di sisi lain juga ingin menampilkan isi visi misi + office gallery pada halaman ini. Berdasarkan instruksi "The Kachoo (kantor media dan berita sklian sm visi dan misinya) yg kalau di klik ngarah ke thekachoo.github.io/Home". Artinya menu utama The Kachoo akan membuka link eksternal, namun juga halaman ini memiliki konten lengkap the kachoo. Tapi karena kita harus memenuhi navigasi yang diminta: kedua menu ada di header pojok kanan, The Kafka (menampilkan penjelasan keluarga + 3 kantor) dan The Kachoo yang jika diklik mengarah ke thekachoo.github.io/Home. TAPI pada saat yang sama, kita tetap menampilkan bagian visi misi + galeri perkantoran di dalam halaman ini? Agar tidak bentrok, kita buat: ketika user mengklik "The Kachoo" pada navigator, akan membuka tab baru ke https://thekachoo.github.io/Home, namun di halaman ini kita juga tetap punya bagian The Kachoo (dengan visi misi) dan bisa diakses melalui elemen lain? Karena permintaan awal: "Di header pojok kanan ada navigator main menu isinya The Kafka ... The Kachoo yg kalau di klik ngarah ke thekachoo.github.io/Home". Jadi pastikan navigator The Kachoo mengarah ke url tsb. Untuk menampilkan isi visi misi + galeri dalam website yang sama, kita bisa beri akses via scroll atau tetap tampilkan di bawah? Namun instruksi lebih lanjut: "Isinya Penjelasan singkat The Kafka itu sm 3 kantornya. Terus The Kachoo, yg isinya: penjelasan visi misi diawal, kantor pusat ..." dan seterusnya. Jadi saya tetap menampilkan semua konten The Kachoo pada halaman yang sama (section tersembunyi atau tampil via anchor). Agar tidak konflik, saya membuat kedua navigasi: The Kafka menampilkan bagian kafka, The Kachoo pada navigator akan MEMBUKA link eksternal, TAPI juga kita sediakan cara lain? tidak, karena keinginan user: navigator utama The Kachoo = arah ke link. Jadi saya ubah: navKachoo akan membuka tab baru ke https://thekachoo.github.io/Home. Namun halaman ini tetap memiliki semua konten The Kachoo (visi misi dll) dengan cara pengguna bisa mengakses dari menu lain? lebih baik memisahkan: karena spesifikasi ganda, tapi prioritas: "yg kalau di klik ngarah ke thekachoo.github.io/Home". Maka saya implementasikan bahwa The Kachoo menu adalah redirect ke external. Untuk menampilkan isi detail The Kachoo (visi misi, kantor, gallery), Saya buat tombol atau tetap tampil di home? tetapi karena permintaan komprehensif, saya tambahkan sebuah area yang tetap menampilkan semua konten The Kachoo di bawah The Kafka, dan navigator The Kachoo tetap redirect external. Namun karena awal sudah ada toggle, saya sesuaikan: ganti agar "The Kachoo" menu melakukan redirect, tetapi juga ada cara menampilkan konten? Saya akan mengakali: Ketika halaman dimuat, kita tampilkan The Kafka section, lalu di dalam The Kafka section, ada referensi The Kachoo (penjelasan singkat + link). Tapi untuk memenuhi visi misi dan seluruh slide, saya akan membuat bagian The Kachoo tetap ada di halaman (di bawah The Kafka). Namun agar sesuai dengan permintaan navigator, menu The Kachoo = external link. Baik, saya revisi sedikit:
+
+    const originalKachooHandler = () => { window.open('https://thekachoo.github.io/Home', '_blank'); };
+    navKachoo.removeEventListener('click', showKachoo);
+    navKachoo.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('https://thekachoo.github.io/Home', '_blank');
+    });
+    // Tapi konten The Kachoo tetap ingin ditampilkan pada halaman? Maka kita tampilkan section The Kachoo secara permanen di bawah The Kafka, tanpa perlu toggle. Dan agar header navigator tidak bentrok, kita biarkan The Kachoo section visible default di bawah The Kafka. Jadi semua konten: visi misi, kantor, foto, slider dll tetap muncul. Dan navigator The Kachoo mengarah ke link eksternal. Itu paling aman. Saya akan atur ulang: hapus toggle, tunjukkan kafka intro lalu langsung tampilkan semua konten Kachoo setelahnya. Sehingga kedua permintaan terpenuhi: navigator The Kachoo -> external, tetapi semua isi tetap ada di halaman. 
+    // implementasi: 
+    document.getElementById('theKafkaSection').style.display = 'block';
+    document.getElementById('theKachooSection').style.display = 'block';
+    // Hapus fungsi showKafka/showKachoo, ganti menu: The Kafka smooth scroll ke bagian keluarga, The Kachoo external.
+    navKafka.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('theKafkaSection').scrollIntoView({ behavior: 'smooth' });
+    });
+    navKachoo.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('https://thekachoo.github.io/Home', '_blank');
+    });
+    // pastikan slider jalan
+    initAllSliders();
+</script>
+</body>
+</html>
