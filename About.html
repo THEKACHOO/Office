@@ -38,7 +38,7 @@
     }
 
     .hero-kachoo {
-      padding: 60px 0 60px 0;
+      padding: 60px 0;
       background: linear-gradient(125deg, #ffffff 0%, #f2f2f2 100%);
       border-bottom: 1px solid rgba(0,0,0,0.05);
     }
@@ -253,8 +253,6 @@
 </head>
 <body>
 
-<div id="header-placeholder"></div>
-
 <main>
   <div class="hero-kachoo">
     <div class="container">
@@ -377,25 +375,9 @@
     </div>
   </div>
 </main>
-<div id="footer-placeholder"></div>
 
 <script>
   (function() {
-    fetch('https://cdn.jsdelivr.net/gh/thekachoo/Home@main/partials/header.html')
-      .then(r => r.text())
-      .then(html => {
-        document.getElementById('header-placeholder').innerHTML = html;
-        if (window.initHeaderFooter) window.initHeaderFooter();
-      })
-      .catch(() => console.warn('Header partial tidak ditemukan'));
-
-    fetch('https://cdn.jsdelivr.net/gh/thekachoo/Home@main/partials/footer.html')
-      .then(r => r.text())
-      .then(html => {
-        document.getElementById('footer-placeholder').innerHTML = html;
-      })
-      .catch(() => console.warn('Footer partial tidak ditemukan'));
-
     const headOffice = document.getElementById('headOfficeLink');
     if(headOffice) {
       headOffice.style.cursor = 'pointer';
